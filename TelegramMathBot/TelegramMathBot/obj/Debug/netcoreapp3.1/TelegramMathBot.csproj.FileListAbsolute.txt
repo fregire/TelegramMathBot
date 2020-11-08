@@ -1,0 +1,16 @@
+C:\Users\xxccv\Downloads\TelegramMathBot\TelegramMathBot\TelegramMathBot\bin\Debug\netcoreapp3.1\TelegramMathBot.exe
+C:\Users\xxccv\Downloads\TelegramMathBot\TelegramMathBot\TelegramMathBot\bin\Debug\netcoreapp3.1\TelegramMathBot.deps.json
+C:\Users\xxccv\Downloads\TelegramMathBot\TelegramMathBot\TelegramMathBot\bin\Debug\netcoreapp3.1\TelegramMathBot.runtimeconfig.json
+C:\Users\xxccv\Downloads\TelegramMathBot\TelegramMathBot\TelegramMathBot\bin\Debug\netcoreapp3.1\TelegramMathBot.runtimeconfig.dev.json
+C:\Users\xxccv\Downloads\TelegramMathBot\TelegramMathBot\TelegramMathBot\bin\Debug\netcoreapp3.1\TelegramMathBot.dll
+C:\Users\xxccv\Downloads\TelegramMathBot\TelegramMathBot\TelegramMathBot\bin\Debug\netcoreapp3.1\TelegramMathBot.pdb
+C:\Users\xxccv\Downloads\TelegramMathBot\TelegramMathBot\TelegramMathBot\obj\Debug\netcoreapp3.1\TelegramMathBot.csprojAssemblyReference.cache
+C:\Users\xxccv\Downloads\TelegramMathBot\TelegramMathBot\TelegramMathBot\obj\Debug\netcoreapp3.1\TelegramMathBot.AssemblyInfoInputs.cache
+C:\Users\xxccv\Downloads\TelegramMathBot\TelegramMathBot\TelegramMathBot\obj\Debug\netcoreapp3.1\TelegramMathBot.AssemblyInfo.cs
+C:\Users\xxccv\Downloads\TelegramMathBot\TelegramMathBot\TelegramMathBot\obj\Debug\netcoreapp3.1\TelegramMathBot.dll
+C:\Users\xxccv\Downloads\TelegramMathBot\TelegramMathBot\TelegramMathBot\obj\Debug\netcoreapp3.1\TelegramMathBot.pdb
+C:\Users\xxccv\Downloads\TelegramMathBot\TelegramMathBot\TelegramMathBot\obj\Debug\netcoreapp3.1\TelegramMathBot.genruntimeconfig.cache
+C:\Users\xxccv\Downloads\TelegramMathBot\TelegramMathBot\TelegramMathBot\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\xxccv\Downloads\TelegramMathBot\TelegramMathBot\TelegramMathBot\obj\Debug\netcoreapp3.1\TelegramMathBot.csproj.CopyComplete
+C:\Users\xxccv\Downloads\TelegramMathBot\TelegramMathBot\TelegramMathBot\bin\Debug\netcoreapp3.1\Telegram.Bot.dll
+C:\Users\xxccv\Downloads\TelegramMathBot\TelegramMathBot\TelegramMathBot\obj\Debug\netcoreapp3.1\TelegramMathBot.csproj.CoreCompileInputs.cache
