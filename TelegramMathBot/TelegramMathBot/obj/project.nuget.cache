@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "xz0zbl5rVGKZSlgY98r1R3io0DIiObik22LtoSTeOYLoNhjMwpRQhLEBlcalUp786uvMJmsywlqTixOAI6lyTw==",
+  "dgSpecHash": "Ya0d++Ib+JS6W09xgXecLL9Ovy2lVrWBp/ykGkpUwYYmYzLg/MDevOsuMkYsdo2tT6u9GPClPvEhQmKhV2vbcA==",
   "success": true,
   "projectFilePath": "/home/fr1tzler/Desktop/Study/CSharp/TelegramMathBot/TelegramMathBot/TelegramMathBot/TelegramMathBot.csproj",
   "expectedPackageFiles": [
@@ -25,6 +25,7 @@
     "/home/fr1tzler/.nuget/packages/runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl/4.3.0/runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "/home/fr1tzler/.nuget/packages/runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl/4.3.0/runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "/home/fr1tzler/.nuget/packages/runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl/4.3.0/runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
+    "/home/fr1tzler/.nuget/packages/skiasharp/2.80.2/skiasharp.2.80.2.nupkg.sha512",
     "/home/fr1tzler/.nuget/packages/system.appcontext/4.3.0/system.appcontext.4.3.0.nupkg.sha512",
     "/home/fr1tzler/.nuget/packages/system.buffers/4.3.0/system.buffers.4.3.0.nupkg.sha512",
     "/home/fr1tzler/.nuget/packages/system.collections/4.3.0/system.collections.4.3.0.nupkg.sha512",
@@ -44,6 +45,7 @@
     "/home/fr1tzler/.nuget/packages/system.io.filesystem.primitives/4.3.0/system.io.filesystem.primitives.4.3.0.nupkg.sha512",
     "/home/fr1tzler/.nuget/packages/system.linq/4.3.0/system.linq.4.3.0.nupkg.sha512",
     "/home/fr1tzler/.nuget/packages/system.linq.expressions/4.3.0/system.linq.expressions.4.3.0.nupkg.sha512",
+    "/home/fr1tzler/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512",
     "/home/fr1tzler/.nuget/packages/system.net.http/4.3.0/system.net.http.4.3.0.nupkg.sha512",
     "/home/fr1tzler/.nuget/packages/system.net.primitives/4.3.0/system.net.primitives.4.3.0.nupkg.sha512",
     "/home/fr1tzler/.nuget/packages/system.net.requests/4.3.0/system.net.requests.4.3.0.nupkg.sha512",

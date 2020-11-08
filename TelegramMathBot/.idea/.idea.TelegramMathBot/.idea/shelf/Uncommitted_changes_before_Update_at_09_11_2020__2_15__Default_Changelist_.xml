@@ -1,0 +1,19 @@
+<changelist name="Uncommitted_changes_before_Update_at_09_11_2020,_2_15_[Default_Changelist]" date="1604870154642" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/.idea.TelegramMathBot/.idea/shelf/Uncommitted_changes_before_Update_at_09_11_2020,_2_15_[Default_Changelist]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 09.11.2020, 2:15 [Default Changelist]" />
+  <binary>
+    <option name="BEFORE_PATH" value="TelegramMathBot/obj/Debug/netcoreapp3.1/TelegramMathBot.csprojAssemblyReference.cache" />
+    <option name="AFTER_PATH" value="TelegramMathBot/obj/Debug/netcoreapp3.1/TelegramMathBot.csprojAssemblyReference.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.TelegramMathBot/.idea/shelf/Uncommitted_changes_before_Update_at_09_11_2020,_2_15_[Default_Changelist]/TelegramMathBot.csprojAssemblyReference.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="TelegramMathBot/obj/Debug/netcoreapp3.1/TelegramMathBot.assets.cache" />
+    <option name="AFTER_PATH" value="TelegramMathBot/obj/Debug/netcoreapp3.1/TelegramMathBot.assets.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.TelegramMathBot/.idea/shelf/Uncommitted_changes_before_Update_at_09_11_2020,_2_15_[Default_Changelist]/TelegramMathBot.assets.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="TelegramMathBot/obj/project.nuget.cache" />
+    <option name="AFTER_PATH" value="TelegramMathBot/obj/project.nuget.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.TelegramMathBot/.idea/shelf/Uncommitted_changes_before_Update_at_09_11_2020,_2_15_[Default_Changelist]/project.nuget.cache" />
+  </binary>
+</changelist>

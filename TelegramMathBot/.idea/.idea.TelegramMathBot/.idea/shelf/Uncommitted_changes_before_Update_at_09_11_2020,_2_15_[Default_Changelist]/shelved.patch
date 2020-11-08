@@ -1,0 +1,368 @@
+Index: TelegramMathBot/Math/Polynom.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using System;\nusing System.Collections.Generic;\nusing System.Linq;\n\nnamespace MathModule\n{\n    public class Polynom\n    {\n        private const double Epsilon = 10e-15;\n        private const int scanStages = 10000 / 2;\n\n        public List<double> Coefficients;\n\n        public Polynom(List<double> coefficients)\n        {\n            var start = true;\n            Coefficients = new List<double>();\n            foreach (var coefficient in coefficients)\n            {\n                if (Math.Abs(coefficient) < Epsilon && start)\n                    continue;\n                start = false;\n                Coefficients.Add(coefficient);\n            }\n        }\n\n        public static List<double> GetDerivative(List<double> coefficients) => coefficients\n            .Where(elem => true)\n            .Reverse()\n            .Select((elem, index) => elem * (index))\n            .Where((elem, index) => index != 0)\n            .Reverse()\n            .ToList();\n\n        public static List<double> FindRoots(List<double> coefficients)\n        {\n            var result = new List<double>();\n            var degree = coefficients.Count;\n            switch (degree)\n            {\n                case 0:\n                    break;\n                case 1:\n                    result.Add(0);\n                    break;\n                case 2:\n                    result.Add(-coefficients[1] / coefficients[0]);\n                    break;\n                case 3:\n                    result.AddRange(QuadraticEquationSolver(coefficients[0], coefficients[1], coefficients[2]));\n                    break;\n                default:\n                    var root = GetAnyPolynomRoot(coefficients);\n                    result.Add(root);\n                    coefficients = Divide(coefficients, root);\n                    result.AddRange(FindRoots(coefficients));\n                    break;\n            }\n\n            return result;\n        }\n\n        private static List<double> QuadraticEquationSolver(double a, double b, double c)\n        {\n            var result = new List<double>();\n            var discriminant = b * b - 4 * a * c;\n            if (Math.Abs(discriminant) < Epsilon)\n                result.Add(-b / (2 * a));\n            else if (discriminant > 0)\n            {\n                result.Add((-b - Math.Sqrt(discriminant)) / (2 * a));\n                result.Add((-b + Math.Sqrt(discriminant)) / (2 * a));\n            }\n\n            return result;\n        }\n\n        public static List<double> RecursiveScan(List<double> coefficients, List<double> pointQueue, double scanBorders)\n        {\n            if (scanBorders < Epsilon)\n            {\n                return pointQueue;\n            }\n\n            var nextPointQueue = new List<double>();\n            foreach (var point in pointQueue)\n            {\n                var prev = point - Epsilon;\n                var prev2 = point - Epsilon * 2;\n                var prevValue = GetPolynomValue(coefficients, prev);\n                var prev2Value = GetPolynomValue(coefficients, prev2);\n\n                for (var x = point - scanBorders; x < point + scanBorders; x += scanBorders / scanStages)\n                {\n                    var value = GetPolynomValue(coefficients, x);\n                    if (Math.Abs(GetPolynomValue(coefficients, prev)) <=\n                        Math.Abs(GetPolynomValue(coefficients, prev2)) &&\n                        Math.Abs(GetPolynomValue(coefficients, prev)) <=\n                        Math.Abs(GetPolynomValue(coefficients, value)))\n                    {\n                        nextPointQueue.Add(prev);\n                    }\n\n                    prev2 = prev;\n                    prev = value;\n                }\n            }\n\n            return RecursiveScan(coefficients, nextPointQueue, scanBorders * 10 / scanStages);\n        }\n\n        public static double GetAnyPolynomRoot1(List<double> coefficients)\n        {\n            var possibleRoots = RecursiveScan(coefficients, new List<double>(0), 100);\n\n            throw new NotImplementedException();\n        }\n\n        public static double GetAnyPolynomRoot(List<double> coefficients)\n        {\n            var positiveX = 0d;\n            var negativeX = 0d;\n            var positiveFound = false;\n            var negativeFound = false;\n            var currentIntervalSize = 10d;\n            while (!(positiveFound && negativeFound) && currentIntervalSize < 10e5)\n            {\n                for (var x = -currentIntervalSize; x < currentIntervalSize; x += currentIntervalSize / 10e3)\n                {\n                    if (GetPolynomValue(coefficients, x) > 0)\n                    {\n                        positiveFound = true;\n                        positiveX = x;\n                    }\n                    else\n                    {\n                        negativeFound = true;\n                        negativeX = x;\n                    }\n\n                    if (positiveFound && negativeFound)\n                        break;\n                }\n\n                currentIntervalSize *= 11;\n            }\n\n            var middle = (positiveX + negativeX) / 2;\n            while (Math.Abs(GetPolynomValue(coefficients, middle)) > Epsilon)\n            {\n                if (GetPolynomValue(coefficients, middle) > 0)\n                    positiveX = middle;\n                else\n                    negativeX = middle;\n                middle = (positiveX + negativeX) / 2;\n            }\n\n            return middle;\n        }\n\n        public static double GetPolynomValue(List<double> coefficients, double x)\n        {\n            var result = 0d;\n            foreach (var d in coefficients)\n            {\n                result *= x;\n                result += d;\n            }\n\n            return result;\n        }\n\n        public static List<double> Divide(List<double> coefficients, double value)\n        {\n            var accumulator = 0d;\n            for (var i = 0; i < coefficients.Count; i++)\n            {\n                coefficients[i] += value * accumulator;\n                accumulator = coefficients[i];\n            }\n\n            coefficients.RemoveAt(coefficients.Count - 1);\n            return coefficients;\n        }\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- TelegramMathBot/Math/Polynom.cs	(revision 3c6b6890c1f169a8e1451e134109dd2e8975e40f)
++++ TelegramMathBot/Math/Polynom.cs	(date 1604870071663)
+@@ -2,185 +2,69 @@
+ using System.Collections.Generic;
+ using System.Linq;
+ 
+-namespace MathModule
++namespace TelegramMathBot.MathModule
+ {
+     public class Polynom
+     {
+-        private const double Epsilon = 10e-15;
+-        private const int scanStages = 10000 / 2;
+-
+-        public List<double> Coefficients;
++        private const double Epsilon = 10e-14;
+ 
+-        public Polynom(List<double> coefficients)
++        public static List<double> RecursiveScan(List<double> coefficients, List<double> pointQueue, double step)
+         {
+-            var start = true;
+-            Coefficients = new List<double>();
+-            foreach (var coefficient in coefficients)
++            if (step < Epsilon) 
++                return pointQueue;
++            var nextPointQueue = new List<double>();
++            for(var i = 0; i < pointQueue.Count; i++)
+             {
+-                if (Math.Abs(coefficient) < Epsilon && start)
+-                    continue;
+-                start = false;
+-                Coefficients.Add(coefficient);
++                var elem = pointQueue[i];
++                var possibleNext = elem - step;
++                while (Math.Abs(GetPolynomValue(coefficients, elem)) >
++                       Math.Abs(GetPolynomValue(coefficients, possibleNext)))
++                {
++                    elem -= step;
++                    possibleNext -= step;
++                }
++                nextPointQueue.Add(elem);
+             }
++            return RecursiveScan(coefficients, nextPointQueue, step / 2);
+         }
+ 
+-        public static List<double> GetDerivative(List<double> coefficients) => coefficients
+-            .Where(elem => true)
+-            .Reverse()
+-            .Select((elem, index) => elem * (index))
+-            .Where((elem, index) => index != 0)
+-            .Reverse()
+-            .ToList();
++        public static List<double> GetAllPolynomRoots(List<double> coefficients, double scanFrom, double scanTo, double step)
++        {
++            var pointQueue = new List<double>();
++            for (var i = scanFrom; i < scanTo; i += step) 
++                pointQueue.Add(i);
++            var possibleRoots = RecursiveScan(coefficients, pointQueue, step);
++            possibleRoots = ClearSingles(possibleRoots);
++            possibleRoots = ClearDoubles(possibleRoots);
++            return possibleRoots
++                .Select(elem => Math.Round(elem, 10))
++                .ToList();
++        }
+ 
+-        public static List<double> FindRoots(List<double> coefficients)
++        public static List<double> ClearSingles(List<double> lst)
+         {
+             var result = new List<double>();
+-            var degree = coefficients.Count;
+-            switch (degree)
+-            {
+-                case 0:
+-                    break;
+-                case 1:
+-                    result.Add(0);
+-                    break;
+-                case 2:
+-                    result.Add(-coefficients[1] / coefficients[0]);
+-                    break;
+-                case 3:
+-                    result.AddRange(QuadraticEquationSolver(coefficients[0], coefficients[1], coefficients[2]));
+-                    break;
+-                default:
+-                    var root = GetAnyPolynomRoot(coefficients);
+-                    result.Add(root);
+-                    coefficients = Divide(coefficients, root);
+-                    result.AddRange(FindRoots(coefficients));
+-                    break;
+-            }
+-
++            for (var i = 1; i < lst.Count; i++)
++                if (Math.Abs(lst[i] - lst[i-1]) < 10e-6) // magick
++                    result.Add(lst[i]);
+             return result;
+         }
+ 
+-        private static List<double> QuadraticEquationSolver(double a, double b, double c)
++        public static List<double> ClearDoubles(List<double> lst)
+         {
+-            var result = new List<double>();
+-            var discriminant = b * b - 4 * a * c;
+-            if (Math.Abs(discriminant) < Epsilon)
+-                result.Add(-b / (2 * a));
+-            else if (discriminant > 0)
+-            {
+-                result.Add((-b - Math.Sqrt(discriminant)) / (2 * a));
+-                result.Add((-b + Math.Sqrt(discriminant)) / (2 * a));
+-            }
+-
++            var result = new List<double>{lst[0]};
++            for (var i = 1; i < lst.Count; i++)
++                if (Math.Abs(lst[i] - lst[i-1]) > Epsilon)
++                    result.Add(lst[i]);
+             return result;
+         }
+-
+-        public static List<double> RecursiveScan(List<double> coefficients, List<double> pointQueue, double scanBorders)
+-        {
+-            if (scanBorders < Epsilon)
+-            {
+-                return pointQueue;
+-            }
+-
+-            var nextPointQueue = new List<double>();
+-            foreach (var point in pointQueue)
+-            {
+-                var prev = point - Epsilon;
+-                var prev2 = point - Epsilon * 2;
+-                var prevValue = GetPolynomValue(coefficients, prev);
+-                var prev2Value = GetPolynomValue(coefficients, prev2);
+-
+-                for (var x = point - scanBorders; x < point + scanBorders; x += scanBorders / scanStages)
+-                {
+-                    var value = GetPolynomValue(coefficients, x);
+-                    if (Math.Abs(GetPolynomValue(coefficients, prev)) <=
+-                        Math.Abs(GetPolynomValue(coefficients, prev2)) &&
+-                        Math.Abs(GetPolynomValue(coefficients, prev)) <=
+-                        Math.Abs(GetPolynomValue(coefficients, value)))
+-                    {
+-                        nextPointQueue.Add(prev);
+-                    }
+-
+-                    prev2 = prev;
+-                    prev = value;
+-                }
+-            }
+-
+-            return RecursiveScan(coefficients, nextPointQueue, scanBorders * 10 / scanStages);
+-        }
+-
+-        public static double GetAnyPolynomRoot1(List<double> coefficients)
+-        {
+-            var possibleRoots = RecursiveScan(coefficients, new List<double>(0), 100);
+-
+-            throw new NotImplementedException();
+-        }
+-
+-        public static double GetAnyPolynomRoot(List<double> coefficients)
+-        {
+-            var positiveX = 0d;
+-            var negativeX = 0d;
+-            var positiveFound = false;
+-            var negativeFound = false;
+-            var currentIntervalSize = 10d;
+-            while (!(positiveFound && negativeFound) && currentIntervalSize < 10e5)
+-            {
+-                for (var x = -currentIntervalSize; x < currentIntervalSize; x += currentIntervalSize / 10e3)
+-                {
+-                    if (GetPolynomValue(coefficients, x) > 0)
+-                    {
+-                        positiveFound = true;
+-                        positiveX = x;
+-                    }
+-                    else
+-                    {
+-                        negativeFound = true;
+-                        negativeX = x;
+-                    }
+-
+-                    if (positiveFound && negativeFound)
+-                        break;
+-                }
+-
+-                currentIntervalSize *= 11;
+-            }
+-
+-            var middle = (positiveX + negativeX) / 2;
+-            while (Math.Abs(GetPolynomValue(coefficients, middle)) > Epsilon)
+-            {
+-                if (GetPolynomValue(coefficients, middle) > 0)
+-                    positiveX = middle;
+-                else
+-                    negativeX = middle;
+-                middle = (positiveX + negativeX) / 2;
+-            }
+-
+-            return middle;
+-        }
+-
+-        public static double GetPolynomValue(List<double> coefficients, double x)
++        
++        private static double GetPolynomValue(List<double> coefficients, double x)
+         {
+             var result = 0d;
+             foreach (var d in coefficients)
+-            {
+-                result *= x;
+-                result += d;
+-            }
+-
++                result = result * x + d;
+             return result;
+         }
+-
+-        public static List<double> Divide(List<double> coefficients, double value)
+-        {
+-            var accumulator = 0d;
+-            for (var i = 0; i < coefficients.Count; i++)
+-            {
+-                coefficients[i] += value * accumulator;
+-                accumulator = coefficients[i];
+-            }
+-
+-            coefficients.RemoveAt(coefficients.Count - 1);
+-            return coefficients;
+-        }
+     }
+ }
+\ No newline at end of file
+Index: TelegramMathBot/obj/TelegramMathBot.csproj.nuget.dgspec.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\n  \"format\": 1,\n  \"restore\": {\n    \"C:\\\\Users\\\\xxccv\\\\Downloads\\\\TelegramMathBot\\\\TelegramMathBot\\\\TelegramMathBot\\\\TelegramMathBot.csproj\": {}\n  },\n  \"projects\": {\n    \"C:\\\\Users\\\\xxccv\\\\Downloads\\\\TelegramMathBot\\\\TelegramMathBot\\\\TelegramMathBot\\\\TelegramMathBot.csproj\": {\n      \"version\": \"1.0.0\",\n      \"restore\": {\n        \"projectUniqueName\": \"C:\\\\Users\\\\xxccv\\\\Downloads\\\\TelegramMathBot\\\\TelegramMathBot\\\\TelegramMathBot\\\\TelegramMathBot.csproj\",\n        \"projectName\": \"TelegramMathBot\",\n        \"projectPath\": \"C:\\\\Users\\\\xxccv\\\\Downloads\\\\TelegramMathBot\\\\TelegramMathBot\\\\TelegramMathBot\\\\TelegramMathBot.csproj\",\n        \"packagesPath\": \"C:\\\\Users\\\\xxccv\\\\.nuget\\\\packages\\\\\",\n        \"outputPath\": \"C:\\\\Users\\\\xxccv\\\\Downloads\\\\TelegramMathBot\\\\TelegramMathBot\\\\TelegramMathBot\\\\obj\\\\\",\n        \"projectStyle\": \"PackageReference\",\n        \"configFilePaths\": [\n          \"C:\\\\Users\\\\xxccv\\\\AppData\\\\Roaming\\\\NuGet\\\\NuGet.Config\",\n          \"C:\\\\Program Files (x86)\\\\NuGet\\\\Config\\\\Microsoft.VisualStudio.Offline.config\"\n        ],\n        \"originalTargetFrameworks\": [\n          \"netcoreapp3.1\"\n        ],\n        \"sources\": {\n          \"C:\\\\Program Files (x86)\\\\Microsoft SDKs\\\\NuGetPackages\\\\\": {},\n          \"https://api.nuget.org/v3/index.json\": {}\n        },\n        \"frameworks\": {\n          \"netcoreapp3.1\": {\n            \"projectReferences\": {}\n          }\n        },\n        \"warningProperties\": {\n          \"warnAsError\": [\n            \"NU1605\"\n          ]\n        }\n      },\n      \"frameworks\": {\n        \"netcoreapp3.1\": {\n          \"imports\": [\n            \"net461\",\n            \"net462\",\n            \"net47\",\n            \"net471\",\n            \"net472\",\n            \"net48\"\n          ],\n          \"assetTargetFallback\": true,\n          \"warn\": true,\n          \"frameworkReferences\": {\n            \"Microsoft.NETCore.App\": {\n              \"privateAssets\": \"all\"\n            }\n          },\n          \"runtimeIdentifierGraphPath\": \"C:\\\\Program Files\\\\dotnet\\\\sdk\\\\3.1.402\\\\RuntimeIdentifierGraph.json\"\n        }\n      }\n    }\n  }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- TelegramMathBot/obj/TelegramMathBot.csproj.nuget.dgspec.json	(revision 3c6b6890c1f169a8e1451e134109dd2e8975e40f)
++++ TelegramMathBot/obj/TelegramMathBot.csproj.nuget.dgspec.json	(date 1604870106879)
+@@ -1,27 +1,25 @@
+ {
+   "format": 1,
+   "restore": {
+-    "C:\\Users\\xxccv\\Downloads\\TelegramMathBot\\TelegramMathBot\\TelegramMathBot\\TelegramMathBot.csproj": {}
++    "/home/fr1tzler/Desktop/Study/CSharp/TelegramMathBot/TelegramMathBot/TelegramMathBot/TelegramMathBot.csproj": {}
+   },
+   "projects": {
+-    "C:\\Users\\xxccv\\Downloads\\TelegramMathBot\\TelegramMathBot\\TelegramMathBot\\TelegramMathBot.csproj": {
++    "/home/fr1tzler/Desktop/Study/CSharp/TelegramMathBot/TelegramMathBot/TelegramMathBot/TelegramMathBot.csproj": {
+       "version": "1.0.0",
+       "restore": {
+-        "projectUniqueName": "C:\\Users\\xxccv\\Downloads\\TelegramMathBot\\TelegramMathBot\\TelegramMathBot\\TelegramMathBot.csproj",
++        "projectUniqueName": "/home/fr1tzler/Desktop/Study/CSharp/TelegramMathBot/TelegramMathBot/TelegramMathBot/TelegramMathBot.csproj",
+         "projectName": "TelegramMathBot",
+-        "projectPath": "C:\\Users\\xxccv\\Downloads\\TelegramMathBot\\TelegramMathBot\\TelegramMathBot\\TelegramMathBot.csproj",
+-        "packagesPath": "C:\\Users\\xxccv\\.nuget\\packages\\",
+-        "outputPath": "C:\\Users\\xxccv\\Downloads\\TelegramMathBot\\TelegramMathBot\\TelegramMathBot\\obj\\",
++        "projectPath": "/home/fr1tzler/Desktop/Study/CSharp/TelegramMathBot/TelegramMathBot/TelegramMathBot/TelegramMathBot.csproj",
++        "packagesPath": "/home/fr1tzler/.nuget/packages/",
++        "outputPath": "/home/fr1tzler/Desktop/Study/CSharp/TelegramMathBot/TelegramMathBot/TelegramMathBot/obj/",
+         "projectStyle": "PackageReference",
+         "configFilePaths": [
+-          "C:\\Users\\xxccv\\AppData\\Roaming\\NuGet\\NuGet.Config",
+-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
++          "/home/fr1tzler/.nuget/NuGet/NuGet.Config"
+         ],
+         "originalTargetFrameworks": [
+           "netcoreapp3.1"
+         ],
+         "sources": {
+-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+           "https://api.nuget.org/v3/index.json": {}
+         },
+         "frameworks": {
+@@ -52,7 +50,7 @@
+               "privateAssets": "all"
+             }
+           },
+-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
++          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.401/RuntimeIdentifierGraph.json"
+         }
+       }
+     }
+Index: TelegramMathBot/obj/project.assets.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\n  \"version\": 3,\n  \"targets\": {\n    \".NETCoreApp,Version=v3.1\": {}\n  },\n  \"libraries\": {},\n  \"projectFileDependencyGroups\": {\n    \".NETCoreApp,Version=v3.1\": []\n  },\n  \"packageFolders\": {\n    \"C:\\\\Users\\\\xxccv\\\\.nuget\\\\packages\\\\\": {}\n  },\n  \"project\": {\n    \"version\": \"1.0.0\",\n    \"restore\": {\n      \"projectUniqueName\": \"C:\\\\Users\\\\xxccv\\\\Downloads\\\\TelegramMathBot\\\\TelegramMathBot\\\\TelegramMathBot\\\\TelegramMathBot.csproj\",\n      \"projectName\": \"TelegramMathBot\",\n      \"projectPath\": \"C:\\\\Users\\\\xxccv\\\\Downloads\\\\TelegramMathBot\\\\TelegramMathBot\\\\TelegramMathBot\\\\TelegramMathBot.csproj\",\n      \"packagesPath\": \"C:\\\\Users\\\\xxccv\\\\.nuget\\\\packages\\\\\",\n      \"outputPath\": \"C:\\\\Users\\\\xxccv\\\\Downloads\\\\TelegramMathBot\\\\TelegramMathBot\\\\TelegramMathBot\\\\obj\\\\\",\n      \"projectStyle\": \"PackageReference\",\n      \"configFilePaths\": [\n        \"C:\\\\Users\\\\xxccv\\\\AppData\\\\Roaming\\\\NuGet\\\\NuGet.Config\",\n        \"C:\\\\Program Files (x86)\\\\NuGet\\\\Config\\\\Microsoft.VisualStudio.Offline.config\"\n      ],\n      \"originalTargetFrameworks\": [\n        \"netcoreapp3.1\"\n      ],\n      \"sources\": {\n        \"C:\\\\Program Files (x86)\\\\Microsoft SDKs\\\\NuGetPackages\\\\\": {},\n        \"https://api.nuget.org/v3/index.json\": {}\n      },\n      \"frameworks\": {\n        \"netcoreapp3.1\": {\n          \"projectReferences\": {}\n        }\n      },\n      \"warningProperties\": {\n        \"warnAsError\": [\n          \"NU1605\"\n        ]\n      }\n    },\n    \"frameworks\": {\n      \"netcoreapp3.1\": {\n        \"imports\": [\n          \"net461\",\n          \"net462\",\n          \"net47\",\n          \"net471\",\n          \"net472\",\n          \"net48\"\n        ],\n        \"assetTargetFallback\": true,\n        \"warn\": true,\n        \"frameworkReferences\": {\n          \"Microsoft.NETCore.App\": {\n            \"privateAssets\": \"all\"\n          }\n        },\n        \"runtimeIdentifierGraphPath\": \"C:\\\\Program Files\\\\dotnet\\\\sdk\\\\3.1.402\\\\RuntimeIdentifierGraph.json\"\n      }\n    }\n  }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- TelegramMathBot/obj/project.assets.json	(revision 3c6b6890c1f169a8e1451e134109dd2e8975e40f)
++++ TelegramMathBot/obj/project.assets.json	(date 1604870107747)
+@@ -8,26 +8,24 @@
+     ".NETCoreApp,Version=v3.1": []
+   },
+   "packageFolders": {
+-    "C:\\Users\\xxccv\\.nuget\\packages\\": {}
++    "/home/fr1tzler/.nuget/packages/": {}
+   },
+   "project": {
+     "version": "1.0.0",
+     "restore": {
+-      "projectUniqueName": "C:\\Users\\xxccv\\Downloads\\TelegramMathBot\\TelegramMathBot\\TelegramMathBot\\TelegramMathBot.csproj",
++      "projectUniqueName": "/home/fr1tzler/Desktop/Study/CSharp/TelegramMathBot/TelegramMathBot/TelegramMathBot/TelegramMathBot.csproj",
+       "projectName": "TelegramMathBot",
+-      "projectPath": "C:\\Users\\xxccv\\Downloads\\TelegramMathBot\\TelegramMathBot\\TelegramMathBot\\TelegramMathBot.csproj",
+-      "packagesPath": "C:\\Users\\xxccv\\.nuget\\packages\\",
+-      "outputPath": "C:\\Users\\xxccv\\Downloads\\TelegramMathBot\\TelegramMathBot\\TelegramMathBot\\obj\\",
++      "projectPath": "/home/fr1tzler/Desktop/Study/CSharp/TelegramMathBot/TelegramMathBot/TelegramMathBot/TelegramMathBot.csproj",
++      "packagesPath": "/home/fr1tzler/.nuget/packages/",
++      "outputPath": "/home/fr1tzler/Desktop/Study/CSharp/TelegramMathBot/TelegramMathBot/TelegramMathBot/obj/",
+       "projectStyle": "PackageReference",
+       "configFilePaths": [
+-        "C:\\Users\\xxccv\\AppData\\Roaming\\NuGet\\NuGet.Config",
+-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
++        "/home/fr1tzler/.nuget/NuGet/NuGet.Config"
+       ],
+       "originalTargetFrameworks": [
+         "netcoreapp3.1"
+       ],
+       "sources": {
+-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+         "https://api.nuget.org/v3/index.json": {}
+       },
+       "frameworks": {
+@@ -58,7 +56,7 @@
+             "privateAssets": "all"
+           }
+         },
+-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
++        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.401/RuntimeIdentifierGraph.json"
+       }
+     }
+   }
+Index: TelegramMathBot/obj/TelegramMathBot.csproj.nuget.g.props
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n<Project ToolsVersion=\"14.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">\n  <PropertyGroup Condition=\" '$(ExcludeRestorePackageImports)' != 'true' \">\n    <RestoreSuccess Condition=\" '$(RestoreSuccess)' == '' \">True</RestoreSuccess>\n    <RestoreTool Condition=\" '$(RestoreTool)' == '' \">NuGet</RestoreTool>\n    <ProjectAssetsFile Condition=\" '$(ProjectAssetsFile)' == '' \">$(MSBuildThisFileDirectory)project.assets.json</ProjectAssetsFile>\n    <NuGetPackageRoot Condition=\" '$(NuGetPackageRoot)' == '' \">$(UserProfile)\\.nuget\\packages\\</NuGetPackageRoot>\n    <NuGetPackageFolders Condition=\" '$(NuGetPackageFolders)' == '' \">C:\\Users\\xxccv\\.nuget\\packages\\</NuGetPackageFolders>\n    <NuGetProjectStyle Condition=\" '$(NuGetProjectStyle)' == '' \">PackageReference</NuGetProjectStyle>\n    <NuGetToolVersion Condition=\" '$(NuGetToolVersion)' == '' \">5.7.0</NuGetToolVersion>\n  </PropertyGroup>\n  <ItemGroup Condition=\" '$(ExcludeRestorePackageImports)' != 'true' \">\n    <SourceRoot Include=\"$([MSBuild]::EnsureTrailingSlash($(NuGetPackageFolders)))\" />\n  </ItemGroup>\n  <PropertyGroup>\n    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>\n  </PropertyGroup>\n</Project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- TelegramMathBot/obj/TelegramMathBot.csproj.nuget.g.props	(revision 3c6b6890c1f169a8e1451e134109dd2e8975e40f)
++++ TelegramMathBot/obj/TelegramMathBot.csproj.nuget.g.props	(date 1604870107691)
+@@ -4,14 +4,11 @@
+     <RestoreSuccess Condition=" '$(RestoreSuccess)' == '' ">True</RestoreSuccess>
+     <RestoreTool Condition=" '$(RestoreTool)' == '' ">NuGet</RestoreTool>
+     <ProjectAssetsFile Condition=" '$(ProjectAssetsFile)' == '' ">$(MSBuildThisFileDirectory)project.assets.json</ProjectAssetsFile>
+-    <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>
+-    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\xxccv\.nuget\packages\</NuGetPackageFolders>
++    <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">/home/fr1tzler/.nuget/packages/</NuGetPackageRoot>
++    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">/home/fr1tzler/.nuget/packages/</NuGetPackageFolders>
+     <NuGetProjectStyle Condition=" '$(NuGetProjectStyle)' == '' ">PackageReference</NuGetProjectStyle>
+-    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">5.7.0</NuGetToolVersion>
++    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">5.5.0</NuGetToolVersion>
+   </PropertyGroup>
+-  <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+-    <SourceRoot Include="$([MSBuild]::EnsureTrailingSlash($(NuGetPackageFolders)))" />
+-  </ItemGroup>
+   <PropertyGroup>
+     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+   </PropertyGroup>
