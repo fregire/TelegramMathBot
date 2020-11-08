@@ -37,6 +37,12 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "Telegram.Bot": {
+              "target": "Package",
+              "version": "[15.7.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
