@@ -6,6 +6,9 @@ namespace MathModule
 {
     public class Polynom
     {
+        private const double Epsilon = 10e-15;
+        private const int scanStages = 10000 / 2;
+
         public List<double> Coefficients;
 
         public Polynom(List<double> coefficients)
@@ -14,7 +17,7 @@ namespace MathModule
             Coefficients = new List<double>();
             foreach (var coefficient in coefficients)
             {
-                if (Math.Abs(coefficient) < 10e-6 && start)
+                if (Math.Abs(coefficient) < Epsilon && start)
                     continue;
                 start = false;
                 Coefficients.Add(coefficient);
@@ -53,6 +56,7 @@ namespace MathModule
                     result.AddRange(FindRoots(coefficients));
                     break;
             }
+
             return result;
         }
 
@@ -60,7 +64,7 @@ namespace MathModule
         {
             var result = new List<double>();
             var discriminant = b * b - 4 * a * c;
-            if (Math.Abs(discriminant) < 10e-6)
+            if (Math.Abs(discriminant) < Epsilon)
                 result.Add(-b / (2 * a));
             else if (discriminant > 0)
             {
@@ -69,6 +73,47 @@ namespace MathModule
             }
 
             return result;
+        }
+
+        public static List<double> RecursiveScan(List<double> coefficients, List<double> pointQueue, double scanBorders)
+        {
+            if (scanBorders < Epsilon)
+            {
+                return pointQueue;
+            }
+
+            var nextPointQueue = new List<double>();
+            foreach (var point in pointQueue)
+            {
+                var prev = point - Epsilon;
+                var prev2 = point - Epsilon * 2;
+                var prevValue = GetPolynomValue(coefficients, prev);
+                var prev2Value = GetPolynomValue(coefficients, prev2);
+
+                for (var x = point - scanBorders; x < point + scanBorders; x += scanBorders / scanStages)
+                {
+                    var value = GetPolynomValue(coefficients, x);
+                    if (Math.Abs(GetPolynomValue(coefficients, prev)) <=
+                        Math.Abs(GetPolynomValue(coefficients, prev2)) &&
+                        Math.Abs(GetPolynomValue(coefficients, prev)) <=
+                        Math.Abs(GetPolynomValue(coefficients, value)))
+                    {
+                        nextPointQueue.Add(prev);
+                    }
+
+                    prev2 = prev;
+                    prev = value;
+                }
+            }
+
+            return RecursiveScan(coefficients, nextPointQueue, scanBorders * 10 / scanStages);
+        }
+
+        public static double GetAnyPolynomRoot1(List<double> coefficients)
+        {
+            var possibleRoots = RecursiveScan(coefficients, new List<double>(0), 100);
+
+            throw new NotImplementedException();
         }
 
         public static double GetAnyPolynomRoot(List<double> coefficients)
@@ -92,13 +137,16 @@ namespace MathModule
                         negativeFound = true;
                         negativeX = x;
                     }
+
                     if (positiveFound && negativeFound)
                         break;
                 }
+
                 currentIntervalSize *= 11;
             }
+
             var middle = (positiveX + negativeX) / 2;
-            while (Math.Abs(GetPolynomValue(coefficients, middle)) > 10e-6)
+            while (Math.Abs(GetPolynomValue(coefficients, middle)) > Epsilon)
             {
                 if (GetPolynomValue(coefficients, middle) > 0)
                     positiveX = middle;
@@ -106,6 +154,7 @@ namespace MathModule
                     negativeX = middle;
                 middle = (positiveX + negativeX) / 2;
             }
+
             return middle;
         }
 
@@ -117,6 +166,7 @@ namespace MathModule
                 result *= x;
                 result += d;
             }
+
             return result;
         }
 
@@ -128,6 +178,7 @@ namespace MathModule
                 coefficients[i] += value * accumulator;
                 accumulator = coefficients[i];
             }
+
             coefficients.RemoveAt(coefficients.Count - 1);
             return coefficients;
         }
