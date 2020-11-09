@@ -1,44 +1,22 @@
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
+using TelegramMathBot.MathModule;
 
 namespace TelegramMathBot.GraphicModule
 { 
-    public class GraphFunction
+    public class GraphicProcessor
     {
-        public Expression Function;
-        public List<Tuple<double, double>> GraphPoints;
-        
-        public GraphFunction()
-        {
-            throw new NotImplementedException();
-        }
-
-        public double ValueAt(double x)
-        {
-            throw new NotImplementedException();
-        }
-    }
-    
-    public class Graph
-    {
-        public IEnumerable<GraphFunction> Functions; 
+        public List<RealArgumentFunction> Functions; 
         public Tuple<double, double> XInterval;
         public Tuple<double, double> YInterval;
         
-        public Graph(Tuple<double, double> xInterval, Tuple<double, double> yInterval)
+        public GraphicProcessor(Tuple<double, double> xInterval, Tuple<double, double> yInterval)
         {
             XInterval = xInterval;
             YInterval = yInterval;
-            
-            throw new NotImplementedException();
+            Functions = new List<RealArgumentFunction>();            
         }
-
-        public void ProcessImageFromBitmap(string filename)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public void ChangeIntervalX()
         {
             throw new NotImplementedException();
@@ -49,9 +27,10 @@ namespace TelegramMathBot.GraphicModule
             throw new NotImplementedException();
         }
 
-        public void RecalculateAfterUpdatingInterval()
+        public void CalculatePoints()
         {
-            throw new NotImplementedException();
+            foreach (var function in Functions)
+                function.CalculatePointsInInterval(XInterval, YInterval);
         }
     }
     

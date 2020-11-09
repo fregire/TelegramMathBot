@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using SFML.Graphics;
 
 namespace TelegramMathBot.GraphicModule
@@ -47,21 +48,40 @@ namespace TelegramMathBot.GraphicModule
                     GraphImage.SetPixel(imageX, imageY, niceGrey);
                 }
             }
-
             var zeroPoint = TransofmPosition(new Tuple<double, double>(0, 0));
             for (uint x = 0; x < Width; x++) GraphImage.SetPixel(x, zeroPoint.Item2, Color.Black);
             for (uint y = 0; y < Height; y++) GraphImage.SetPixel(zeroPoint.Item1, y, Color.Black);
         }
 
-        public void DrawGraphic()
+        public void DrawGraphics(GraphicProcessor g)
         {
-            
+            var Colors = new List<Color> {Color.Blue, Color.Green, Color.Red, Color.Magenta, Color.Cyan};
+            var currColor = 0;
+            foreach (var function in g.Functions)
+            {
+                DrawGraphic(function.GraphPoints, Colors[currColor % 5]);
+                currColor++;
+            }
+        }
+
+        public void DrawGraphic(List<Tuple<double, double>> points, Color color)
+        {
+            foreach (var point in points)
+            {
+                var p = TransofmPosition(point);
+                if (p.Item1 - 1 < 0 || p.Item1 + 1 > Width || p.Item2 - 1 < 0 || p.Item2 + 1 > Height) continue;
+                GraphImage.SetPixel(p.Item1, p.Item2, color);
+                GraphImage.SetPixel(p.Item1 + 1, p.Item2, color);
+                GraphImage.SetPixel(p.Item1 - 1, p.Item2, color);
+                GraphImage.SetPixel(p.Item1, p.Item2 + 1, color);
+                GraphImage.SetPixel(p.Item1, p.Item2 - 1, color);
+            }
         }
 
         public Tuple<uint, uint> TransofmPosition(Tuple<double, double> point)
         {
             var pointX = (uint) ((point.Item1 - XInterval.Item1) / (XInterval.Item2 - XInterval.Item1) * Width);
-            var pointY = (uint) ((point.Item2 - YInterval.Item1) / (YInterval.Item2 - YInterval.Item1) * Height);
+            var pointY = (uint) (Height - (point.Item2 - YInterval.Item1) / (YInterval.Item2 - YInterval.Item1) * Height);
             if (pointX < 0 || pointX > Width || pointY < 0 || pointY > Height) return null;
             return new Tuple<uint, uint>(pointX, pointY);
         }
