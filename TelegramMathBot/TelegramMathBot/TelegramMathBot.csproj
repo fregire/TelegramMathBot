@@ -14,4 +14,8 @@
     <Folder Include="Domain\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Tests" />
+  </ItemGroup>
+
 </Project>

@@ -8,6 +8,8 @@ namespace TelegramMathBot.MathModule
         public Func<double, double> Body;
         public List<Tuple<double, double>> GraphPoints;
 
+        private const double AppropriateInterval = 10e-4;
+
         public RealArgumentFunction(Func<double, double> body)
         {
             Body = body;
@@ -16,7 +18,7 @@ namespace TelegramMathBot.MathModule
         public void CalculatePointsInInterval(Tuple<double, double> xInterval, Tuple<double, double> yInterval)
         {
             GraphPoints = new List<Tuple<double, double>>();
-            for (var x = xInterval.Item1; x < xInterval.Item2; x += 10e-4)
+            for (var x = xInterval.Item1; x < xInterval.Item2; x += AppropriateInterval)
             {
                 var y = ValueAt(x);
                 if (double.IsNaN(y)) continue;
@@ -36,5 +38,9 @@ namespace TelegramMathBot.MathModule
                 return double.NaN;
             }
         }
+
+        public RealArgumentFunction Derivative() =>
+            new RealArgumentFunction((x) => 
+                (Body(x) + Body(x + AppropriateInterval)) / AppropriateInterval);
     }
 }
