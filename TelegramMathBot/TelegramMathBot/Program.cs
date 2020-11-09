@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TelegramMathBot.GraphicModule;
+using TelegramMathBot.View;
 
 namespace TelegramMathBot
 {

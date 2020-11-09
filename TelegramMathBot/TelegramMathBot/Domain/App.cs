@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using TelegramMathBot.MathModule;
 
-namespace TelegramMathBot
+namespace TelegramMathBot.Domain
 {
     public class App
     {

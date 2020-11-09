@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TelegramMathBot
+namespace TelegramMathBot.Domain
 {
     public enum RequestType
     {
