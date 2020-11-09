@@ -21,7 +21,7 @@ namespace TelegramMathBot.GraphicModule
             GraphImage = new Image(width, height, Color.White);
             XInterval = xInterval;
             YInterval = yInterval;
-            Filename = filename;
+            Filename = filename + ".png";
         }
 
         public void DrawAxes()
