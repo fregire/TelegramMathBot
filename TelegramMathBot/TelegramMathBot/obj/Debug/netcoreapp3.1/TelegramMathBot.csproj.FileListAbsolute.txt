@@ -92,3 +92,9 @@ C:/Users/xxccv/Downloads/TelegramMathBot/TelegramMathBot/TelegramMathBot/obj/Deb
 /home/fr1tzler/Desktop/Study/CSharp/TelegramMathBot/TelegramMathBot/TelegramMathBot/obj/Debug/netcoreapp3.1/TelegramMathBot.dll
 /home/fr1tzler/Desktop/Study/CSharp/TelegramMathBot/TelegramMathBot/TelegramMathBot/obj/Debug/netcoreapp3.1/TelegramMathBot.pdb
 /home/fr1tzler/Desktop/Study/CSharp/TelegramMathBot/TelegramMathBot/TelegramMathBot/obj/Debug/netcoreapp3.1/TelegramMathBot.genruntimeconfig.cache
+D:\Projects\TG1\TelegramMathBot\TelegramMathBot\obj\Debug\netcoreapp3.1\TelegramMathBot.csprojAssemblyReference.cache
+D:\Projects\TG1\TelegramMathBot\TelegramMathBot\obj\Debug\netcoreapp3.1\TelegramMathBot.AssemblyInfoInputs.cache
+D:\Projects\TG1\TelegramMathBot\TelegramMathBot\obj\Debug\netcoreapp3.1\TelegramMathBot.AssemblyInfo.cs
+D:\Projects\TG1\TelegramMathBot\TelegramMathBot\obj\Debug\netcoreapp3.1\TelegramMathBot.csproj.CoreCompileInputs.cache
+D:\Projects\TG1\TelegramMathBot\TelegramMathBot\obj\Debug\netcoreapp3.1\TelegramMathBot.dll
+D:\Projects\TG1\TelegramMathBot\TelegramMathBot\obj\Debug\netcoreapp3.1\TelegramMathBot.pdb
