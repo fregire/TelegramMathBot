@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.Enums;
+using TelegramMathBot.Parsers;
 
 namespace TelegramMathBot
 {
@@ -12,12 +14,14 @@ namespace TelegramMathBot
         private readonly TelegramBotClient bot;
         private readonly App app;
         private readonly Command defaultCommand = new Command(RequestType.None, false);
+        private readonly Dictionary<string, Command> commands;
 
         public TelegramBot(string token)
         {
             this.token = token;
             this.bot = new TelegramBotClient(token);
-            this.app = new App(GetCommands());
+            this.app = new App();
+            this.commands = GetCommands();
         }
 
         public Dictionary<string, Command> GetCommands()
@@ -37,7 +41,6 @@ namespace TelegramMathBot
             while (true) ;
         }
 
-
         private async void OnMessageReceived(object sender, MessageEventArgs messageEvents)
         {
             var message = messageEvents.Message;
@@ -52,52 +55,44 @@ namespace TelegramMathBot
                     client = new Client(clientId, defaultCommand);
                     app.AddClient(client);
                 }
-                var requestType = client.Command.RequestType;
+                var requestType = client.State.RequestType;
                 string response;
 
                 if (requestType == RequestType.None)
                 {
-                    if (app.Commands.ContainsKey(message.Text))
+                    if (commands.ContainsKey(message.Text))
                     {
-                        var command = app.Commands[message.Text];
+                        var command = commands[message.Text];
                         if (!command.IsWaitingForResponse)
                         {
-                            response = GetResponse(command.RequestType, "");
+                            response = GetResponse(client, command.RequestType, "");
                             await bot.SendTextMessageAsync(message.Chat.Id, response);
-                            client.Command = defaultCommand;
+                            app.ChangeClientCommand(client, defaultCommand);
                             return;
                         }
 
-                        client.Command = command;
-                        response = GetResponse(RequestType.None, "");
+                        app.ChangeClientCommand(client, command);
+                        response = GetResponse(client, RequestType.None, "");
                     }
                     else
                         response = "Can't understand";
                 }
                 else
-                {
-                    response = GetResponse(requestType, message.Text);
-                    client.Command = defaultCommand;
-                }
+                    response = GetResponse(client, requestType, message.Text);
 
                 await bot.SendTextMessageAsync(message.Chat.Id, response);
             }
         }
 
-        private string GetResponse(RequestType request, string message)
+        private string GetResponse(Client client, RequestType request, string message)
         {
             switch (request)
             {
                 case RequestType.Expression:
-                    return "Done";
-                case RequestType.Factorial:
-                    return "Done";
-                case RequestType.Help:
-                    return "Helping instructions";
-                case RequestType.None:
-                    return "Type expression";
+                    var data = ExpressionParser.Parse(message);
+                    return app.SolveClientTask(client, request, data);
                 default:
-                    return "Nigger";
+                    return "Type expression";
             }
         }
     }
