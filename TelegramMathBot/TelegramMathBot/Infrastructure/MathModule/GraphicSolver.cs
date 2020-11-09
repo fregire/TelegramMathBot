@@ -1,5 +1,6 @@
 using System;
 using TelegramMathBot.Infrastructure.GraphicModule;
+using SFML.Graphics;
 
 namespace TelegramMathBot.Infrastructure.MathModule
 {
@@ -14,15 +15,15 @@ namespace TelegramMathBot.Infrastructure.MathModule
         /// <param name="xInterval">Horizontal segment describing visible part of oX axis</param>
         /// <param name="yInterval">Vertical segment describing visible part of oY axis</param>
         /// <param name="rawFunction">Function, which will be drawn</param>
-        public static void Solve(int screenWidth, int screenHeight, string filename, Tuple<double, double> xInterval, Tuple<double, double> yInterval, Func<double, double> rawFunction)
+        public static Image Solve(int screenWidth, int screenHeight, string filename, Tuple<double, double> xInterval, Tuple<double, double> yInterval, Func<double, double> rawFunction)
         {
             var imgProcessor = new ImageProcessor((uint)screenWidth, (uint)screenHeight, filename, xInterval, yInterval);
             imgProcessor.DrawAxes();
             var processedFunction = new RealArgumentFunction(rawFunction);
             processedFunction.CalculatePointsInInterval(xInterval, yInterval);
-            Console.WriteLine(filename);
             imgProcessor.DrawGraphic(processedFunction.GraphPoints, SFML.Graphics.Color.Green);
-            imgProcessor.SaveFile();
+
+            return imgProcessor.GraphImage;
         }
     }
 }

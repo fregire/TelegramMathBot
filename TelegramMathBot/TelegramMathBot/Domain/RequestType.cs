@@ -10,6 +10,7 @@ namespace TelegramMathBot.Domain
         WaitingForResult,
         Expression,
         Help,
+        Roots,
         Graphic
     }
 }

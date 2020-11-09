@@ -8,6 +8,7 @@ using TelegramMathBot.View.Parsers;
 using TelegramMathBot.Domain;
 using Telegram.Bot.Types.InputFiles;
 using System.IO;
+using System.Linq;
 
 namespace TelegramMathBot.View
 {
@@ -31,9 +32,10 @@ namespace TelegramMathBot.View
         {
             return new Dictionary<string, Command>
             {
-                {"exp", app.Commands[RequestType.Expression] },
-                {"/help", app.Commands[RequestType.Help] },
-                {"graphic", app.Commands[RequestType.Graphic] }
+                {@"/exp", app.Commands[RequestType.Expression] },
+                {@"/help", app.Commands[RequestType.Help] },
+                {@"/roots", app.Commands[RequestType.Roots] },
+                {@"/graphic", app.Commands[RequestType.Graphic] }
             };
         }
 
@@ -72,15 +74,15 @@ namespace TelegramMathBot.View
                         return;
                     }
 
+                    response = GetResponse(client, RequestType.WaitingForResult, ""); 
                     app.ChangeClientCommand(client, command);
-                    response = GetResponse(client, RequestType.WaitingForResult, "");
                 }
                 else
                 {
                     if (requestType != RequestType.None)
                         response = GetResponse(client, requestType, message.Text);
                     else
-                        response = "Cant understand you";
+                        response = "Я не понимаю тебя...";
                 }
 
                 await bot.SendTextMessageAsync(message.Chat.Id, response);
@@ -89,21 +91,22 @@ namespace TelegramMathBot.View
 
         private string GetResponse(Client client, RequestType request, string message)
         {
+            object result = null;
+
             switch (request)
             {
                 case RequestType.Expression:
                     var data = ExpressionParser.Parse(message);
-                    var result = app.SolveClientTask(client, request, data);
-                    return result.ToString();
+                    result = app.SolveClientTask(client, request, data);
+                    return "Ответ: " + result.ToString();
+                case RequestType.Roots:
+                    var coeffs = PolynomParser.Parse(message);
+                    var roots = (List<double>)app.SolveClientTask(client, request, coeffs);
+                    return "Ответ: " + String.Join(", ", roots);
                 case RequestType.Graphic:
-                    var func = GraphicParser.Parse(message);
-                    app.SolveClientTask(client, request, func);
-                    
-                    return "Hello";
+                    return (string)app.SolveClientTask(client, request, message);
                 case RequestType.Help:
                     return (string)app.SolveClientTask(client, request, null);
-                case RequestType.WaitingForResult:
-                    return "Type expression";
                 default:
                     return (string)app.SolveClientTask(client, request, null);
             }

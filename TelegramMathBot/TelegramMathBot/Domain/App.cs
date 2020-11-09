@@ -26,7 +26,8 @@ namespace TelegramMathBot.Domain
         {
             Commands.Add(RequestType.Expression, new Command(RequestType.Expression, true));
             Commands.Add(RequestType.Help, new Command(RequestType.Help, false));
-            Commands.Add(RequestType.Graphic, new Command(RequestType.Graphic, true));
+            Commands.Add(RequestType.Graphic, new Command(RequestType.Graphic, false));
+            Commands.Add(RequestType.Roots, new Command(RequestType.Roots, true));
         }
 
 
@@ -36,20 +37,27 @@ namespace TelegramMathBot.Domain
 
             switch (requestType)
             {
+                case RequestType.WaitingForResult:
+                    result = "Напишите выражение";
+                    break;
                 case RequestType.Expression:
                     result = ExpressionSolver.Solve((string)args[0]);
                     break;
                 case RequestType.Graphic:
-                    GraphicSolver.Solve(500,
-                                500,
-                                client.Id + "graphic.png",
-                                Tuple.Create(-1.0, 1.0),
-                                Tuple.Create(-1.0, 1.0),
-                                (Func<double, double>)args[0]);
-                    result = "Graphic";
+                    result = "К сожалению, пока в доработке";
+                    break;
+                case RequestType.Roots:
+                    result = PolynomialSolver.Solve((List<double>)args[0]);
                     break;
                 case RequestType.Help:
-                    result = "Hello, World!";
+                    result = 
+                        "Команды: /help, exp, roots, graphic\n\n" +
+                        "/help - помощь по боту\n\n" +
+                        "/exp - решение числовых выражений - отправьте команду 'exp'" +
+                        " а затем отправьте выражение, которое необходимо посчитать\n\n" +
+                        "/roots - поиск корней уравнение - отправьте команду 'roots'," +
+                        "а затем отправьте уравнение в формате ax^n + bx^(n-1) + ... + c\n" +
+                        "Например: 2x^2 + x + 9";
                     break;
                 default:
                     result = "None";

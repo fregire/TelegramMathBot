@@ -55,7 +55,7 @@ namespace TelegramMathBot.Infrastructure.GraphicModule
 
         public void DrawGraphics(GraphicProcessor g)
         {
-            var Colors = new List<Color> {Color.Blue, Color.Green, Color.Red, Color.Magenta, Color.Cyan};
+            var Colors = new List<Color> { Color.Blue, Color.Green, Color.Red, Color.Magenta, Color.Cyan };
             var currColor = 0;
             foreach (var function in g.Functions)
             {
@@ -80,11 +80,16 @@ namespace TelegramMathBot.Infrastructure.GraphicModule
 
         public Tuple<uint, uint> TransofmPosition(Tuple<double, double> point)
         {
-            var pointX = (uint) ((point.Item1 - XInterval.Item1) / (XInterval.Item2 - XInterval.Item1) * Width);
-            var pointY = (uint) (Height - (point.Item2 - YInterval.Item1) / (YInterval.Item2 - YInterval.Item1) * Height);
+            var pointX = (uint)((point.Item1 - XInterval.Item1) / (XInterval.Item2 - XInterval.Item1) * Width);
+            var pointY = (uint)(Height - (point.Item2 - YInterval.Item1) / (YInterval.Item2 - YInterval.Item1) * Height);
             return new Tuple<uint, uint>(pointX, pointY);
         }
 
-        public bool SaveFile() => GraphImage.SaveToFile(Filename);
+        public bool SaveFile() 
+        {
+            while (!GraphImage.SaveToFile(Filename));
+            return true;
+        }
+
     }
 }
