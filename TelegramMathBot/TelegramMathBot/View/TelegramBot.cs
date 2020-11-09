@@ -5,8 +5,9 @@ using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.Enums;
 using TelegramMathBot.Parsers;
+using TelegramMathBot.Domain;
 
-namespace TelegramMathBot
+namespace TelegramMathBot.View
 {
     public class TelegramBot
     {
