@@ -36,9 +36,9 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
-            "SkiaSharp": {
+            "SFML.Net": {
               "target": "Package",
-              "version": "[2.80.2, )"
+              "version": "[2.5.0, )"
             },
             "Telegram.Bot": {
               "target": "Package",

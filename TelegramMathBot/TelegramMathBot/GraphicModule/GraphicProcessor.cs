@@ -2,24 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace TelegramMathBot.MathModule
-{
-    public enum Color
-    {
-        Red,
-        Orange,
-        Yellow,
-        Green,
-        Cyan,
-        Blue,
-        Violet,
-        Black
-    }
-
+namespace TelegramMathBot.GraphicModule
+{ 
     public class GraphFunction
     {
-        public Color color;
-        public Expression function;
+        public Expression Function;
+        public List<Tuple<double, double>> GraphPoints;
         
         public GraphFunction()
         {
@@ -35,22 +23,18 @@ namespace TelegramMathBot.MathModule
     public class Graph
     {
         public IEnumerable<GraphFunction> Functions; 
-        public Tuple<double, double> X_interval;
-        public Tuple<double, double> Y_interval;
-        public Tuple<int, int> screenResolution;
-        private List<Tuple<double, double>> GraphPoints;
-
-        public Graph()
+        public Tuple<double, double> XInterval;
+        public Tuple<double, double> YInterval;
+        
+        public Graph(Tuple<double, double> xInterval, Tuple<double, double> yInterval)
         {
+            XInterval = xInterval;
+            YInterval = yInterval;
+            
             throw new NotImplementedException();
         }
 
-        public void ProcessImage()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Tuple<int, int>> TransformPointToImage(Tuple<double, double> position)
+        public void ProcessImageFromBitmap(string filename)
         {
             throw new NotImplementedException();
         }
@@ -65,7 +49,7 @@ namespace TelegramMathBot.MathModule
             throw new NotImplementedException();
         }
 
-        public void RecalculateAfterUpdating()
+        public void RecalculateAfterUpdatingInterval()
         {
             throw new NotImplementedException();
         }

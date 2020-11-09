@@ -8,10 +8,13 @@
         <e p="App.cs" t="Include" />
         <e p="Client.cs" t="Include" />
         <e p="Command.cs" t="Include" />
+        <e p="GraphicModule" t="Include">
+          <e p="GraphicProcessor.cs" t="Include" />
+          <e p="ImageProcessor.cs" t="Include" />
+        </e>
         <e p="MathModule" t="Include">
           <e p="Geometry.cs" t="Include" />
           <e p="GeometryTests.cs" t="Include" />
-          <e p="Graph.cs" t="Include" />
           <e p="Polynom.cs" t="Include" />
         </e>
         <e p="Program.cs" t="Include" />

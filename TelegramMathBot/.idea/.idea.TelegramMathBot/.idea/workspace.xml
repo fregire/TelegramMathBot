@@ -23,13 +23,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="97236272-df12-4919-9787-e4655188296b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/TelegramMathBot/MathModule/Graph.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TelegramMathBot/GraphicModule/ImageProcessor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.TelegramMathBot/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TelegramMathBot/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.TelegramMathBot/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TelegramMathBot/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TelegramMathBot/MathModule/Graph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TelegramMathBot/GraphicModule/GraphicProcessor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TelegramMathBot/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TelegramMathBot/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TelegramMathBot/TelegramMathBot.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/TelegramMathBot/TelegramMathBot.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TelegramMathBot/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll" beforeDir="false" afterPath="$PROJECT_DIR$/TelegramMathBot/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TelegramMathBot/bin/Debug/netcoreapp3.1/Telegram.Bot.dll" beforeDir="false" afterPath="$PROJECT_DIR$/TelegramMathBot/bin/Debug/netcoreapp3.1/Telegram.Bot.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TelegramMathBot/bin/Debug/netcoreapp3.1/TelegramMathBot.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/TelegramMathBot/bin/Debug/netcoreapp3.1/TelegramMathBot.deps.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TelegramMathBot/bin/Debug/netcoreapp3.1/TelegramMathBot.dll" beforeDir="false" afterPath="$PROJECT_DIR$/TelegramMathBot/bin/Debug/netcoreapp3.1/TelegramMathBot.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TelegramMathBot/bin/Debug/netcoreapp3.1/TelegramMathBot.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/TelegramMathBot/bin/Debug/netcoreapp3.1/TelegramMathBot.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TelegramMathBot/bin/Debug/netcoreapp3.1/TelegramMathBot.runtimeconfig.dev.json" beforeDir="false" afterPath="$PROJECT_DIR$/TelegramMathBot/bin/Debug/netcoreapp3.1/TelegramMathBot.runtimeconfig.dev.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TelegramMathBot/obj/Debug/netcoreapp3.1/TelegramMathBot.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/TelegramMathBot/obj/Debug/netcoreapp3.1/TelegramMathBot.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TelegramMathBot/obj/Debug/netcoreapp3.1/TelegramMathBot.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/TelegramMathBot/obj/Debug/netcoreapp3.1/TelegramMathBot.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TelegramMathBot/obj/Debug/netcoreapp3.1/TelegramMathBot.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/TelegramMathBot/obj/Debug/netcoreapp3.1/TelegramMathBot.csproj.FileListAbsolute.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TelegramMathBot/obj/Debug/netcoreapp3.1/TelegramMathBot.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/TelegramMathBot/obj/Debug/netcoreapp3.1/TelegramMathBot.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TelegramMathBot/obj/Debug/netcoreapp3.1/TelegramMathBot.dll" beforeDir="false" afterPath="$PROJECT_DIR$/TelegramMathBot/obj/Debug/netcoreapp3.1/TelegramMathBot.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TelegramMathBot/obj/Debug/netcoreapp3.1/TelegramMathBot.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/TelegramMathBot/obj/Debug/netcoreapp3.1/TelegramMathBot.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TelegramMathBot/obj/TelegramMathBot.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/TelegramMathBot/obj/TelegramMathBot.csproj.nuget.dgspec.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TelegramMathBot/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/TelegramMathBot/obj/project.assets.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TelegramMathBot/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/TelegramMathBot/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TelegramMathBot/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/TelegramMathBot/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TelegramMathBot/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/TelegramMathBot/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,9 +63,12 @@
       <list>
         <option value="$PROJECT_DIR$/TelegramMathBot/MathModule/Polynom.cs" />
         <option value="$PROJECT_DIR$/TelegramMathBot/Math/Polynom.cs" />
-        <option value="$PROJECT_DIR$/TelegramMathBot/Program.cs" />
         <option value="$PROJECT_DIR$/TelegramMathBot/MathModule/IntegerFunctions.cs" />
+        <option value="$PROJECT_DIR$/TelegramMathBot/ImageProcessor/ImageProcessor.cs" />
         <option value="$PROJECT_DIR$/TelegramMathBot/MathModule/Graph.cs" />
+        <option value="$PROJECT_DIR$/TelegramMathBot/GraphicModule/GraphicProcessor.cs" />
+        <option value="$PROJECT_DIR$/TelegramMathBot/Program.cs" />
+        <option value="$PROJECT_DIR$/TelegramMathBot/GraphicModule/ImageProcessor.cs" />
       </list>
     </option>
   </component>
@@ -103,7 +122,7 @@
       <workItem from="1604862120371" duration="1352000" />
       <workItem from="1604863670231" duration="6375000" />
       <workItem from="1604870108547" duration="1433000" />
-      <workItem from="1604874385180" duration="1878000" />
+      <workItem from="1604874385180" duration="7499000" />
     </task>
     <task id="LOCAL-00001" summary="Polynom.cs v0.2">
       <created>1604858809569</created>
@@ -119,7 +138,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604871249488</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Add Graph.cs v0.01&#10;&#10;Graph&#10;    Base structures&#10;    Added library (SkiaSharp)">
+      <created>1604876364665</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1604876364665</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -143,29 +169,30 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Polynom.cs v0.2" />
     <MESSAGE value="Update Polynom.cs v0.3&#10;&#10;Solver&#10;    Waits for unit tests&#10;    Works with integer roots&#10;    Fixes quantization errors&#10;    Now refactored and shiny" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update Polynom.cs v0.3&#10;&#10;Solver&#10;    Waits for unit tests&#10;    Works with integer roots&#10;    Fixes quantization errors&#10;    Now refactored and shiny" />
+    <MESSAGE value="Add Graph.cs v0.01&#10;&#10;Graph&#10;    Base structures&#10;    Added library (SkiaSharp)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Graph.cs v0.01&#10;&#10;Graph&#10;    Base structures&#10;    Added library (SkiaSharp)" />
   </component>
   <component name="WindowStateProjectService">
     <state x="779" y="312" width="424" height="491" key="FileChooserDialogImpl" timestamp="1604858896815">
       <screen x="72" y="29" width="1848" height="1051" />
     </state>
     <state x="779" y="312" width="424" height="491" key="FileChooserDialogImpl/72.29.1848.1051@72.29.1848.1051" timestamp="1604858896815" />
-    <state width="901" height="275" key="GridCell.Tab.0.bottom" timestamp="1604870096772">
+    <state width="1802" height="275" key="GridCell.Tab.0.bottom" timestamp="1604893049230">
       <screen x="72" y="29" width="1848" height="1051" />
     </state>
-    <state width="901" height="275" key="GridCell.Tab.0.bottom/72.29.1848.1051@72.29.1848.1051" timestamp="1604870096772" />
-    <state width="901" height="275" key="GridCell.Tab.0.center" timestamp="1604870096771">
+    <state width="1802" height="275" key="GridCell.Tab.0.bottom/72.29.1848.1051@72.29.1848.1051" timestamp="1604893049230" />
+    <state width="1802" height="275" key="GridCell.Tab.0.center" timestamp="1604893049229">
       <screen x="72" y="29" width="1848" height="1051" />
     </state>
-    <state width="901" height="275" key="GridCell.Tab.0.center/72.29.1848.1051@72.29.1848.1051" timestamp="1604870096771" />
-    <state width="901" height="275" key="GridCell.Tab.0.left" timestamp="1604870096770">
+    <state width="1802" height="275" key="GridCell.Tab.0.center/72.29.1848.1051@72.29.1848.1051" timestamp="1604893049229" />
+    <state width="1802" height="275" key="GridCell.Tab.0.left" timestamp="1604893049229">
       <screen x="72" y="29" width="1848" height="1051" />
     </state>
-    <state width="901" height="275" key="GridCell.Tab.0.left/72.29.1848.1051@72.29.1848.1051" timestamp="1604870096770" />
-    <state width="901" height="275" key="GridCell.Tab.0.right" timestamp="1604870096771">
+    <state width="1802" height="275" key="GridCell.Tab.0.left/72.29.1848.1051@72.29.1848.1051" timestamp="1604893049229" />
+    <state width="1802" height="275" key="GridCell.Tab.0.right" timestamp="1604893049230">
       <screen x="72" y="29" width="1848" height="1051" />
     </state>
-    <state width="901" height="275" key="GridCell.Tab.0.right/72.29.1848.1051@72.29.1848.1051" timestamp="1604870096771" />
+    <state width="1802" height="275" key="GridCell.Tab.0.right/72.29.1848.1051@72.29.1848.1051" timestamp="1604893049230" />
     <state x="252" y="119" width="1478" height="877" key="MergeDialog" timestamp="1604870154514">
       <screen x="72" y="29" width="1848" height="1051" />
     </state>
@@ -174,10 +201,10 @@
       <screen x="72" y="29" width="1848" height="1051" />
     </state>
     <state x="172" y="129" width="1648" height="851" key="VCS.FileHistoryDialog/72.29.1848.1051@72.29.1848.1051" timestamp="1604869923138" />
-    <state x="591" y="290" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1604871261229">
+    <state x="591" y="290" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1604876374223">
       <screen x="72" y="29" width="1848" height="1051" />
     </state>
-    <state x="591" y="290" width="800" height="535" key="Vcs.Push.Dialog.v2/72.29.1848.1051@72.29.1848.1051" timestamp="1604871261229" />
+    <state x="591" y="290" width="800" height="535" key="Vcs.Push.Dialog.v2/72.29.1848.1051@72.29.1848.1051" timestamp="1604876374223" />
     <state x="777" y="469" width="438" height="184" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1604874447683">
       <screen x="72" y="29" width="1848" height="1051" />
     </state>
