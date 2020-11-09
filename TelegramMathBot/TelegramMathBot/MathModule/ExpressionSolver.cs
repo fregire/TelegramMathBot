@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text;
 
-namespace TelegramMathBot.Math
+namespace TelegramMathBot.MathModule
 {
     public class ExpressionSolver
     {
