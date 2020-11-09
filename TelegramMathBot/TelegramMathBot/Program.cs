@@ -16,9 +16,9 @@ namespace TelegramMathBot
             GraphicSolver.Solve(
                 200, 
                 200,
-                @"D:\Projects\TelegramMathBot\TelegramMathBot\TelegramMathBot\test1", 
-                Tuple.Create(-1.0, 1.0),
-                Tuple.Create(-1.0, 1.0), 
+                @"/home/fr1tzler/Desktop/Study/temp/test1", 
+                new Tuple<double, double>(-5, 5),
+                new Tuple<double, double>(-5, 5), 
                 x => x * 2);
             //var bot = new TelegramBot(token);
             //bot.Start();

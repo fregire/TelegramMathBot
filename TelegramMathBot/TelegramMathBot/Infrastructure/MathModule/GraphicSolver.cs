@@ -3,7 +3,7 @@ using TelegramMathBot.Infrastructure.GraphicModule;
 
 namespace TelegramMathBot.Infrastructure.MathModule
 {
-    public class GraphicSolver
+    public static class GraphicSolver
     {
         /// <summary>
         /// Generates given function graphic and saves in into "filename".png
@@ -20,8 +20,9 @@ namespace TelegramMathBot.Infrastructure.MathModule
             imgProcessor.DrawAxes();
             var processedFunction = new RealArgumentFunction(rawFunction);
             processedFunction.CalculatePointsInInterval(xInterval, yInterval);
+            Console.WriteLine(filename);
             imgProcessor.DrawGraphic(processedFunction.GraphPoints, SFML.Graphics.Color.Green);
-            while (!imgProcessor.SaveFile()) {}
+            imgProcessor.SaveFile();
         }
     }
 }

@@ -38,7 +38,7 @@ namespace TelegramMathBot.Infrastructure.MathModule
                 var result = _body(x);
                 return result;
             }
-            catch (Exception e)
+            catch
             {
                 return double.NaN;
             }
@@ -49,7 +49,7 @@ namespace TelegramMathBot.Infrastructure.MathModule
         /// </summary>
         /// <returns>New function, that's equal to current function derivative</returns>
         public RealArgumentFunction Derivative() =>
-            new RealArgumentFunction((x) => 
+            new RealArgumentFunction((x) =>
                 (_body(x) + _body(x + AppropriateInterval)) / AppropriateInterval);
     }
 }

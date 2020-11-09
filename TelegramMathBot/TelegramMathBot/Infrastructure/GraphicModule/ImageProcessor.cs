@@ -69,7 +69,7 @@ namespace TelegramMathBot.Infrastructure.GraphicModule
             foreach (var point in points)
             {
                 var p = TransofmPosition(point);
-                if (p.Item1 - 1 < 0 || p.Item1 + 1 > Width || p.Item2 - 1 < 0 || p.Item2 + 1 > Height) continue;
+                if (p.Item1 <= 1 || p.Item1 >= Width - 1 || p.Item2 <= 1 || p.Item2 >= Height - 1) continue;
                 GraphImage.SetPixel(p.Item1, p.Item2, color);
                 GraphImage.SetPixel(p.Item1 + 1, p.Item2, color);
                 GraphImage.SetPixel(p.Item1 - 1, p.Item2, color);
@@ -82,7 +82,6 @@ namespace TelegramMathBot.Infrastructure.GraphicModule
         {
             var pointX = (uint) ((point.Item1 - XInterval.Item1) / (XInterval.Item2 - XInterval.Item1) * Width);
             var pointY = (uint) (Height - (point.Item2 - YInterval.Item1) / (YInterval.Item2 - YInterval.Item1) * Height);
-            if (pointX < 0 || pointX > Width || pointY < 0 || pointY > Height) return null;
             return new Tuple<uint, uint>(pointX, pointY);
         }
 
