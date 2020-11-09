@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "/home/fr1tzler/Desktop/Study/CSharp/TelegramMathBot/TelegramMathBot/TelegramMathBot/TelegramMathBot.csproj": {}
+    "D:\\Projects\\TG1\\TelegramMathBot\\TelegramMathBot\\TelegramMathBot.csproj": {}
   },
   "projects": {
-    "/home/fr1tzler/Desktop/Study/CSharp/TelegramMathBot/TelegramMathBot/TelegramMathBot/TelegramMathBot.csproj": {
+    "D:\\Projects\\TG1\\TelegramMathBot\\TelegramMathBot\\TelegramMathBot.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/fr1tzler/Desktop/Study/CSharp/TelegramMathBot/TelegramMathBot/TelegramMathBot/TelegramMathBot.csproj",
+        "projectUniqueName": "D:\\Projects\\TG1\\TelegramMathBot\\TelegramMathBot\\TelegramMathBot.csproj",
         "projectName": "TelegramMathBot",
-        "projectPath": "/home/fr1tzler/Desktop/Study/CSharp/TelegramMathBot/TelegramMathBot/TelegramMathBot/TelegramMathBot.csproj",
-        "packagesPath": "/home/fr1tzler/.nuget/packages/",
-        "outputPath": "/home/fr1tzler/Desktop/Study/CSharp/TelegramMathBot/TelegramMathBot/TelegramMathBot/obj/",
+        "projectPath": "D:\\Projects\\TG1\\TelegramMathBot\\TelegramMathBot\\TelegramMathBot.csproj",
+        "packagesPath": "C:\\Users\\xxccv\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\TG1\\TelegramMathBot\\TelegramMathBot\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/fr1tzler/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\xxccv\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -60,7 +62,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.401/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
         }
       }
     }
