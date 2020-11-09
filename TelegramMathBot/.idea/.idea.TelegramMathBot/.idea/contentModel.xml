@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_TelegramMathBot.-315925727.00" t="ExcludeRecursive" />
+    <e p="$PROJECT_DIR$" t="IncludeFlat">
+      <e p="TelegramMathBot" t="IncludeRecursive">
+        <e p="App.cs" t="Include" />
+        <e p="Client.cs" t="Include" />
+        <e p="Command.cs" t="Include" />
+        <e p="GraphicModule" t="Include">
+          <e p="GraphicProcessor.cs" t="Include" />
+          <e p="ImageProcessor.cs" t="Include" />
+        </e>
+        <e p="MathModule" t="Include">
+          <e p="Geometry.cs" t="Include" />
+          <e p="GeometryTests.cs" t="Include" />
+          <e p="Polynom.cs" t="Include" />
+          <e p="RealArgumentFunction.cs" t="Include" />
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="RequestType.cs" t="Include" />
+        <e p="TelegramBot.cs" t="Include" />
+        <e p="TelegramMathBot.csproj" t="IncludeRecursive" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="TelegramMathBot.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="TelegramMathBot.sln" t="IncludeFlat" />
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
