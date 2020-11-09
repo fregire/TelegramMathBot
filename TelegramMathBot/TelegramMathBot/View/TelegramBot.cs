@@ -4,8 +4,10 @@ using System.Linq.Expressions;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.Enums;
-using TelegramMathBot.Parsers;
+using TelegramMathBot.View.Parsers;
 using TelegramMathBot.Domain;
+using Telegram.Bot.Types.InputFiles;
+using System.IO;
 
 namespace TelegramMathBot.View
 {
@@ -29,9 +31,9 @@ namespace TelegramMathBot.View
         {
             return new Dictionary<string, Command>
             {
-                {"exp", new Command(RequestType.Expression, true) },
-                {"fac", new Command(RequestType.Factorial, true) },
-                {"/help", new Command(RequestType.Help, false) }
+                {"exp", app.Commands[RequestType.Expression] },
+                {"/help", app.Commands[RequestType.Help] },
+                {"graphic", app.Commands[RequestType.Graphic] }
             };
         }
 
@@ -56,30 +58,30 @@ namespace TelegramMathBot.View
                     client = new Client(clientId, defaultCommand);
                     app.AddClient(client);
                 }
-                var requestType = client.State.RequestType;
-                string response;
+                var requestType = client.CurrentCommand.RequestType;
+                var response = "";
 
-                if (requestType == RequestType.None)
+                if (commands.ContainsKey(message.Text))
                 {
-                    if (commands.ContainsKey(message.Text))
+                    var command = commands[message.Text];
+                    if (!command.IsWaitingForResponse)
                     {
-                        var command = commands[message.Text];
-                        if (!command.IsWaitingForResponse)
-                        {
-                            response = GetResponse(client, command.RequestType, "");
-                            await bot.SendTextMessageAsync(message.Chat.Id, response);
-                            app.ChangeClientCommand(client, defaultCommand);
-                            return;
-                        }
-
-                        app.ChangeClientCommand(client, command);
-                        response = GetResponse(client, RequestType.None, "");
+                        response = GetResponse(client, command.RequestType, "");
+                        await bot.SendTextMessageAsync(message.Chat.Id, response);
+                        app.ChangeClientCommand(client, defaultCommand);
+                        return;
                     }
-                    else
-                        response = "Can't understand";
+
+                    app.ChangeClientCommand(client, command);
+                    response = GetResponse(client, RequestType.WaitingForResult, "");
                 }
                 else
-                    response = GetResponse(client, requestType, message.Text);
+                {
+                    if (requestType != RequestType.None)
+                        response = GetResponse(client, requestType, message.Text);
+                    else
+                        response = "Cant understand you";
+                }
 
                 await bot.SendTextMessageAsync(message.Chat.Id, response);
             }
@@ -91,9 +93,19 @@ namespace TelegramMathBot.View
             {
                 case RequestType.Expression:
                     var data = ExpressionParser.Parse(message);
-                    return app.SolveClientTask(client, request, data);
-                default:
+                    var result = app.SolveClientTask(client, request, data);
+                    return result.ToString();
+                case RequestType.Graphic:
+                    var func = GraphicParser.Parse(message);
+                    app.SolveClientTask(client, request, func);
+                    
+                    return "Hello";
+                case RequestType.Help:
+                    return (string)app.SolveClientTask(client, request, null);
+                case RequestType.WaitingForResult:
                     return "Type expression";
+                default:
+                    return (string)app.SolveClientTask(client, request, null);
             }
         }
     }

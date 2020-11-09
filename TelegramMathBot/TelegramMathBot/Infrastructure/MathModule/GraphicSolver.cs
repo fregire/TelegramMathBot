@@ -1,6 +1,5 @@
 using System;
-using TelegramMathBot.GraphicModule;
-using TelegramMathBot.MathModule;
+using TelegramMathBot.Infrastructure.GraphicModule;
 
 namespace TelegramMathBot.Infrastructure.MathModule
 {
@@ -15,7 +14,7 @@ namespace TelegramMathBot.Infrastructure.MathModule
         /// <param name="xInterval">Horizontal segment describing visible part of oX axis</param>
         /// <param name="yInterval">Vertical segment describing visible part of oY axis</param>
         /// <param name="rawFunction">Function, which will be drawn</param>
-        public void Solve(int screenWidth, int screenHeight, string filename, Tuple<double, double> xInterval, Tuple<double, double> yInterval, Func<double, double> rawFunction)
+        public static void Solve(int screenWidth, int screenHeight, string filename, Tuple<double, double> xInterval, Tuple<double, double> yInterval, Func<double, double> rawFunction)
         {
             var imgProcessor = new ImageProcessor((uint)screenWidth, (uint)screenHeight, filename, xInterval, yInterval);
             imgProcessor.DrawAxes();

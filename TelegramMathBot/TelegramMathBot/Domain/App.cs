@@ -3,27 +3,53 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
-using TelegramMathBot.MathModule;
+using TelegramMathBot.Infrastructure.MathModule;
+using TelegramMathBot.View.Parsers;
 
 namespace TelegramMathBot.Domain
 {
     public class App
     {
         public Dictionary<long, Client> Clients { get; }
-        public readonly Command DefaultCommand = new Command(RequestType.None, false);
+        public readonly Command DefaultCommand;
+        public Dictionary<RequestType, Command> Commands { get; }
         public App()
         {
             this.Clients = new Dictionary<long, Client>();
+            this.Commands = new Dictionary<RequestType, Command>();
+            this.DefaultCommand = new Command(RequestType.None, false);
+
+            InitCommands();
         }
 
-        public string SolveClientTask(Client client, RequestType requestType, params object[] args)
+        private void InitCommands()
         {
-            var result = "";
+            Commands.Add(RequestType.Expression, new Command(RequestType.Expression, true));
+            Commands.Add(RequestType.Help, new Command(RequestType.Help, false));
+            Commands.Add(RequestType.Graphic, new Command(RequestType.Graphic, true));
+        }
+
+
+        public object SolveClientTask(Client client, RequestType requestType, params object[] args)
+        {
+            object result;
 
             switch (requestType)
             {
                 case RequestType.Expression:
-                    result = ExpressionSolver.Solve((string)args[0]).ToString();
+                    result = ExpressionSolver.Solve((string)args[0]);
+                    break;
+                case RequestType.Graphic:
+                    GraphicSolver.Solve(500,
+                                500,
+                                client.Id + "graphic.png",
+                                Tuple.Create(-1.0, 1.0),
+                                Tuple.Create(-1.0, 1.0),
+                                (Func<double, double>)args[0]);
+                    result = "Graphic";
+                    break;
+                case RequestType.Help:
+                    result = "Hello, World!";
                     break;
                 default:
                     result = "None";
@@ -55,7 +81,7 @@ namespace TelegramMathBot.Domain
 
         public void ChangeClientCommand(Client client, Command newCommand)
         {
-            Clients[client.Id].State = newCommand;
+            Clients[client.Id].CurrentCommand = newCommand;
         }
     }
 }

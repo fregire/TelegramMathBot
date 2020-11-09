@@ -1,6 +1,6 @@
 using System.Linq;
 
-namespace TelegramMathBot.MathModule
+namespace TelegramMathBot.Infrastructure.MathModule
 {
     public class FactorialSolver
     {

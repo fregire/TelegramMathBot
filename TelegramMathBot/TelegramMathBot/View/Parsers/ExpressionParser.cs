@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-using TelegramMathBot.MathModule;
+using TelegramMathBot.Infrastructure.MathModule;
 
-namespace TelegramMathBot.Parsers
+namespace TelegramMathBot.View.Parsers
 {
     public class ExpressionParser
     {

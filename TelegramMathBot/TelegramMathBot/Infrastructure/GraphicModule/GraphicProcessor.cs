@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using TelegramMathBot.MathModule;
+using TelegramMathBot.Infrastructure.MathModule;
 
-namespace TelegramMathBot.GraphicModule
+namespace TelegramMathBot.Infrastructure.GraphicModule
 { 
     public class GraphicProcessor
     {

@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace TelegramMathBot.MathModule
+namespace TelegramMathBot.Infrastructure.MathModule
 {
     public class ExpressionSolver
     {

@@ -7,8 +7,9 @@ namespace TelegramMathBot.Domain
     public enum RequestType
     {
         None,
-        Factorial,
+        WaitingForResult,
         Expression,
-        Help
+        Help,
+        Graphic
     }
 }

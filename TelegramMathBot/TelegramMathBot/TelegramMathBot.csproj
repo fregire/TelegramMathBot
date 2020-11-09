@@ -6,16 +6,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Tests\**" />
+    <EmbeddedResource Remove="Tests\**" />
+    <None Remove="Tests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Flee" Version="1.2.2" />
     <PackageReference Include="SFML.Net" Version="2.5.0" />
     <PackageReference Include="Telegram.Bot" Version="15.7.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Domain\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Tests" />
   </ItemGroup>
 
 </Project>

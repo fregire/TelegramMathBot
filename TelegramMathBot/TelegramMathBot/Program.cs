@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TelegramMathBot.GraphicModule;
+using TelegramMathBot.Infrastructure.GraphicModule;
 using TelegramMathBot.Infrastructure.MathModule;
 using TelegramMathBot.View;
 
@@ -13,8 +13,15 @@ namespace TelegramMathBot
         // Сынок ебаный, нельзя так делать.
         static void Main(string[] args)
         {
-            var bot = new TelegramBot(token);
-            bot.Start();
+            GraphicSolver.Solve(
+                200, 
+                200,
+                @"D:\Projects\TelegramMathBot\TelegramMathBot\TelegramMathBot\test1", 
+                Tuple.Create(-1.0, 1.0),
+                Tuple.Create(-1.0, 1.0), 
+                x => x * 2);
+            //var bot = new TelegramBot(token);
+            //bot.Start();
         }
     }
 }
