@@ -5,16 +5,21 @@ namespace TelegramMathBot.MathModule
 {
     public class RealArgumentFunction
     {
-        public Func<double, double> Body;
+        private readonly Func<double, double> _body;
         public List<Tuple<double, double>> GraphPoints;
 
         private const double AppropriateInterval = 10e-4;
 
         public RealArgumentFunction(Func<double, double> body)
         {
-            Body = body;
+            _body = body;
         }
 
+        /// <summary>
+        /// Fills list GraphPoints with all points belonging to the function on the specified rectangular set;
+        /// </summary>
+        /// <param name="xInterval">Horisontal segment that characterizes the set</param>
+        /// <param name="yInterval">Vertical segment that characterizes the set</param>
         public void CalculatePointsInInterval(Tuple<double, double> xInterval, Tuple<double, double> yInterval)
         {
             GraphPoints = new List<Tuple<double, double>>();
@@ -26,11 +31,11 @@ namespace TelegramMathBot.MathModule
             }
         }
 
-        public double ValueAt(double x)
+        private double ValueAt(double x)
         {
             try
             {
-                var result = Body(x);
+                var result = _body(x);
                 return result;
             }
             catch (Exception e)
@@ -39,8 +44,12 @@ namespace TelegramMathBot.MathModule
             }
         }
 
+        /// <summary>
+        /// Returns function derivative, based on limit derivative finding method
+        /// </summary>
+        /// <returns>New function, that's equal to current function derivative</returns>
         public RealArgumentFunction Derivative() =>
             new RealArgumentFunction((x) => 
-                (Body(x) + Body(x + AppropriateInterval)) / AppropriateInterval);
+                (_body(x) + _body(x + AppropriateInterval)) / AppropriateInterval);
     }
 }
