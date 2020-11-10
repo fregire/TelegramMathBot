@@ -12,6 +12,13 @@ using System.Linq;
 
 namespace TelegramMathBot.View
 {
+
+    public class MessageReceivedEventArgs: EventArgs 
+    {
+        public string Message { get; set; }
+        public long ClientId { get; set; }
+    }
+
     public class TelegramBot
     {
         private readonly string token;
@@ -19,12 +26,12 @@ namespace TelegramMathBot.View
         private readonly App app;
         private readonly Command defaultCommand = new Command(RequestType.None, false);
         private readonly Dictionary<string, Command> commands;
-
-        public TelegramBot(string token)
+        public TelegramBot(string token, App app)
         {
+            //Принимать список команд
             this.token = token;
             this.bot = new TelegramBotClient(token);
-            this.app = new App();
+            this.app = app;
             this.commands = GetCommands();
         }
 

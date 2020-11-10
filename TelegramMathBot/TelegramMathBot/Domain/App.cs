@@ -33,6 +33,10 @@ namespace TelegramMathBot.Domain
 
         public object SolveClientTask(Client client, RequestType requestType, params object[] args)
         {
+            //object -> solverresult тип 
+            // Тексты во view перенести
+            // передавать solver'ы через конструкторы
+            // Разбить app на части 
             object result;
 
             switch (requestType)
