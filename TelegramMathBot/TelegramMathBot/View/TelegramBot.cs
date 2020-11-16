@@ -12,111 +12,48 @@ using System.Linq;
 
 namespace TelegramMathBot.View
 {
-
-    public class MessageReceivedEventArgs: EventArgs 
+    public class MessageTextEventArgs: EventArgs
     {
-        public string Message { get; set; }
-        public long ClientId { get; set; }
+        public string Message { get; }
+        public long Id { get; }
+
+
+        public MessageTextEventArgs(string message, long messageId)
+        {
+            Message = message;
+            Id = messageId;
+        }
     }
+
+    public delegate void MessageTextReceivedHandler(MessageTextEventArgs messageEventArgs);
 
     public class TelegramBot
     {
-        private readonly string token;
         private readonly TelegramBotClient bot;
-        private readonly App app;
-        private readonly Command defaultCommand = new Command(RequestType.None, false);
-        private readonly Dictionary<string, Command> commands;
-        public TelegramBot(string token, App app)
+        public event MessageTextReceivedHandler OnMessageTextReceived;
+
+        public TelegramBot(string token)
         {
-            //Принимать список команд
-            this.token = token;
             this.bot = new TelegramBotClient(token);
-            this.app = app;
-            this.commands = GetCommands();
         }
 
-        public Dictionary<string, Command> GetCommands()
-        {
-            return new Dictionary<string, Command>
-            {
-                {@"/exp", app.Commands[RequestType.Expression] },
-                {@"/help", app.Commands[RequestType.Help] },
-                {@"/roots", app.Commands[RequestType.Roots] },
-                {@"/graphic", app.Commands[RequestType.Graphic] }
-            };
-        }
-
-        public void Start()
+        public void StartReceiving()
         {
             bot.OnMessage += OnMessageReceived;
             bot.StartReceiving();
-            while (true) ;
         }
 
-        private async void OnMessageReceived(object sender, MessageEventArgs messageEvents)
+        private void OnMessageReceived(object sender, MessageEventArgs messageEvents)
         {
             var message = messageEvents.Message;
 
             if (message.Type == MessageType.Text)
-            {
-                var clientId = message.Chat.Id;
-                var hasClient = app.TryGetClientById(clientId, out var client);
-
-                if (!hasClient)
-                {
-                    client = new Client(clientId, defaultCommand);
-                    app.AddClient(client);
-                }
-                var requestType = client.CurrentCommand.RequestType;
-                var response = "";
-
-                if (commands.ContainsKey(message.Text))
-                {
-                    var command = commands[message.Text];
-                    if (!command.IsWaitingForResponse)
-                    {
-                        response = GetResponse(client, command.RequestType, "");
-                        await bot.SendTextMessageAsync(message.Chat.Id, response);
-                        app.ChangeClientCommand(client, defaultCommand);
-                        return;
-                    }
-
-                    response = GetResponse(client, RequestType.WaitingForResult, ""); 
-                    app.ChangeClientCommand(client, command);
-                }
-                else
-                {
-                    if (requestType != RequestType.None)
-                        response = GetResponse(client, requestType, message.Text);
-                    else
-                        response = "Я не понимаю тебя...";
-                }
-
-                await bot.SendTextMessageAsync(message.Chat.Id, response);
-            }
+                OnMessageTextReceived?.Invoke(new MessageTextEventArgs(message.Text, message.Chat.Id));
         }
 
-        private string GetResponse(Client client, RequestType request, string message)
+        public async void SendTextMessage(long chatId, string message)
         {
-            object result = null;
-
-            switch (request)
-            {
-                case RequestType.Expression:
-                    var data = ExpressionParser.Parse(message);
-                    result = app.SolveClientTask(client, request, data);
-                    return "Ответ: " + result.ToString();
-                case RequestType.Roots:
-                    var coeffs = PolynomParser.Parse(message);
-                    var roots = (List<double>)app.SolveClientTask(client, request, coeffs);
-                    return "Ответ: " + String.Join(", ", roots);
-                case RequestType.Graphic:
-                    return (string)app.SolveClientTask(client, request, message);
-                case RequestType.Help:
-                    return (string)app.SolveClientTask(client, request, null);
-                default:
-                    return (string)app.SolveClientTask(client, request, null);
-            }
+            await bot.SendTextMessageAsync(chatId, message);
         }
     }
 }

@@ -8,6 +8,8 @@ namespace TelegramMathBot.Domain
     {
         public RequestType RequestType { get; }
         public bool IsWaitingForResponse { get; }
+        public Func<string, string> GetResult { get; }
+        public string CommandName { get; }
         public Command(
             RequestType requestType, 
             bool waitingForResponse, 
@@ -17,6 +19,8 @@ namespace TelegramMathBot.Domain
         {
             this.RequestType = requestType;
             this.IsWaitingForResponse = waitingForResponse;
+            this.GetResult = getResponse;
+            this.CommandName = commandName;
         }
 
     }
