@@ -47,7 +47,7 @@ namespace TelegramMathBot.Infrastructure.MathModule
         /// <summary>
         /// Returns function derivative, based on limit derivative finding method
         /// </summary>
-        /// <returns>New function, that's equal to current function derivative</returns>
+        /// <returns>New function, that's equal to current function derivative on its domain</returns>
         public RealArgumentFunction Derivative() =>
             new RealArgumentFunction((x) =>
                 (_body(x) + _body(x + AppropriateInterval)) / AppropriateInterval);

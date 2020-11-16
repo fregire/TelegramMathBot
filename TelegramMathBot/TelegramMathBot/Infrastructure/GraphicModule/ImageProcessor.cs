@@ -52,18 +52,7 @@ namespace TelegramMathBot.Infrastructure.GraphicModule
             for (uint x = 0; x < Width; x++) GraphImage.SetPixel(x, zeroPoint.Item2, Color.Black);
             for (uint y = 0; y < Height; y++) GraphImage.SetPixel(zeroPoint.Item1, y, Color.Black);
         }
-
-        public void DrawGraphics(GraphicProcessor g)
-        {
-            var Colors = new List<Color> { Color.Blue, Color.Green, Color.Red, Color.Magenta, Color.Cyan };
-            var currColor = 0;
-            foreach (var function in g.Functions)
-            {
-                DrawGraphic(function.GraphPoints, Colors[currColor % 5]);
-                currColor++;
-            }
-        }
-
+        
         public void DrawGraphic(List<Tuple<double, double>> points, Color color)
         {
             foreach (var point in points)
