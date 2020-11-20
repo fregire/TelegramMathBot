@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TelegramMathBot.Infrastructure.MathModule;
+using TelegramMathBot.View.Messages;
 using TelegramMathBot.View.Parsers;
 
 namespace TelegramMathBot.View.Commands
@@ -17,10 +18,12 @@ namespace TelegramMathBot.View.Commands
             return "Вычисление выражения";
         }
 
-        public string GetResponse(string input)
+        public IMessage GetResponse(string input)
         {
             var data = ExpressionParser.Parse(input);
-            return ExpressionSolver.Solve(data).ToString();
+            var result = ExpressionSolver.Solve(data).ToString();
+
+            return new TextMessage(result);
         }
     }
 }

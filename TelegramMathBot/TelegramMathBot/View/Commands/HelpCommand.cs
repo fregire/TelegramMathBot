@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TelegramMathBot.View.Messages;
 
 namespace TelegramMathBot.View.Commands
 {
@@ -21,9 +22,9 @@ namespace TelegramMathBot.View.Commands
             return "Помощь";
         }
 
-        public string GetResponse(string message)
+        public IMessage GetResponse(string message)
         {
-            return "";
+            return new TextMessage("Helping command");
         }
     }
 }

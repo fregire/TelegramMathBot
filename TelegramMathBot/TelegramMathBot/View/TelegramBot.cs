@@ -51,6 +51,7 @@ namespace TelegramMathBot.View
                 OnMessageTextReceived?.Invoke(new MessageTextEventArgs(message.Text, message.Chat.Id));
         }
 
+        // Обернуть примитивы в классы (с одним полем,  chatId, message)
         public async void SendTextMessage(long chatId, string message)
         {
             await bot.SendTextMessageAsync(chatId, message);

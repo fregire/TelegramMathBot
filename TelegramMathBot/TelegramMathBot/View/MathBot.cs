@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using TelegramMathBot.Domain;
 using TelegramMathBot.View.Commands;
+using TelegramMathBot.View.Messages;
 
 namespace TelegramMathBot.View
 {
@@ -12,11 +13,14 @@ namespace TelegramMathBot.View
         private readonly TelegramBot bot;
         private readonly App app;
         private readonly Dictionary<string, ICommand> commands;
+        private readonly BotSender botSender;
         public MathBot(TelegramBot bot, App app, List<ICommand> commands)
         {
+            // MathBot и TelegramBot независимы (через события привязать)
             this.bot = bot;
             this.app = app;
             this.commands = GetDictCommands(commands);
+            this.botSender = new BotSender(bot);
 
             this.bot.OnMessageTextReceived += MessageTextReceived;
         }
@@ -40,10 +44,13 @@ namespace TelegramMathBot.View
 
         private void MessageTextReceived(MessageTextEventArgs messageTextEventArgs)
         {
+            // Возвращать объекты, а не строки
+            // Промежуточный класс - обертка для Telegram и Math ботов который 
+            // принимает объект, возвращенный из MessageTextReceived - результат и переводит в команды для бота
             var clientId = messageTextEventArgs.Id;
             var message = messageTextEventArgs.Message;
             var hasClient = app.TryGetClientById(clientId, out var client);
-            string response;
+            IMessage response = null;
 
             if (!hasClient)
             {
@@ -56,13 +63,13 @@ namespace TelegramMathBot.View
                 var command = commands[message];
                 if (!command.IsWaitingClientInput)
                 {
-                    response = command.GetHelpText();
-                    bot.SendTextMessage(clientId, response);
+                    response = new TextMessage(command.GetHelpText());
+                    botSender.SendMessage(response, clientId);
                     app.ChangeClientCommand(client, null);
                     return;
                 }
 
-                response = command.GetHelpText();
+                response = new TextMessage(command.GetHelpText());
                 app.ChangeClientCommand(client, command);
             }
             else
@@ -70,10 +77,10 @@ namespace TelegramMathBot.View
                 if (client.CurrentCommand != null)
                     response = client.CurrentCommand.GetResponse(message);
                 else
-                    response = "Я не понимаю тебя...";
+                    response = new TextMessage("I cant understand");
             }
 
-            bot.SendTextMessage(clientId, response);
+            botSender.SendMessage(response, clientId);
         }
     }
 }
