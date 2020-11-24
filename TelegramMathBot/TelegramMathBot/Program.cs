@@ -12,23 +12,31 @@ namespace TelegramMathBot
 {
     class Program
     {
-        /*
-            В нашем боте -> распарсенные данные для app
-            bot.OnMessage += app.ProcessMessage;
-            app.OnReply += bot.ProcessReply;
-            */
-        // ClientManager вместо app только для работы с клиентами
-
         static string token = "1495097120:AAHpmNmtzpgF6-_BZe0yXyGdfQYrUdhMokQ";
         static void Main(string[] args)
         {
-            var app = new App();
-            var expCommand = new ExpressionCommand();
-            var helpCommand = new HelpCommand(new List<ICommand> { expCommand});
+            var clientManager = new ClientManager();
             var bot = new TelegramBot(token);
-            var mathBot = new MathBot(bot, app, new List<ICommand> { expCommand, helpCommand});
-            mathBot.Start();
+            var mathBot = new MathBot(clientManager, GetCommands());
+            var botSender = new BotSender(bot);
+
+            bot.OnMessageTextReceived += (MessageTextEventArgs args) =>
+                mathBot.ProcessMessage(args.Id, args.Message);
+
+            mathBot.OnReply += (ReplyEventArgs args) =>
+                botSender.SendMessage(args.Response, args.ClientId);
+
+            bot.StartReceiving();
+
             Console.ReadLine();
+        }
+
+        static List<ICommand> GetCommands()
+        {
+            var expCommand = new ExpressionCommand();
+            var helpCommand = new HelpCommand(new List<ICommand> { expCommand });
+
+            return new List<ICommand> { expCommand, helpCommand };
         }
     }
 }

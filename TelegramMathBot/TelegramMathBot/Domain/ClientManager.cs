@@ -9,10 +9,10 @@ using TelegramMathBot.View.Parsers;
 
 namespace TelegramMathBot.Domain
 {
-    public class App
+    public class ClientManager
     {
         public Dictionary<long, Client> Clients { get; }
-        public App()
+        public ClientManager()
         {
             this.Clients = new Dictionary<long, Client>();
         }
