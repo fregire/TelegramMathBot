@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Telegram.Bot.Types;
 using TelegramMathBot.Domain;
 using TelegramMathBot.View.Commands;
 using TelegramMathBot.View.Messages;
@@ -11,11 +12,11 @@ namespace TelegramMathBot.View
     public class ReplyEventArgs : EventArgs
     {
         public IMessage Response { get; }
-        public long ClientId { get; }
-        public ReplyEventArgs(IMessage response, long clientId)
+        public Chat ClientChat { get; }
+        public ReplyEventArgs(IMessage response, Chat chat)
         {
             this.Response = response;
-            this.ClientId = clientId;
+            this.ClientChat = chat;
         }
     }
 
@@ -45,25 +46,27 @@ namespace TelegramMathBot.View
         }
 
         public event ReplyHandler OnReply;
-        public void ProcessMessage(long clientId, string message)
+        public void ProcessMessage(Message message)
         {
-            var hasClient = clientManager.TryGetClientById(clientId, out var client);
+            var clientChatId = message.Chat.Id;
+            var text = message.Text;
+            var hasClient = clientManager.TryGetClientById(clientChatId, out var client);
             var unknownMessage = new TextMessage("I cant understand");
             IMessage response = null;
 
             if (!hasClient)
             {
-                client = new Client(clientId);
+                client = new Client(clientChatId);
                 clientManager.AddClient(client);
             }
 
-            if (commands.ContainsKey(message))
+            if (commands.ContainsKey(text))
             {
-                var command = commands[message];
+                var command = commands[text];
                 if (!command.IsWaitingClientInput)
                 {
                     response = new TextMessage(command.GetHelpText());
-                    OnReply?.Invoke(new ReplyEventArgs(response, clientId));
+                    OnReply?.Invoke(new ReplyEventArgs(response, message.Chat));
                     clientManager.ChangeClientCommand(client, null);
                     return;
                 }
@@ -74,12 +77,12 @@ namespace TelegramMathBot.View
             else
             {
                 if (client.CurrentCommand != null)
-                    response = client.CurrentCommand.GetResponse(message);
+                    response = client.CurrentCommand.GetResponse(text);
                 else
                     response = unknownMessage;
             }
 
-            OnReply?.Invoke(new ReplyEventArgs(response, clientId));
+            OnReply?.Invoke(new ReplyEventArgs(response, message.Chat));
         }
     }
 }

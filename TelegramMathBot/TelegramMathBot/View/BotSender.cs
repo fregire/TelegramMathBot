@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Telegram.Bot.Types;
 using TelegramMathBot.View.Messages;
 
 namespace TelegramMathBot.View
@@ -14,10 +15,11 @@ namespace TelegramMathBot.View
             this.bot = bot;
         }
 
-        public void SendMessage(IMessage message, long chatId)
+        public void SendMessage(IMessage message, Chat chat)
         {
             if (message is TextMessage textMessage)
-                bot.SendTextMessage(chatId, textMessage.Text);
+                bot.SendTextMessage(
+                    new Message { Chat = chat, Text =  textMessage.Text});
         }
     }
 }

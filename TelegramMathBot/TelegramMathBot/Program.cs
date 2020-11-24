@@ -7,6 +7,7 @@ using TelegramMathBot.Infrastructure.MathModule;
 using TelegramMathBot.View;
 using TelegramMathBot.View.Parsers;
 using TelegramMathBot.View.Commands;
+using Telegram.Bot.Types;
 
 namespace TelegramMathBot
 {
@@ -21,10 +22,10 @@ namespace TelegramMathBot
             var botSender = new BotSender(bot);
 
             bot.OnMessageTextReceived += (MessageTextEventArgs args) =>
-                mathBot.ProcessMessage(args.Id, args.Message);
+                mathBot.ProcessMessage(args.Message);
 
             mathBot.OnReply += (ReplyEventArgs args) =>
-                botSender.SendMessage(args.Response, args.ClientId);
+                botSender.SendMessage(args.Response, args.ClientChat);
 
             bot.StartReceiving();
 

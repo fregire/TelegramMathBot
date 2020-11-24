@@ -9,18 +9,17 @@ using TelegramMathBot.Domain;
 using Telegram.Bot.Types.InputFiles;
 using System.IO;
 using System.Linq;
+using Telegram.Bot.Types;
 
 namespace TelegramMathBot.View
 {
     public class MessageTextEventArgs: EventArgs
     {
-        public string Message { get; }
-        public long Id { get; }
+        public Message Message { get; }
 
-        public MessageTextEventArgs(string message, long messageId)
+        public MessageTextEventArgs(Message message)
         {
             Message = message;
-            Id = messageId;
         }
     }
 
@@ -47,12 +46,12 @@ namespace TelegramMathBot.View
             var message = messageEvents.Message;
 
             if (message.Type == MessageType.Text)
-                OnMessageTextReceived?.Invoke(new MessageTextEventArgs(message.Text, message.Chat.Id));
+                OnMessageTextReceived?.Invoke(new MessageTextEventArgs(message));
         }
 
-        public async void SendTextMessage(long chatId, string message)
+        public async void SendTextMessage(Message message)
         {
-            await bot.SendTextMessageAsync(chatId, message);
+            await bot.SendTextMessageAsync(message.Chat.Id, message.Text);
         }
     }
 }
