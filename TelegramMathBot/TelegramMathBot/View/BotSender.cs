@@ -18,8 +18,11 @@ namespace TelegramMathBot.View
         public void SendMessage(IMessage message, Chat chat)
         {
             if (message is TextMessage textMessage)
-                bot.SendTextMessage(
-                    new Message { Chat = chat, Text =  textMessage.Text});
+            {
+                var content = new Message { Chat = chat, Text = textMessage.Text };
+                bot.SendTextMessage(content);
+            }
+                
         }
     }
 }

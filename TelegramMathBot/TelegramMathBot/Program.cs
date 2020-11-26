@@ -8,16 +8,18 @@ using TelegramMathBot.View;
 using TelegramMathBot.View.Parsers;
 using TelegramMathBot.View.Commands;
 using Telegram.Bot.Types;
+using Telegram.Bot;
 
 namespace TelegramMathBot
 {
     class Program
     {
+        //Config file и добавитьь в .gitignore
         static string token = "1495097120:AAHpmNmtzpgF6-_BZe0yXyGdfQYrUdhMokQ";
         static void Main(string[] args)
         {
             var clientManager = new ClientManager();
-            var bot = new TelegramBot(token);
+            var bot = new TelegramBot(new TelegramBotClient(token));
             var mathBot = new MathBot(clientManager, GetCommands());
             var botSender = new BotSender(bot);
 

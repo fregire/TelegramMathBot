@@ -30,9 +30,9 @@ namespace TelegramMathBot.View
         private readonly TelegramBotClient bot;
         public event MessageTextReceivedHandler OnMessageTextReceived;
 
-        public TelegramBot(string token)
+        public TelegramBot(TelegramBotClient bot)
         {
-            this.bot = new TelegramBotClient(token);
+            this.bot = bot;
         }
 
         public void StartReceiving()

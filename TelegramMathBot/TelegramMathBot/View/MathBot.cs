@@ -20,7 +20,6 @@ namespace TelegramMathBot.View
         }
     }
 
-
     public delegate void ReplyHandler(ReplyEventArgs replyEventArgs);
 
     public class MathBot
@@ -77,7 +76,10 @@ namespace TelegramMathBot.View
             else
             {
                 if (client.CurrentCommand != null)
+                {
                     response = client.CurrentCommand.GetResponse(text);
+                    clientManager.ChangeClientCommand(client, null);
+                }
                 else
                     response = unknownMessage;
             }

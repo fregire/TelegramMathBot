@@ -32,12 +32,12 @@ namespace TelegramMathBot.Domain
 
         public void AddClient(Client client)
         {
-            Clients.Add(client.Id, client);
+            Clients.Add(client.ClientId.Id, client);
         }
 
         public void ChangeClientCommand(Client client, ICommand newCommand)
         {
-            Clients[client.Id].CurrentCommand = newCommand;
+            Clients[client.ClientId.Id].CurrentCommand = newCommand;
         }
     }
 }
