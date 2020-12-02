@@ -6,6 +6,7 @@ namespace TelegramMathBot.View.Messages
 {
     public enum MessageType
     {
-        Text
+        Text,
+        Photo
     }
 }

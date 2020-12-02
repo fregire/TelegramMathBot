@@ -53,5 +53,10 @@ namespace TelegramMathBot.View
         {
             await bot.SendTextMessageAsync(message.Chat.Id, message.Text);
         }
+
+        public async void SendPhotoMessage(Chat chat, InputOnlineFile file)
+        {
+            await bot.SendPhotoAsync(chat.Id, file);
+        }
     }
 }

@@ -8,8 +8,9 @@ namespace TelegramMathBot.View.Commands
     public interface ICommand
     {
         public IMessage GetResponse(string message);
-        public string GetHelpText();
+        public string HelpInfo { get; }
         public string Command { get; }
         public bool IsWaitingClientInput { get; }
+        public string UserInputTip { get; }
     }
 }

@@ -17,14 +17,23 @@ namespace TelegramMathBot.View.Commands
 
         public bool IsWaitingClientInput => false;
 
-        public string GetHelpText()
-        {
-            return "Помощь";
-        }
+        public string UserInputTip => null;
+
+        public string HelpInfo => "Помощь";
 
         public IMessage GetResponse(string message)
         {
-            return new TextMessage("Helping command");
+            var result = new StringBuilder("Команды бота:\n");
+            result.Append("Сначала отправьте команду, затем отправьте аргумент\n");
+
+            foreach (var command in commands)
+            {
+                var commandRow = 
+                    String.Format("{0} - {1}\n", command.Command, command.HelpInfo);
+                result.Append(commandRow);
+            }
+
+            return new TextMessage(result.ToString());
         }
     }
 }

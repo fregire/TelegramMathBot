@@ -27,6 +27,7 @@ namespace TelegramMathBot.Infrastructure.GraphicModule
         public void DrawAxes()
         {
             var niceGrey = new Color(150, 150, 150);
+            /*
             for (var x = Math.Ceiling(XInterval.Item1); x <= Math.Floor(XInterval.Item2); x += 1)
             {
                 var screenPoint = TransofmPosition(new Tuple<double, double>(x, 0));
@@ -48,6 +49,7 @@ namespace TelegramMathBot.Infrastructure.GraphicModule
                     GraphImage.SetPixel(imageX, imageY, niceGrey);
                 }
             }
+            */
             var zeroPoint = TransofmPosition(new Tuple<double, double>(0, 0));
             for (uint x = 0; x < Width; x++) GraphImage.SetPixel(x, zeroPoint.Item2, Color.Black);
             for (uint y = 0; y < Height; y++) GraphImage.SetPixel(zeroPoint.Item1, y, Color.Black);

@@ -64,13 +64,14 @@ namespace TelegramMathBot.View
                 var command = commands[text];
                 if (!command.IsWaitingClientInput)
                 {
-                    response = new TextMessage(command.GetHelpText());
+                    response = command.GetResponse(message.Text);
                     OnReply?.Invoke(new ReplyEventArgs(response, message.Chat));
                     clientManager.ChangeClientCommand(client, null);
                     return;
                 }
+                else
+                    response = new TextMessage(command.UserInputTip);
 
-                response = new TextMessage(command.GetHelpText());
                 clientManager.ChangeClientCommand(client, command);
             }
             else

@@ -9,6 +9,13 @@ using TelegramMathBot.View.Parsers;
 using TelegramMathBot.View.Commands;
 using Telegram.Bot.Types;
 using Telegram.Bot;
+using System.IO;
+using Telegram.Bot.Types.InputFiles;
+using SFML.Graphics;
+using System.Drawing;
+using System.Drawing.Imaging;
+using Telegram.Bot.Types.Enums;
+using System.Reflection;
 
 namespace TelegramMathBot
 {
@@ -17,6 +24,23 @@ namespace TelegramMathBot
         //Config file и добавитьь в .gitignore
         static string token = "1495097120:AAHpmNmtzpgF6-_BZe0yXyGdfQYrUdhMokQ";
         static void Main(string[] args)
+        {
+            var image = GraphicSolver.Solve(
+                100, 
+                100, 
+                "",
+                Tuple.Create(-100.0, 100.0),
+                Tuple.Create(-100.0, 100.0),
+                x => x + 3);
+            image.Save("Test.png", ImageFormat.Png);
+
+            /*
+            Start();
+            Console.ReadLine();
+            */
+        }
+
+        static void Start()
         {
             var clientManager = new ClientManager();
             var bot = new TelegramBot(new TelegramBotClient(token));
@@ -36,10 +60,12 @@ namespace TelegramMathBot
 
         static List<ICommand> GetCommands()
         {
+            var graphicCommand = new GraphicCommand(ImageFormat.Png);
             var expCommand = new ExpressionCommand();
-            var helpCommand = new HelpCommand(new List<ICommand> { expCommand });
+            var helpCommand = new HelpCommand(
+                new List<ICommand> { expCommand, graphicCommand });
 
-            return new List<ICommand> { expCommand, helpCommand };
+            return new List<ICommand> { expCommand, helpCommand, graphicCommand };
         }
     }
 }

@@ -13,10 +13,10 @@ namespace TelegramMathBot.View.Commands
 
         public bool IsWaitingClientInput => true;
 
-        public string GetHelpText()
-        {
-            return "Вычисление выражения";
-        }
+        public string HelpInfo => "Команда для вычисления численного выражения.\n" +
+            "Например, 6+2-10*4+6!";
+
+        public string UserInputTip => "Введите численное выражение";
 
         public IMessage GetResponse(string input)
         {
