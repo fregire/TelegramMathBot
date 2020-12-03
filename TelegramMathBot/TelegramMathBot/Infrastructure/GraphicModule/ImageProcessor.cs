@@ -13,7 +13,7 @@ namespace TelegramMathBot.Infrastructure.GraphicModule
         public uint Width;
         public uint Height;
 
-        public ImageProcessor(uint width, uint height, string filename, Tuple<double, double> xInterval,
+        public ImageProcessor(uint width, uint height, Tuple<double, double> xInterval,
             Tuple<double, double> yInterval)
         {
             Width = width;
@@ -21,7 +21,6 @@ namespace TelegramMathBot.Infrastructure.GraphicModule
             GraphImage = new Image(width, height, Color.White);
             XInterval = xInterval;
             YInterval = yInterval;
-            Filename = filename + ".png";
         }
 
         public void DrawAxes()
@@ -75,12 +74,5 @@ namespace TelegramMathBot.Infrastructure.GraphicModule
             var pointY = (uint)(Height - (point.Item2 - YInterval.Item1) / (YInterval.Item2 - YInterval.Item1) * Height);
             return new Tuple<uint, uint>(pointX, pointY);
         }
-
-        public bool SaveFile() 
-        {
-            while (!GraphImage.SaveToFile(Filename));
-            return true;
-        }
-
     }
 }

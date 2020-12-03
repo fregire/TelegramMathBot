@@ -29,11 +29,10 @@ namespace TelegramMathBot.View.Commands
         {
             var func = GraphicParser.Parse(message);
             var image = GraphicSolver.Solve(
-                100,
-                100,
-                "",
-                Tuple.Create(-100.0, 100.0),
-                Tuple.Create(-100.0, 100.0),
+                500,
+                500,
+                Tuple.Create(-10.0, 10.0),
+                Tuple.Create(-10.0, 10.0),
                 func);
 
             return new PhotoMessage(image, imageFormat);

@@ -25,19 +25,8 @@ namespace TelegramMathBot
         static string token = "1495097120:AAHpmNmtzpgF6-_BZe0yXyGdfQYrUdhMokQ";
         static void Main(string[] args)
         {
-            var image = GraphicSolver.Solve(
-                100, 
-                100, 
-                "",
-                Tuple.Create(-100.0, 100.0),
-                Tuple.Create(-100.0, 100.0),
-                x => x + 3);
-            image.Save("Test.png", ImageFormat.Png);
-
-            /*
             Start();
             Console.ReadLine();
-            */
         }
 
         static void Start()

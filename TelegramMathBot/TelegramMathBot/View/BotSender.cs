@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
+using System.Threading;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.InputFiles;
 using TelegramMathBot.View.Messages;
+
 
 namespace TelegramMathBot.View
 {
@@ -29,12 +31,13 @@ namespace TelegramMathBot.View
             if (message is PhotoMessage photoMessage)
             {
                 var tmpName = GeneratePhotoName(photoMessage.ImageFormat);
-                photoMessage.Image.Save(tmpName, photoMessage.ImageFormat);
+                photoMessage.Image.SaveToFile(tmpName);
 
                 using (var stream = System.IO.File.Open(tmpName, FileMode.Open))
                 {
                     var fileToSend = new InputOnlineFile(stream, "Test");
                     bot.SendPhotoMessage(chat, fileToSend);
+                    Thread.Sleep(1);
                 }
 
                 System.IO.File.Delete(tmpName);
