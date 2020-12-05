@@ -16,6 +16,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using Telegram.Bot.Types.Enums;
 using System.Reflection;
+using System.Threading;
 
 namespace TelegramMathBot
 {
@@ -49,9 +50,9 @@ namespace TelegramMathBot
 
         static List<ICommand> GetCommands()
         {
-            var graphicCommand = new GraphicCommand(ImageFormat.Png);
-            var expCommand = new ExpressionCommand();
-            var helpCommand = new HelpCommand(
+            var graphicCommand = CommandsFactory.CreateGraphicCommand(ImageFormat.Png);
+            var expCommand = CommandsFactory.CreateExpressionCommand();
+            var helpCommand = CommandsFactory.CreateHelpCommand(
                 new List<ICommand> { expCommand, graphicCommand });
 
             return new List<ICommand> { expCommand, helpCommand, graphicCommand };

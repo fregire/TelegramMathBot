@@ -34,6 +34,7 @@ namespace TelegramMathBot.View.Commands
                 Tuple.Create(-10.0, 10.0),
                 Tuple.Create(-10.0, 10.0),
                 func);
+            
 
             return new PhotoMessage(image, imageFormat);
         }

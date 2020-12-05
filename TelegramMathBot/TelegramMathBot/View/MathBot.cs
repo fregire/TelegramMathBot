@@ -50,7 +50,7 @@ namespace TelegramMathBot.View
             var clientChatId = message.Chat.Id;
             var text = message.Text;
             var hasClient = clientManager.TryGetClientById(clientChatId, out var client);
-            var unknownMessage = new TextMessage("I cant understand");
+            var unknownMessage = new TextMessage("Я не понимаю:( \nВведите команду /help");
             IMessage response = null;
 
             if (!hasClient)
@@ -78,8 +78,14 @@ namespace TelegramMathBot.View
             {
                 if (client.CurrentCommand != null)
                 {
-                    response = client.CurrentCommand.GetResponse(text);
-                    clientManager.ChangeClientCommand(client, null);
+                    try
+                    {
+                        response = client.CurrentCommand.GetResponse(text);
+                    }
+                    catch
+                    {
+                        response = new TextMessage("Данные введены в неправильном формате");
+                    }
                 }
                 else
                     response = unknownMessage;
