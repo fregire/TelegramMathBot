@@ -25,7 +25,12 @@ namespace TelegramMathBot.View.Commands
 
         public string UserInputTip => "Введите функцию по переменной x";
 
-        public IMessage GetResponse(string message)
+        public ICommand CreateSameCommand()
+        {
+            return new GraphicCommand(imageFormat);
+        }
+
+        public (bool IsCompleted, IMessage Response) GetResponse(string message)
         {
             var func = GraphicParser.Parse(message);
             var image = GraphicSolver.Solve(
@@ -36,7 +41,7 @@ namespace TelegramMathBot.View.Commands
                 func);
             
 
-            return new PhotoMessage(image, imageFormat);
+            return (true, new PhotoMessage(image, imageFormat));
         }
     }
 }

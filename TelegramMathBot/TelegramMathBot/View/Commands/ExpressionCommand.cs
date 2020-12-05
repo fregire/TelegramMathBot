@@ -11,19 +11,45 @@ namespace TelegramMathBot.View.Commands
     {
         public string Command => "/exp";
 
-        public bool IsWaitingClientInput => true;
-
         public string HelpInfo => "Команда для вычисления численного выражения.\n" +
             "Например, 6+2-10*4+6!";
 
-        public string UserInputTip => "Введите численное выражение";
-
-        public IMessage GetResponse(string input)
+        private int currentCommand;
+        private readonly List<Func<string, IMessage>> commands;
+        public (bool IsCompleted, IMessage Response) GetResponse(string input)
         {
-            var data = ExpressionParser.Parse(input);
-            var result = ExpressionSolver.Solve(data).ToString();
+            var result = commands[currentCommand].Invoke(input);
+            currentCommand = currentCommand == commands.Count - 1
+                ? currentCommand : currentCommand + 1;
 
-            return new TextMessage(result);
+            return (false, result);
+        }
+
+        public ICommand CreateSameCommand()
+        {
+            return new ExpressionCommand();
+        }
+
+        public ExpressionCommand()
+        {
+            commands = new List<Func<string, IMessage>>();
+            InitCommands(commands);
+        }
+
+        private void InitCommands(List<Func<string, IMessage>> commands)
+        {
+            commands.Add((input) =>
+            {
+                return new TextMessage("Введите численное выражение");
+            });
+
+            commands.Add((input) =>
+            {
+                var data = ExpressionParser.Parse(input);
+                var result = ExpressionSolver.Solve(data).ToString();
+
+                return new TextMessage(result);
+            });
         }
     }
 }

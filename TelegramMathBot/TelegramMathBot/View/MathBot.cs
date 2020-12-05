@@ -62,31 +62,19 @@ namespace TelegramMathBot.View
             if (commands.ContainsKey(text))
             {
                 var command = commands[text];
-                if (!command.IsWaitingClientInput)
-                {
-                    response = command.GetResponse(message.Text);
-                    OnReply?.Invoke(new ReplyEventArgs(response, message.Chat));
-                    clientManager.ChangeClientCommand(client, null);
-                    return;
-                }
-                else
-                    response = new TextMessage(command.UserInputTip);
+                var clientCommand = command.CreateSameCommand();
+                var result = clientCommand.GetResponse("");
+                response = result.Response;
 
-                clientManager.ChangeClientCommand(client, command);
+                if (result.IsCompleted)
+                    clientManager.ChangeClientCommand(client, null);
+                else
+                    clientManager.ChangeClientCommand(client, clientCommand);
             }
             else
             {
                 if (client.CurrentCommand != null)
-                {
-                    try
-                    {
-                        response = client.CurrentCommand.GetResponse(text);
-                    }
-                    catch
-                    {
-                        response = new TextMessage("Данные введены в неправильном формате");
-                    }
-                }
+                    response = client.CurrentCommand.GetResponse(text).Response;
                 else
                     response = unknownMessage;
             }
