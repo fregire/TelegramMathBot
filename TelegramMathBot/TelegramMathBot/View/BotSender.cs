@@ -20,7 +20,7 @@ namespace TelegramMathBot.View
             this.bot = bot;
         }
 
-        public void SendMessage(IMessage message, Chat chat)
+        public async void SendMessage(IMessage message, Chat chat)
         {
             if (message is TextMessage textMessage)
             {
@@ -35,9 +35,8 @@ namespace TelegramMathBot.View
 
                 using (var stream = System.IO.File.Open(tmpName, FileMode.Open))
                 {
-                    var fileToSend = new InputOnlineFile(stream, "Test");
-                    bot.SendPhotoMessage(chat, fileToSend);
-                    Thread.Sleep(1);
+                    var fileToSend = new InputOnlineFile(stream, "Test"); 
+                    await bot.SendPhotoMessage(chat, fileToSend);
                 }
 
                 System.IO.File.Delete(tmpName);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Text;
+using TelegramMathBot.View.Commands.ReferenceCommandF;
 
 namespace TelegramMathBot.View.Commands
 {
@@ -20,6 +21,11 @@ namespace TelegramMathBot.View.Commands
         public static HelpCommand CreateHelpCommand(List<ICommand> commands)
         {
             return new HelpCommand(commands);
+        }
+
+        public static ReferenceCommand CreateReferenceCommand()
+        {
+            return new ReferenceCommand();
         }
     }
 }

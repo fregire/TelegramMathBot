@@ -10,6 +10,7 @@ using Telegram.Bot.Types.InputFiles;
 using System.IO;
 using System.Linq;
 using Telegram.Bot.Types;
+using System.Threading.Tasks;
 
 namespace TelegramMathBot.View
 {
@@ -54,9 +55,9 @@ namespace TelegramMathBot.View
             await bot.SendTextMessageAsync(message.Chat.Id, message.Text);
         }
 
-        public async void SendPhotoMessage(Chat chat, InputOnlineFile file)
+        public async Task<Message> SendPhotoMessage(Chat chat, InputOnlineFile file)
         {
-            await bot.SendPhotoAsync(chat.Id, file);
+            return await bot.SendPhotoAsync(chat.Id, file);
         }
     }
 }
