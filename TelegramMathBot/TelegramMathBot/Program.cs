@@ -23,6 +23,7 @@ namespace TelegramMathBot
     class Program
     {
         //Config file и добавитьь в .gitignore
+        //431331940 
         static string token = "1495097120:AAHpmNmtzpgF6-_BZe0yXyGdfQYrUdhMokQ";
         static void Main(string[] args)
         {
@@ -38,7 +39,10 @@ namespace TelegramMathBot
             var botSender = new BotSender(bot);
 
             bot.OnMessageTextReceived += (MessageTextEventArgs args) =>
+            {
+                Console.WriteLine(args.Message.Chat.Id);
                 mathBot.ProcessMessage(args.Message);
+            };
 
             mathBot.OnReply += (ReplyEventArgs args) =>
                 botSender.SendMessage(args.Response, args.ClientChat);

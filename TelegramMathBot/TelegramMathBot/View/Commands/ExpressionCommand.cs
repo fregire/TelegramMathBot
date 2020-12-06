@@ -18,11 +18,18 @@ namespace TelegramMathBot.View.Commands
         private readonly List<Func<string, IMessage>> commands;
         public (bool IsCompleted, IMessage Response) GetResponse(string input)
         {
-            var result = commands[currentCommand].Invoke(input);
+            var nextCommand = GetNextCommand();
+
+            return (false, nextCommand(input));
+        }
+
+        private Func<string, IMessage> GetNextCommand()
+        {
+            var result = commands[currentCommand];
             currentCommand = currentCommand == commands.Count - 1
                 ? currentCommand : currentCommand + 1;
 
-            return (false, result);
+            return result;
         }
 
         public ICommand CreateSameCommand()

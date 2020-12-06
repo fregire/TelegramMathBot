@@ -15,10 +15,6 @@ namespace TelegramMathBot.View.Commands
 
         public string Command => "/help";
 
-        public bool IsWaitingClientInput => false;
-
-        public string UserInputTip => null;
-
         public string HelpInfo => "Помощь";
 
         public ICommand CreateSameCommand()
