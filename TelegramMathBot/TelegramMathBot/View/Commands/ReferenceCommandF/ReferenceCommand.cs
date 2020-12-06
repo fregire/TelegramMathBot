@@ -70,7 +70,8 @@ namespace TelegramMathBot.View.Commands.ReferenceCommandF
                     if (IsValidIndex(num - 1, categories))
                         return categories[num - 1].Message;
                 }
-                return new TextMessage("Номер неправильный");
+
+                return new TextMessage("Номер неверный");
             });
 
             return result;

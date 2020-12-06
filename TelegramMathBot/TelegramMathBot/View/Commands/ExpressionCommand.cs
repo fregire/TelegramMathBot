@@ -29,10 +29,16 @@ namespace TelegramMathBot.View.Commands
 
             result.Add((input) =>
             {
-                var data = ExpressionParser.Parse(input);
-                var result = ExpressionSolver.Solve(data).ToString();
-
-                return new TextMessage(result);
+                try
+                {
+                    var data = ExpressionParser.Parse(input);
+                    var result = ExpressionSolver.Solve(data).ToString();
+                    return new TextMessage(result);
+                }
+                catch
+                {
+                    return new TextMessage("Численное выражение введено неверно");
+                }
             });
 
             return result;

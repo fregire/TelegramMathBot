@@ -19,7 +19,7 @@ namespace TelegramMathBot.View.Commands
         }
 
         public override string Command => "/graph";
-        public override string HelpInfo => "Команда для отрисовки графика функции по переменной x.\n";
+        public override string HelpInfo => "Команда для отрисовки графика функции по переменной x.";
 
         public override ICommand CreateSameCommand()
         {
@@ -37,15 +37,22 @@ namespace TelegramMathBot.View.Commands
 
             result.Add((input) =>
             {
-                var func = GraphicParser.Parse(input);
-                var image = GraphicSolver.Solve(
-                    500,
-                    500,
-                    Tuple.Create(-10.0, 10.0),
-                    Tuple.Create(-10.0, 10.0),
-                    func);
+                try
+                {
+                    var func = GraphicParser.Parse(input);
+                    var image = GraphicSolver.Solve(
+                        500,
+                        500,
+                        Tuple.Create(-10.0, 10.0),
+                        Tuple.Create(-10.0, 10.0),
+                        func);
 
-                return new PhotoMessage(image, imageFormat);
+                    return new PhotoMessage(image, imageFormat);
+                }
+                catch
+                {
+                    return new TextMessage("Функция неверная");
+                }
             });
 
             return result;
