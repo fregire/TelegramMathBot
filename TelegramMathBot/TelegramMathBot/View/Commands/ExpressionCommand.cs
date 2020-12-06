@@ -7,56 +7,44 @@ using TelegramMathBot.View.Parsers;
 
 namespace TelegramMathBot.View.Commands
 {
-    public class ExpressionCommand : ICommand
+    public class ExpressionCommand : StepByStepCommand
     {
-        public string Command => "/exp";
-
-        public string HelpInfo => "Команда для вычисления численного выражения.\n" +
+        public override string HelpInfo => "Команда для вычисления численного выражения.\n" +
             "Например, 6+2-10*4+6!";
 
-        private int currentCommand;
-        private readonly List<Func<string, IMessage>> commands;
-        public (bool IsCompleted, IMessage Response) GetResponse(string input)
-        {
-            var nextCommand = GetNextCommand();
-
-            return (false, nextCommand(input));
-        }
-
-        private Func<string, IMessage> GetNextCommand()
-        {
-            var result = commands[currentCommand];
-            currentCommand = currentCommand == commands.Count - 1
-                ? currentCommand : currentCommand + 1;
-
-            return result;
-        }
-
-        public ICommand CreateSameCommand()
+        public override string Command => "/exp";
+        
+        public override ICommand CreateSameCommand()
         {
             return new ExpressionCommand();
         }
 
-        public ExpressionCommand()
+        protected override List<Func<string, IMessage>> GetInitedCommands()
         {
-            commands = new List<Func<string, IMessage>>();
-            InitCommands(commands);
-        }
-
-        private void InitCommands(List<Func<string, IMessage>> commands)
-        {
-            commands.Add((input) =>
+            var result = new List<Func<string, IMessage>>();
+            result.Add((input) =>
             {
                 return new TextMessage("Введите численное выражение");
             });
 
-            commands.Add((input) =>
+            result.Add((input) =>
             {
                 var data = ExpressionParser.Parse(input);
                 var result = ExpressionSolver.Solve(data).ToString();
 
                 return new TextMessage(result);
             });
+
+            return result;
+        }
+
+        protected override (bool IsCompleted, Func<string, IMessage> command) GetNextCommand()
+        {
+            var result = commands[currentCommand];
+            currentCommand = currentCommand == commands.Count - 1
+                ? currentCommand : currentCommand + 1;
+
+            return (false, result);
         }
     }
 }

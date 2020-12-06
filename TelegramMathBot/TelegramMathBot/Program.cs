@@ -39,10 +39,7 @@ namespace TelegramMathBot
             var botSender = new BotSender(bot);
 
             bot.OnMessageTextReceived += (MessageTextEventArgs args) =>
-            {
-                Console.WriteLine(args.Message.Chat.Id);
                 mathBot.ProcessMessage(args.Message);
-            };
 
             mathBot.OnReply += (ReplyEventArgs args) =>
                 botSender.SendMessage(args.Response, args.ClientChat);

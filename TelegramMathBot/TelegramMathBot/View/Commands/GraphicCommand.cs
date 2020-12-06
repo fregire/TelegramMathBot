@@ -9,52 +9,33 @@ using TelegramMathBot.View.Parsers;
 
 namespace TelegramMathBot.View.Commands
 {
-    public class GraphicCommand : ICommand
+    public class GraphicCommand : StepByStepCommand
     {
         private readonly ImageFormat imageFormat;
-        private int currentCommand;
-        private readonly List<Func<string, IMessage>> commands;
 
-        public GraphicCommand(ImageFormat imageFormat)
+        public GraphicCommand(ImageFormat imageFormat) : base()
         {
             this.imageFormat = imageFormat;
-            this.commands = new List<Func<string, IMessage>>();
-            InitCommands(commands);
         }
-        public string Command => "/graph";
 
-        public string HelpInfo => 
-            "Команда для отрисовки графика функции по переменной x.\n";
+        public override string Command => "/graph";
+        public override string HelpInfo => "Команда для отрисовки графика функции по переменной x.\n";
 
-        public ICommand CreateSameCommand()
+        public override ICommand CreateSameCommand()
         {
             return new GraphicCommand(imageFormat);
         }
 
-        public (bool IsCompleted, IMessage Response) GetResponse(string message)
+        protected override List<Func<string, IMessage>> GetInitedCommands()
         {
-            var nextCommand = GetNextCommand();
+            var result = new List<Func<string, IMessage>>();
 
-            return (false, nextCommand(message));
-        }
-
-        private Func<string, IMessage> GetNextCommand()
-        {
-            var result = commands[currentCommand];
-            currentCommand = currentCommand == commands.Count - 1
-                ? currentCommand : currentCommand + 1;
-
-            return result;
-        }
-
-        private void InitCommands(List<Func<string, IMessage>> commands)
-        {
-            commands.Add((input) =>
+            result.Add((input) =>
             {
                 return new TextMessage("Введите функцию по переменной x");
             });
 
-            commands.Add((input) =>
+            result.Add((input) =>
             {
                 var func = GraphicParser.Parse(input);
                 var image = GraphicSolver.Solve(
@@ -66,6 +47,17 @@ namespace TelegramMathBot.View.Commands
 
                 return new PhotoMessage(image, imageFormat);
             });
+
+            return result;
+        }
+
+        protected override (bool IsCompleted, Func<string, IMessage> command) GetNextCommand()
+        {
+            var result = commands[currentCommand];
+            currentCommand = currentCommand == commands.Count - 1
+                ? currentCommand : currentCommand + 1;
+
+            return (false, result);
         }
     }
 }
