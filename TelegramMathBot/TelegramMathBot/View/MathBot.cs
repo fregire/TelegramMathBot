@@ -26,10 +26,12 @@ namespace TelegramMathBot.View
     {
         private readonly ClientManager clientManager;
         private readonly Dictionary<string, ICommand> commands;
+        private readonly Dictionary<Client, ICommand> clientsCommands;
         public MathBot(ClientManager app, List<ICommand> commands)
         {
             this.clientManager = app;
             this.commands = GetDictCommands(commands);
+            this.clientsCommands = new Dictionary<Client, ICommand>();
         }
 
         private Dictionary<string, ICommand> GetDictCommands(List<ICommand> commands)
@@ -57,6 +59,7 @@ namespace TelegramMathBot.View
             {
                 client = new Client(clientChatId);
                 clientManager.AddClient(client);
+                clientsCommands.Add(client, null);
             }
 
             if (commands.ContainsKey(text))
@@ -67,14 +70,14 @@ namespace TelegramMathBot.View
                 response = result.Response;
 
                 if (result.IsCompleted)
-                    clientManager.ChangeClientCommand(client, null);
+                    clientsCommands[client] = null;
                 else
-                    clientManager.ChangeClientCommand(client, clientCommand);
+                    clientsCommands[client] = clientCommand;
             }
             else
             {
-                if (client.CurrentCommand != null)
-                    response = client.CurrentCommand.GetResponse(text).Response;
+                if (clientsCommands[client] != null)
+                    response = clientsCommands[client].GetResponse(text).Response;
                 else
                     response = unknownMessage;
             }

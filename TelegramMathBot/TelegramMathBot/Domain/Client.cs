@@ -9,11 +9,9 @@ namespace TelegramMathBot.Domain
     public class Client
     {
         public ClientId ClientId { get; }
-        public ICommand CurrentCommand { get; set; }
-        public Client(long id, ICommand command = null)
+        public Client(long id)
         {
             ClientId = new ClientId(id);
-            CurrentCommand = command;
         }
     }
 }
