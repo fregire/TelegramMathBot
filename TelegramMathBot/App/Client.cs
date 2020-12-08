@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Telegram.Bot.Types;
-using TelegramMathBot.View.Commands;
 
-namespace TelegramMathBot.Domain
+namespace App
 {
     public class Client
     {

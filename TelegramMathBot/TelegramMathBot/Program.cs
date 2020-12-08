@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using TelegramMathBot.Domain;
-using TelegramMathBot.Infrastructure.GraphicModule;
-using TelegramMathBot.Infrastructure.MathModule;
+using TelegramMathBot.App;
+using TelegramMathBot.Domain.GraphicModule;
+using TelegramMathBot.Domain.MathModule;
 using TelegramMathBot.View;
 using TelegramMathBot.View.Parsers;
 using TelegramMathBot.View.Commands;

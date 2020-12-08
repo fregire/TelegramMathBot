@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TelegramMathBot.Domain
+namespace App
 {
     public class ClientId
     {

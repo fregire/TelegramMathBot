@@ -1,6 +1,6 @@
 using System;
 
-namespace TelegramMathBot.Infrastructure.MathModule
+namespace TelegramMathBot.Domain.MathModule
 {
     public class IntegralSolver
     {

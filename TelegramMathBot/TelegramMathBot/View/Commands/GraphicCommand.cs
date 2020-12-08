@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Reflection;
 using System.Text;
-using TelegramMathBot.Infrastructure.MathModule;
+using TelegramMathBot.Domain.MathModule;
 using TelegramMathBot.View.Messages;
 using TelegramMathBot.View.Parsers;
 
@@ -30,6 +30,8 @@ namespace TelegramMathBot.View.Commands
         {
             var result = new List<Func<string, IMessage>>();
 
+            // Func - мини класс который возвращает сообщение или следующую команду
+            // много разных классов - хорошо
             result.Add((input) =>
             {
                 return new TextMessage("Введите функцию по переменной x");

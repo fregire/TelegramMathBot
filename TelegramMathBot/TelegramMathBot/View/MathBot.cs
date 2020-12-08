@@ -1,9 +1,9 @@
-﻿using System;
+﻿using App;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Telegram.Bot.Types;
-using TelegramMathBot.Domain;
 using TelegramMathBot.View.Commands;
 using TelegramMathBot.View.Messages;
 
@@ -49,6 +49,7 @@ namespace TelegramMathBot.View
         public event ReplyHandler OnReply;
         public void ProcessMessage(Message message)
         {
+            //ClientManager во view
             var clientChatId = message.Chat.Id;
             var text = message.Text;
             var hasClient = clientManager.TryGetClientById(clientChatId, out var client);

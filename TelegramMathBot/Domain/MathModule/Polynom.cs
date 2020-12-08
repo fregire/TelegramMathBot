@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TelegramMathBot.Infrastructure.MathModule
+namespace TelegramMathBot.Domain.MathModule
 {
     public static class Polynom
     {
