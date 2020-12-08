@@ -8,7 +8,7 @@ namespace Domain.MathModule
         private readonly Func<double, double> _body;
         public List<Tuple<double, double>> GraphPoints;
 
-        private const double AppropriateInterval = 10e-4;
+        private const double AppropriateInterval = 10e-5;
 
         public RealArgumentFunction(Func<double, double> body)
         {
@@ -45,11 +45,35 @@ namespace Domain.MathModule
         }
 
         /// <summary>
-        /// Returns function derivative, based on limit derivative finding method
+        /// Returns function derivative, based on limit derivative finding method.
+        /// Result can be erroneous!
         /// </summary>
         /// <returns>New function, that's equal to current function derivative on its domain</returns>
         public RealArgumentFunction Derivative() =>
-            new RealArgumentFunction((x) =>
+            new RealArgumentFunction(x =>
                 (_body(x) + _body(x + AppropriateInterval)) / AppropriateInterval);
+
+        /// <summary>
+        /// Returns function definite integral value
+        /// Result can be erroneous!
+        /// </summary>
+        /// <param name="lowerBound"></param>
+        /// <param name="upperBound"></param>
+        /// <returns></returns>
+        public double Integral(double lowerBound, double upperBound)
+        {
+            var result = 0d;
+            for (var x = lowerBound; x < upperBound; x += AppropriateInterval)
+                result += ValueAt(x);
+            return result * AppropriateInterval;
+        }
+
+        /// <summary>
+        /// Returns function integral
+        /// Be careful with constant!
+        /// </summary>
+        /// <returns></returns>
+        public RealArgumentFunction Integral(double c = 0d) => 
+            new RealArgumentFunction(x => Integral(0, x) + c);
     }
 }
