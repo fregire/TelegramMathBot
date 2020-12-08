@@ -2,20 +2,23 @@
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Text;
+using TelegramMathBot.View.Commands;
+using TelegramMathBot.View.Commands.ExpressionCommand;
+using TelegramMathBot.View.Commands.GraphicCommand;
 using TelegramMathBot.View.Commands.ReferenceCommandF;
 
 namespace TelegramMathBot.View.Commands
 {
     public static class CommandsFactory
     {
-        public static ExpressionCommand CreateExpressionCommand()
+        public static ExpressionHelp CreateExpressionCommand()
         {
-            return new ExpressionCommand();
+            return new ExpressionHelp();
         }
 
-        public static GraphicCommand CreateGraphicCommand(ImageFormat imageFormat)
+        public static GraphicHelp CreateGraphicCommand(ImageFormat imageFormat)
         {
-            return new GraphicCommand(imageFormat);
+            return new GraphicHelp(imageFormat);
         }
 
         public static HelpCommand CreateHelpCommand(List<ICommand> commands)
@@ -23,9 +26,9 @@ namespace TelegramMathBot.View.Commands
             return new HelpCommand(commands);
         }
 
-        public static ReferenceCommand CreateReferenceCommand()
+        public static RefHelp CreateReferenceCommand()
         {
-            return new ReferenceCommand();
+            return new RefHelp();
         }
     }
 }

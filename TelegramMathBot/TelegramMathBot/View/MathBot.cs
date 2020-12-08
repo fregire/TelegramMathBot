@@ -66,19 +66,13 @@ namespace TelegramMathBot.View
             if (commands.ContainsKey(text))
             {
                 var command = commands[text];
-                var clientCommand = command.CreateSameCommand();
-                var result = clientCommand.GetResponse("");
-                response = result.Response;
-
-                if (result.IsCompleted)
-                    clientsCommands[client] = null;
-                else
-                    clientsCommands[client] = clientCommand;
+                response = command.GetResponse("");
+                clientsCommands[client] = command.GetNextCommand();
             }
             else
             {
                 if (clientsCommands[client] != null)
-                    response = clientsCommands[client].GetResponse(text).Response;
+                    response = clientsCommands[client].GetResponse(text);
                 else
                     response = unknownMessage;
             }
