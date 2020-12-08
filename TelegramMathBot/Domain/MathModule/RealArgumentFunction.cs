@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TelegramMathBot.Domain.MathModule
+namespace Domain.MathModule
 {
     public class RealArgumentFunction
     {

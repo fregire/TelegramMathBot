@@ -1,6 +1,6 @@
 using System;
 
-namespace TelegramMathBot.Domain.MathModule
+namespace Domain.MathModule
 {
     public class Vector3d
     {

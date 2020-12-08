@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using TelegramMathBot.App;
-using TelegramMathBot.Domain.GraphicModule;
-using TelegramMathBot.Domain.MathModule;
 using TelegramMathBot.View;
 using TelegramMathBot.View.Parsers;
 using TelegramMathBot.View.Commands;
@@ -17,6 +14,7 @@ using System.Drawing.Imaging;
 using Telegram.Bot.Types.Enums;
 using System.Reflection;
 using System.Threading;
+using App;
 
 namespace TelegramMathBot
 {

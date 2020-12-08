@@ -1,8 +1,8 @@
 using System;
-using TelegramMathBot.Domain.GraphicModule;
+using Domain.GraphicModule;
 using SFML.Graphics;
 
-namespace TelegramMathBot.Domain.MathModule
+namespace Domain.MathModule
 {
     public static class GraphicSolver
     {

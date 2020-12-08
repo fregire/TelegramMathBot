@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
-using TelegramMathBot.Domain.MathModule;
+using Domain.MathModule;
 
 namespace TelegramMathBot.View.Parsers
 {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using SFML.Graphics;
 
-namespace TelegramMathBot.Domain.GraphicModule
+namespace Domain.GraphicModule
 {
     public class ImageProcessor
     {

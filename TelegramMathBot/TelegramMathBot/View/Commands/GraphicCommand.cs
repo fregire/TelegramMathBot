@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Reflection;
 using System.Text;
-using TelegramMathBot.Domain.MathModule;
+using Domain.MathModule;
 using TelegramMathBot.View.Messages;
 using TelegramMathBot.View.Parsers;
 

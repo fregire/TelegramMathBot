@@ -5,7 +5,7 @@ using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.Enums;
 using TelegramMathBot.View.Parsers;
-using TelegramMathBot.App;
+using App;
 using Telegram.Bot.Types.InputFiles;
 using System.IO;
 using System.Linq;

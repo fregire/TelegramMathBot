@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TelegramMathBot.Domain.MathModule;
+using Domain.MathModule;
 using TelegramMathBot.View.Messages;
 using TelegramMathBot.View.Parsers;
 
