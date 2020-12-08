@@ -30,5 +30,10 @@ namespace TelegramMathBot.View.Commands
         {
             return new RefHelp();
         }
+
+        public static StartCommand CreateStartCommand()
+        {
+            return new StartCommand();
+        }
     }
 }

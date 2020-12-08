@@ -54,8 +54,9 @@ namespace TelegramMathBot
             var expCommand = CommandsFactory.CreateExpressionCommand();
             var helpCommand = CommandsFactory.CreateHelpCommand(
                 new List<ICommand> { expCommand, graphicCommand, referenceCommand });
+            var startCommand = CommandsFactory.CreateStartCommand();
 
-            return new List<ICommand> { expCommand, helpCommand, graphicCommand, referenceCommand };
+            return new List<ICommand> { expCommand, helpCommand, graphicCommand, referenceCommand, startCommand };
         }
     }
 }
