@@ -18,14 +18,9 @@ namespace TelegramMathBot.View.Commands.GraphicCommand
             this.imageFormat = imageFormat;
         }
 
-        public ICommand GetNextCommand()
+        public (ICommand NextCommand, IMessage Response) GetResponse(string message)
         {
-            return new GraphicSolve(imageFormat);
-        }
-
-        public IMessage GetResponse(string message)
-        {
-            return new TextMessage("Введите функцию по переменной x");
+            return (new GraphicSolve(imageFormat), new TextMessage("Введите функцию по переменной x"));
         }
     }
 }

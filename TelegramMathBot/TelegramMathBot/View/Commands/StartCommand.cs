@@ -11,11 +11,6 @@ namespace TelegramMathBot.View.Commands
 
         public string Command => "/start";
 
-        public ICommand GetNextCommand()
-        {
-            return null;
-        }
-
         private string GetGreetingMessage()
         {
             var result = new StringBuilder();
@@ -26,9 +21,9 @@ namespace TelegramMathBot.View.Commands
             return result.ToString();
         }
 
-        public IMessage GetResponse(string message)
+        public (ICommand NextCommand, IMessage Response) GetResponse(string message)
         {
-            return new TextMessage(GetGreetingMessage());
+            return (new UnknownCommand(), new TextMessage(GetGreetingMessage()));
         }
     }
 }

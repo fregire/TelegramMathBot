@@ -44,14 +44,9 @@ namespace TelegramMathBot.View.Commands.ReferenceCommandF
             return result.ToString();
         }
 
-        public ICommand GetNextCommand()
+        public (ICommand NextCommand, IMessage Response) GetResponse(string message)
         {
-            return new RefSolve(categories);
-        }
-
-        public IMessage GetResponse(string message)
-        {
-            return new TextMessage(GetFormattedCatsNames(categories));
+            return (new RefSolve(categories), new TextMessage(GetFormattedCatsNames(categories)));
         }
     }
 }

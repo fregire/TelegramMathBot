@@ -21,12 +21,7 @@ namespace TelegramMathBot.View.Commands.GraphicCommand
             this.imageFormat = imageFormat;
         }
 
-        public ICommand GetNextCommand()
-        {
-            return this;
-        }
-
-        public IMessage GetResponse(string message)
+        public (ICommand NextCommand, IMessage Response) GetResponse(string message)
         {
             try
             {
@@ -38,11 +33,11 @@ namespace TelegramMathBot.View.Commands.GraphicCommand
                     Tuple.Create(-10.0, 10.0),
                     func);
 
-                return new PhotoMessage(image, imageFormat);
+                return (this, new PhotoMessage(image, imageFormat));
             }
             catch
             {
-                return new TextMessage("Функция неверная");
+                return (this, new TextMessage("Функция неверная"));
             }
         }
     }

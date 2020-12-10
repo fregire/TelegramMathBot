@@ -12,14 +12,9 @@ namespace TelegramMathBot.View.Commands.ExpressionCommand
 
         public string Command => "/exp";
 
-        public ICommand GetNextCommand()
+        public (ICommand NextCommand, IMessage Response) GetResponse(string message)
         {
-            return new ExpresssionSolve();
-        }
-
-        public IMessage GetResponse(string message)
-        {
-            return new TextMessage("Введите численное выражение");
+            return (new ExpresssionSolve(), new TextMessage("Введите численное выражение"));
         }
     }
 }

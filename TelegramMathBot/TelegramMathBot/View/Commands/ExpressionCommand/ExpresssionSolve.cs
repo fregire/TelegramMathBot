@@ -13,22 +13,17 @@ namespace TelegramMathBot.View.Commands.ExpressionCommand
 
         public string Command => throw new NotImplementedException();
 
-        public ICommand GetNextCommand()
-        {
-            return this;
-        }
-
-        public IMessage GetResponse(string message)
+        public (ICommand NextCommand, IMessage Response) GetResponse(string message)
         {
             try
             {
                 var data = ExpressionParser.Parse(message);
                 var result = ExpressionSolver.Solve(data).ToString();
-                return new TextMessage(result);
+                return (this, new TextMessage(result));
             }
             catch
             {
-                return new TextMessage("Численное выражение введено неверно");
+                return (this, new TextMessage("Численное выражение введено неверно"));
             }
         }
     }

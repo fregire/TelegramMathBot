@@ -17,12 +17,7 @@ namespace TelegramMathBot.View.Commands
 
         public string HelpInfo => "Помощь";
 
-        public ICommand GetNextCommand()
-        {
-            return new UnknownCommand();
-        }
-
-        public IMessage GetResponse(string message)
+        public (ICommand NextCommand, IMessage Response) GetResponse(string message)
         {
             var result = new StringBuilder("Команды бота:\n");
             result.Append("Сначала отправьте команду, затем отправьте аргумент\n");
@@ -34,7 +29,7 @@ namespace TelegramMathBot.View.Commands
                 result.Append(commandRow);
             }
 
-            return new TextMessage(result.ToString());
+            return (new UnknownCommand(), new TextMessage(result.ToString()));
         }
     }
 }

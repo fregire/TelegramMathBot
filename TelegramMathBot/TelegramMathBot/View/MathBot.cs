@@ -54,7 +54,6 @@ namespace TelegramMathBot.View
             var text = message.Text;
             var hasClient = clientManager.TryGetClientById(clientChatId, out var client);
             var defaultCommand = new UnknownCommand();
-            IMessage response = null;
 
             if (!hasClient)
             {
@@ -63,14 +62,14 @@ namespace TelegramMathBot.View
                 clientsCommands.Add(client, defaultCommand);
             }
 
+            var currCommand = clientsCommands[client];
+
             if (commands.ContainsKey(text))
-            {
-                var command = commands[text];
-                response = command.GetResponse("");
-                clientsCommands[client] = command.GetNextCommand();
-            }
-            else
-                response = clientsCommands[client].GetResponse(text);
+                currCommand = commands[text];
+
+            var commandResult = currCommand.GetResponse(text);
+            var response = commandResult.Response;
+            clientsCommands[client] = commandResult.NextCommand;
 
             OnReply?.Invoke(new ReplyEventArgs(response, message.Chat));
         }

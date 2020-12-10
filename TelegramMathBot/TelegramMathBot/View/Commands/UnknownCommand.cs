@@ -11,14 +11,9 @@ namespace TelegramMathBot.View.Commands
 
         public string Command => throw new NotImplementedException();
 
-        public ICommand GetNextCommand()
+        public (ICommand NextCommand, IMessage Response) GetResponse(string message)
         {
-            return this;
-        }
-
-        public IMessage GetResponse(string message)
-        {
-            return new TextMessage("Я не понимаю:( \nВведите команду /help");
+            return (this, new TextMessage("Я не понимаю:( \nВведите команду /help"));
         }
     }
 }
