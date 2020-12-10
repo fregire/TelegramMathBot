@@ -53,14 +53,14 @@ namespace TelegramMathBot.View
             var clientChatId = message.Chat.Id;
             var text = message.Text;
             var hasClient = clientManager.TryGetClientById(clientChatId, out var client);
-            var unknownMessage = new TextMessage("Я не понимаю:( \nВведите команду /help");
+            var defaultCommand = new UnknownCommand();
             IMessage response = null;
 
             if (!hasClient)
             {
                 client = new Client(clientChatId);
                 clientManager.AddClient(client);
-                clientsCommands.Add(client, null);
+                clientsCommands.Add(client, defaultCommand);
             }
 
             if (commands.ContainsKey(text))
@@ -70,12 +70,7 @@ namespace TelegramMathBot.View
                 clientsCommands[client] = command.GetNextCommand();
             }
             else
-            {
-                if (clientsCommands[client] != null)
-                    response = clientsCommands[client].GetResponse(text);
-                else
-                    response = unknownMessage;
-            }
+                response = clientsCommands[client].GetResponse(text);
 
             OnReply?.Invoke(new ReplyEventArgs(response, message.Chat));
         }

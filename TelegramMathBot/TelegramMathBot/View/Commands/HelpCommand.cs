@@ -19,7 +19,7 @@ namespace TelegramMathBot.View.Commands
 
         public ICommand GetNextCommand()
         {
-            return null;
+            return new UnknownCommand();
         }
 
         public IMessage GetResponse(string message)
