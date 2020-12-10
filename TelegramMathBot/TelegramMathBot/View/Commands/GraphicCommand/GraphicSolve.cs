@@ -25,7 +25,7 @@ namespace TelegramMathBot.View.Commands.GraphicCommand
         {
             try
             {
-                var func = GraphicParser.Parse(message);
+                var func = FunctionParser.Parse(message);
                 var image = GraphicSolver.Solve(
                     500,
                     500,

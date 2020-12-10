@@ -52,11 +52,12 @@ namespace TelegramMathBot
             var graphicCommand = CommandsFactory.CreateGraphicCommand(ImageFormat.Png);
             var referenceCommand = CommandsFactory.CreateReferenceCommand();
             var expCommand = CommandsFactory.CreateExpressionCommand();
+            var integralCommand = CommandsFactory.CreateIntegralCommand();
             var helpCommand = CommandsFactory.CreateHelpCommand(
-                new List<ICommand> { expCommand, graphicCommand, referenceCommand });
+                new List<ICommand> { expCommand, graphicCommand, referenceCommand, integralCommand });
             var startCommand = CommandsFactory.CreateStartCommand();
 
-            return new List<ICommand> { expCommand, helpCommand, graphicCommand, referenceCommand, startCommand };
+            return new List<ICommand> { expCommand, helpCommand, graphicCommand, referenceCommand, startCommand, integralCommand };
         }
     }
 }

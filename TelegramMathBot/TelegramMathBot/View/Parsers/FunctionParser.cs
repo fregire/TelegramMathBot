@@ -6,7 +6,7 @@ using Flee.PublicTypes;
 
 namespace TelegramMathBot.View.Parsers
 {
-    public class GraphicParser
+    public class FunctionParser
     {
         public static Func<double, double> Parse(string input)
         {

@@ -5,6 +5,7 @@ using System.Text;
 using TelegramMathBot.View.Commands;
 using TelegramMathBot.View.Commands.ExpressionCommand;
 using TelegramMathBot.View.Commands.GraphicCommand;
+using TelegramMathBot.View.Commands.IntegralCommand;
 using TelegramMathBot.View.Commands.ReferenceCommandF;
 
 namespace TelegramMathBot.View.Commands
@@ -34,6 +35,11 @@ namespace TelegramMathBot.View.Commands
         public static StartCommand CreateStartCommand()
         {
             return new StartCommand();
+        }
+
+        public static IntegralHelp CreateIntegralCommand()
+        {
+            return new IntegralHelp();
         }
     }
 }
