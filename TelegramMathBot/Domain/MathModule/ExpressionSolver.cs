@@ -4,9 +4,9 @@ namespace Domain.MathModule
 {
     public class ExpressionSolver
     {
-        public static int Solve(string input)
+        public static decimal Solve(string input)
         {
-            return (int) new DataTable().Compute(input, "");
+            return (decimal)new DataTable().Compute(input, "");
         }
     }
 }

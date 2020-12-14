@@ -50,8 +50,6 @@ namespace TelegramMathBot
                 botSender.SendMessage(args.Response, args.ClientChat);
 
             bot.StartReceiving();
-
-            Console.ReadLine();
         }
 
         static StandardKernel ConfigureContainer()
