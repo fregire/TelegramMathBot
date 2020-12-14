@@ -18,15 +18,33 @@ namespace Domain.MathModule
         /// <returns>List containing every root once, regardless of the multiplicity</returns>
         public static List<double> GetAllPolynomRoots(List<double> coefficients, double scanFrom, double scanTo, double step)
         {
+            var resultRoots = new List<double>();
             var pointQueue = new List<double>();
             for (var i = scanFrom; i < scanTo; i += step) 
                 pointQueue.Add(i);
             var possibleRoots = RecursiveScan(coefficients, pointQueue, step);
             possibleRoots = ClearSingles(possibleRoots);
             possibleRoots = ClearDoubles(possibleRoots);
-            return possibleRoots
-                .Select(elem => Math.Round(elem, 10))
-                .ToList();
+
+            foreach(var root in possibleRoots)
+            {
+                var res = GetResult(coefficients, root);
+                if (res < 10e-6)
+                    resultRoots.Add(Math.Round(root, 10));
+            }
+
+            return resultRoots;
+        }
+
+        private static double GetResult(List<double> coefficients, double value)
+        {
+            var coeffsCount = coefficients.Count;
+            var summ = 0.0;
+
+            for(var i = coeffsCount - 1; i >= 0; i--)
+                summ += coefficients[i] * Math.Pow(value, coeffsCount - i - 1);
+
+            return summ;
         }
 
         private static List<double> RecursiveScan(List<double> coefficients, List<double> pointQueue, double step)
