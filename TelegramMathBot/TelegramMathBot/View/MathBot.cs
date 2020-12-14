@@ -49,7 +49,6 @@ namespace TelegramMathBot.View
         public event ReplyHandler OnReply;
         public void ProcessMessage(Message message)
         {
-            //ClientManager во view
             var clientChatId = message.Chat.Id;
             var text = message.Text;
             var hasClient = clientManager.TryGetClientById(clientChatId, out var client);

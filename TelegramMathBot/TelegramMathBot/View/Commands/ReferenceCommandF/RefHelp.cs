@@ -27,6 +27,11 @@ namespace TelegramMathBot.View.Commands.ReferenceCommandF
                     "Производная",
                     new PhotoMessage(new Image("Images/derivative.png"), ImageFormat.Png)));
 
+            result.Add(
+                new RefCategory(
+                    "Интегралы",
+                    new PhotoMessage(new Image("Images/integral.png"), ImageFormat.Png)));
+
             return result;
         }
 
