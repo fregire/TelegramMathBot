@@ -7,9 +7,11 @@ namespace TelegramMathBot.View.Commands
 {
     public class StartCommand : ICommand
     {
-        public string HelpInfo => throw new NotImplementedException();
+        public string FullDescription => throw new NotImplementedException();
 
         public string Command => "/start";
+
+        public string Description => "Начало работы с ботом";
 
         private string GetGreetingMessage()
         {

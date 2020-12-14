@@ -9,7 +9,8 @@ namespace TelegramMathBot.View.Commands.ReferenceCommandF
 {
     public class RefHelp : ICommand
     {
-        public string HelpInfo => "Справка по основным формулам";
+        public string FullDescription => "Справка по основным формулам";
+        public string Description => "Справка по основным формулам";
 
         public string Command => "/ref";
 

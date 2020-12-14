@@ -42,6 +42,7 @@ namespace TelegramMathBot
             var mathBot = container.Get<MathBot>();
             var botSender = container.Get<BotSender>();
 
+            bot.SetCommands(mathBot.Commands);
             bot.OnMessageTextReceived += (MessageTextEventArgs args) =>
                 mathBot.ProcessMessage(args.Message);
 

@@ -7,8 +7,8 @@ namespace TelegramMathBot.View.Commands.IntegralCommand
 {
     public class IntegralHelp : ICommand
     {
-        public string HelpInfo => "Команда для вычисления определенного интеграла";
-
+        public string FullDescription => "Команда для вычисления определенного интеграла";
+        public string Description => "Вычисление определенного интеграла";
         public string Command => "/int";
 
         public (ICommand NextCommand, IMessage Response) GetResponse(string message)

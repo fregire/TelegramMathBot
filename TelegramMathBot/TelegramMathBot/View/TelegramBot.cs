@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using Telegram.Bot.Types;
 using System.Threading.Tasks;
+using TelegramMathBot.View.Commands;
 
 namespace TelegramMathBot.View
 {
@@ -58,6 +59,13 @@ namespace TelegramMathBot.View
         public async Task<Message> SendPhotoMessage(Chat chat, InputOnlineFile file)
         {
             return await bot.SendPhotoAsync(chat.Id, file);
+        }
+
+        public async void SetCommands(Dictionary<string, ICommand> commands)
+        {
+            await bot.SetMyCommandsAsync(commands
+                .Select(pair => new BotCommand { 
+                    Command = pair.Key, Description=pair.Value.Description }));
         }
     }
 }

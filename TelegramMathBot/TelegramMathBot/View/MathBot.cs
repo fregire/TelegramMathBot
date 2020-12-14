@@ -25,12 +25,12 @@ namespace TelegramMathBot.View
     public class MathBot
     {
         private readonly ClientManager clientManager;
-        private readonly Dictionary<string, ICommand> commands;
         private readonly Dictionary<Client, ICommand> clientsCommands;
+        public Dictionary<string, ICommand> Commands { get; }
         public MathBot(ClientManager app, List<ICommand> commands)
         {
             this.clientManager = app;
-            this.commands = GetDictCommands(commands);
+            this.Commands = GetDictCommands(commands);
             this.clientsCommands = new Dictionary<Client, ICommand>();
         }
 
@@ -63,8 +63,8 @@ namespace TelegramMathBot.View
 
             var currCommand = clientsCommands[client];
 
-            if (commands.ContainsKey(text))
-                currCommand = commands[text];
+            if (Commands.ContainsKey(text))
+                currCommand = Commands[text];
 
             var commandResult = currCommand.GetResponse(text);
             var response = commandResult.Response;

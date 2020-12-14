@@ -15,7 +15,9 @@ namespace TelegramMathBot.View.Commands
 
         public string Command => "/help";
 
-        public string HelpInfo => "Помощь";
+        public string FullDescription => "Помощь";
+
+        public string Description => "Подробное описание каждой команды";
 
         public (ICommand NextCommand, IMessage Response) GetResponse(string message)
         {
@@ -25,7 +27,7 @@ namespace TelegramMathBot.View.Commands
             foreach (var command in commands)
             {
                 var commandRow = 
-                    String.Format("{0} - {1}\n", command.Command, command.HelpInfo);
+                    String.Format("{0} - {1}\n", command.Command, command.FullDescription);
                 result.Append(commandRow);
             }
 

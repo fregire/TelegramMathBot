@@ -7,9 +7,9 @@ namespace TelegramMathBot.View.Commands.ExpressionCommand
 {
     public class ExpressionHelp : ICommand
     {
-        public string HelpInfo => "Команда для вычисления численного выражения.\n" +
+        public string FullDescription => "Команда для вычисления численного выражения.\n" +
             "Например, 6+2-10*4+6!";
-
+        public string Description => "Вычисление выражений";
         public string Command => "/exp";
 
         public (ICommand NextCommand, IMessage Response) GetResponse(string message)

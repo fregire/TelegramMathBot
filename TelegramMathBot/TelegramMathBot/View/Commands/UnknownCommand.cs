@@ -7,9 +7,11 @@ namespace TelegramMathBot.View.Commands
 {
     public class UnknownCommand : ICommand
     {
-        public string HelpInfo => throw new NotImplementedException();
+        public string FullDescription => throw new NotImplementedException();
 
         public string Command => throw new NotImplementedException();
+
+        public string Description => throw new NotImplementedException();
 
         public (ICommand NextCommand, IMessage Response) GetResponse(string message)
         {

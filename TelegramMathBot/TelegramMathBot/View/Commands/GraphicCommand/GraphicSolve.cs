@@ -10,9 +10,10 @@ namespace TelegramMathBot.View.Commands.GraphicCommand
 {
     public class GraphicSolve : ICommand
     {
-        public string HelpInfo => throw new NotImplementedException();
+        public string FullDescription => throw new NotImplementedException();
 
         public string Command => throw new NotImplementedException();
+        public string Description => throw new NotImplementedException();
 
         private readonly ImageFormat imageFormat;
 

@@ -7,9 +7,11 @@ namespace TelegramMathBot.View.Commands.ReferenceCommandF
 {
     public class RefSolve : ICommand
     {
-        public string HelpInfo => throw new NotImplementedException();
+        public string FullDescription => throw new NotImplementedException();
 
         public string Command => throw new NotImplementedException();
+
+        public string Description => throw new NotImplementedException();
 
         private readonly List<RefCategory> categories;
 

@@ -8,9 +8,12 @@ namespace TelegramMathBot.View.Commands.GraphicCommand
 {
     public class GraphicHelp : ICommand
     {
-        public string HelpInfo => "Команда для отрисовки графика функции по переменной x.";
+        public string FullDescription => "Команда для отрисовки графика функции по переменной x.";
 
         public string Command => "/graph";
+
+        public string Description => "Отрисовка графика функции";
+
         private readonly ImageFormat imageFormat;
 
         public GraphicHelp(ImageFormat imageFormat)
