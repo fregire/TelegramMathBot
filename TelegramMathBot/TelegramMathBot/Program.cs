@@ -15,6 +15,12 @@ using Telegram.Bot.Types.Enums;
 using System.Reflection;
 using System.Threading;
 using App;
+using Ninject;
+using System.Net.Http;
+using TelegramMathBot.View.Commands.GraphicCommand;
+using TelegramMathBot.View.Commands.ReferenceCommandF;
+using TelegramMathBot.View.Commands.ExpressionCommand;
+using TelegramMathBot.View.Commands.IntegralCommand;
 
 namespace TelegramMathBot
 {
@@ -31,10 +37,10 @@ namespace TelegramMathBot
 
         static void Start()
         {
-            var clientManager = new ClientManager();
-            var bot = new TelegramBot(new TelegramBotClient(token));
-            var mathBot = new MathBot(clientManager, GetCommands());
-            var botSender = new BotSender(bot);
+            var container = ConfigureContainer();
+            var bot = container.Get<TelegramBot>();
+            var mathBot = container.Get<MathBot>();
+            var botSender = container.Get<BotSender>();
 
             bot.OnMessageTextReceived += (MessageTextEventArgs args) =>
                 mathBot.ProcessMessage(args.Message);
@@ -47,17 +53,38 @@ namespace TelegramMathBot
             Console.ReadLine();
         }
 
-        static List<ICommand> GetCommands()
+        static StandardKernel ConfigureContainer()
         {
-            var graphicCommand = CommandsFactory.CreateGraphicCommand(ImageFormat.Png);
-            var referenceCommand = CommandsFactory.CreateReferenceCommand();
-            var expCommand = CommandsFactory.CreateExpressionCommand();
-            var integralCommand = CommandsFactory.CreateIntegralCommand();
-            var helpCommand = CommandsFactory.CreateHelpCommand(
-                new List<ICommand> { expCommand, graphicCommand, referenceCommand, integralCommand });
-            var startCommand = CommandsFactory.CreateStartCommand();
+            var container = new StandardKernel();
+            container.Bind<ImageFormat>().ToConstant(ImageFormat.Png);
+            container.Bind<HttpClient>().ToConstant(new HttpClient());
+            container.Bind<string>().ToConstant(token);
+            container.Bind<ClientManager>().ToSelf().InSingletonScope();
+            container.Bind<TelegramBotClient>().ToSelf().InSingletonScope();
+            container.Bind<TelegramBot>().ToSelf().InSingletonScope();
+            BindCommands(container);
+            container.Bind<MathBot>().ToSelf().InSingletonScope();
+            container.Bind<BotSender>().ToSelf().InSingletonScope();
 
-            return new List<ICommand> { expCommand, helpCommand, graphicCommand, referenceCommand, startCommand, integralCommand };
+            return container;
+        }
+
+
+        static void BindCommands(StandardKernel container)
+        {
+            container.Bind<ICommand>().To(typeof(GraphicHelp));
+            container.Bind<ICommand>().To(typeof(RefHelp));
+            container.Bind<ICommand>().To(typeof(IntegralHelp));
+            container.Bind<ICommand>().To(typeof(ExpressionHelp));
+            container
+                .Bind<ICommand>()
+                .To(typeof(StartCommand))
+                .WhenInjectedInto<MathBot>();
+
+            container
+                .Bind<ICommand>()
+                .To(typeof(HelpCommand))
+                .WhenInjectedInto(typeof(MathBot));
         }
     }
 }
