@@ -11,11 +11,21 @@ namespace Domain.MathModule
         /// <param name="upperBound">greater segment of curvilinear trapezoid</param>
         /// <param name="lowerBound">lower segment of curvilinear trapezoid</param>
         /// <returns>Integral value</returns>
-        public static double Solve(DefiniteIntegral intergral)
+        public static double Solve(DefiniteIntegral integral)
         {
             var result = 0d;
-            for (var x = intergral.LowerBound; x < intergral.UpperBound; x += 10e-5) result += intergral.Function(x) * 10e-5;
-            return result;
+            var resSign = 1;
+
+            if (integral.LowerBound > integral.UpperBound)
+            {
+                var tmp = integral.LowerBound;
+                integral.LowerBound = integral.UpperBound;
+                integral.UpperBound = tmp;
+                resSign = -1;
+            }
+
+            for (var x = integral.LowerBound; x < integral.UpperBound; x += 10e-5) result += integral.Function(x) * 10e-5;
+            return result * resSign;
         }
     }
 }
