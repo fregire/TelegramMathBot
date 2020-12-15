@@ -26,6 +26,9 @@ namespace TelegramMathBot
 {
     class Program
     {
+        // Интерфейс для генерации картинок
+        // Интерфейс для солверов
+        // Код должен работаь сразу при клонировании
         //Config file и добавитьь в .gitignore
         //431331940 
         static string token = "1495097120:AAHpmNmtzpgF6-_BZe0yXyGdfQYrUdhMokQ";

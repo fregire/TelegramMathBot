@@ -14,6 +14,7 @@ namespace TelegramMathBot.View.Commands.ExpressionCommand
 
         public string Command => throw new NotImplementedException();
 
+        //Явно зависит от ExpressionParser => зависимость
         public (ICommand NextCommand, IMessage Response) GetResponse(string message)
         {
             try

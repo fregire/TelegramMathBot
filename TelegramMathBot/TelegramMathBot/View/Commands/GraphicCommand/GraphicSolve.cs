@@ -17,6 +17,11 @@ namespace TelegramMathBot.View.Commands.GraphicCommand
 
         private readonly ImageFormat imageFormat;
 
+        //Допустим хотим сделать свой формат(экзотический, ASCII), 
+        //который возвращает данные в разном формате(в виде картинки, текста(ascii))  
+        // => нужен интерфейс 
+        // интерфейс принимает Image и возвращает в своем формате
+
         public GraphicSolve(ImageFormat imageFormat)
         {
             this.imageFormat = imageFormat;

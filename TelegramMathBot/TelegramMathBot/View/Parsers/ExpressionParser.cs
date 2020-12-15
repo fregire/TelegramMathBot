@@ -8,6 +8,7 @@ namespace TelegramMathBot.View.Parsers
 {
     public class ExpressionParser
     {
+        // Зависимость от FactrorialSolver => зависимость в конструкторе
         public static string Parse(string input)
         {
             var factorials = new Regex("[0-9]+!");
