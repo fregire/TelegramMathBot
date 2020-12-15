@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 
 namespace Domain.MathModule
 {
@@ -6,7 +7,9 @@ namespace Domain.MathModule
     {
         public static decimal Solve(string input)
         {
-            return (decimal)new DataTable().Compute(input, "");
+            var result = new DataTable().Compute(input, "");
+
+            return Convert.ToDecimal(result);
         }
     }
 }
