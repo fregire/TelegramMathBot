@@ -1,3 +1,4 @@
+using Domain.Math;
 using System.Collections.Generic;
 
 namespace Domain.MathModule

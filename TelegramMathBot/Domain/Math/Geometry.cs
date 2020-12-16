@@ -1,6 +1,6 @@
 using System;
 
-namespace Domain.MathModule
+namespace Domain.Math
 {
     public class Vector3d
     {

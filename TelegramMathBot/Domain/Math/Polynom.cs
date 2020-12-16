@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Domain.MathModule
+namespace Domain.Math
 {
     public static class Polynom
     {

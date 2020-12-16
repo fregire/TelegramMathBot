@@ -1,5 +1,6 @@
 using System;
 using Domain.GraphicModule;
+using Domain.Math;
 using SFML.Graphics;
 
 namespace Domain.MathModule
