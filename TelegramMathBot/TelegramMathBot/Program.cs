@@ -21,6 +21,7 @@ using TelegramMathBot.View.Commands.GraphicCommand;
 using TelegramMathBot.View.Commands.ReferenceCommandF;
 using TelegramMathBot.View.Commands.ExpressionCommand;
 using TelegramMathBot.View.Commands.IntegralCommand;
+using TelegramMathBot.View.ImageFormats;
 
 namespace TelegramMathBot
 {
@@ -58,7 +59,8 @@ namespace TelegramMathBot
         static StandardKernel ConfigureContainer()
         {
             var container = new StandardKernel();
-            container.Bind<ImageFormat>().ToConstant(ImageFormat.Png);
+            container.Bind<IImageFormat>().To(typeof(PNGImageFormat));
+            container.Bind<IImageFormat>().To(typeof(ASCIIImageFormat));
             container.Bind<HttpClient>().ToConstant(new HttpClient());
             container.Bind<string>().ToConstant(token);
             container.Bind<ClientManager>().ToSelf().InSingletonScope();

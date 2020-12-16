@@ -17,11 +17,6 @@ namespace TelegramMathBot.View.Commands
             return new ExpressionHelp();
         }
 
-        public static GraphicHelp CreateGraphicCommand(ImageFormat imageFormat)
-        {
-            return new GraphicHelp(imageFormat);
-        }
-
         public static HelpCommand CreateHelpCommand(List<ICommand> commands)
         {
             return new HelpCommand(commands);
