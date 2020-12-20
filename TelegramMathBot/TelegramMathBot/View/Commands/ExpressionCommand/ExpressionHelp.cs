@@ -13,11 +13,19 @@ namespace TelegramMathBot.View.Commands.ExpressionCommand
             "Например, 6+2-10*4+6!";
         public string Description => "Вычисление выражений";
         public string Command => "/exp";
-
+        private readonly ISolver<string, decimal> expSolver;
+        private readonly IParser<string, string> expParser;
+        public ExpressionHelp(
+            ISolver<string, decimal> expSolver, 
+            IParser<string, string> expParser)
+        {
+            this.expParser = expParser;
+            this.expSolver = expSolver;
+        }
         public (ICommand NextCommand, IMessage Response) GetResponse(string message)
         {
             return (
-                new ExpressionSolve(new ExpressionSolver(), new ExpressionParser()), 
+                new ExpressionSolve(expSolver,  expParser), 
                 new TextMessage("Введите численное выражение"));
         }
     }

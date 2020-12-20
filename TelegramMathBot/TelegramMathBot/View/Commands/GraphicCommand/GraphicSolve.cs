@@ -19,35 +19,29 @@ namespace TelegramMathBot.View.Commands.GraphicCommand
         public string Description => throw new NotImplementedException();
 
         private readonly IImageFormat imageFormat;
-        private readonly GraphicSolver solver;
-        private readonly FunctionParser parser;
-
-        //Допустим хотим сделать свой формат(экзотический, ASCII), 
-        //который возвращает данные в разном формате(в виде картинки, текста(ascii))  
-        // => нужен интерфейс 
-        // интерфейс принимает Image и возвращает в своем формате
-
+        private readonly ISolver<GraphicConfig, Image> graphicSolver;
+        private readonly IParser<string, Func<double, double>> funcParser;
         public GraphicSolve(
-            GraphicSolver solver, 
-            FunctionParser parser,
+            ISolver<GraphicConfig, Image> solver,
+            IParser<string, Func<double, double>> parser,
             IImageFormat imageFormat)
         {
             this.imageFormat = imageFormat;
-            this.solver = solver;
-            this.parser = parser;
+            this.graphicSolver = solver;
+            this.funcParser = parser;
         }
 
         public (ICommand NextCommand, IMessage Response) GetResponse(string message)
         {
             try
             {
-                var func = parser.Parse(message);
+                var func = funcParser.Parse(message);
                 var config = new GraphicConfig(
                     new System.Drawing.Size(500, 500),
                     Tuple.Create(-10.0, 10.0),
                     Tuple.Create(-10.0, 10.0),
                     func);
-                var image = solver.Solve(config);
+                var image = graphicSolver.Solve(config);
 
                 return (this, imageFormat.GetResult(image));
             }

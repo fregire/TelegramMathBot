@@ -1,4 +1,6 @@
-﻿using Domain.MathModule.Graphic;
+﻿using Domain.MathModule;
+using Domain.MathModule.Graphic;
+using SFML.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,11 +17,18 @@ namespace TelegramMathBot.View.Commands.GraphicCommand
         public string Description => throw new NotImplementedException();
 
         public string Command => throw new NotImplementedException();
-        public readonly List<IImageFormat> imageFormats;
 
-        public GraphicFormats(List<IImageFormat> imageFormats)
+        public readonly List<IImageFormat> imageFormats;
+        private readonly ISolver<GraphicConfig, Image> solver;
+        private readonly IParser<string, Func<double, double>> parser;
+        public GraphicFormats(
+            ISolver<GraphicConfig, Image> solver,
+            IParser<string, Func<double, double>> parser,
+            List<IImageFormat> imageFormats)
         {
             this.imageFormats = imageFormats;
+            this.solver = solver;
+            this.parser = parser;
         }
 
         public (ICommand NextCommand, IMessage Response) GetResponse(string message)
@@ -33,8 +42,8 @@ namespace TelegramMathBot.View.Commands.GraphicCommand
                 if (IsValidIndex(index))
                     return (
                         new GraphicSolve(
-                            new GraphicSolver(), 
-                            new FunctionParser(),
+                            solver, 
+                            parser,
                             imageFormats[index]), 
                         new TextMessage("Введите функцию по переменной x"));
 

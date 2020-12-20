@@ -1,9 +1,13 @@
-﻿using System;
+﻿using Domain.MathModule;
+using Domain.MathModule.Graphic;
+using SFML.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Text;
 using TelegramMathBot.View.ImageFormats;
 using TelegramMathBot.View.Messages;
+using TelegramMathBot.View.Parsers;
 
 namespace TelegramMathBot.View.Commands.GraphicCommand
 {
@@ -16,9 +20,16 @@ namespace TelegramMathBot.View.Commands.GraphicCommand
         public string Description => "Отрисовка графика функции";
 
         private readonly List<IImageFormat> imageFormats;
-        public GraphicHelp(List<IImageFormat> imageFormats)
+        private readonly ISolver<GraphicConfig, Image> graphicSolver;
+        private readonly IParser<string, Func<double, double>> funcParser;
+        public GraphicHelp(
+            ISolver<GraphicConfig, Image> graphicSolver,
+            IParser<string, Func<double, double>> funcParser,
+            List<IImageFormat> imageFormats)
         {
             this.imageFormats = imageFormats;
+            this.graphicSolver = graphicSolver;
+            this.funcParser = funcParser;
         }
 
         public string GetFormattedListFormats()
@@ -39,7 +50,7 @@ namespace TelegramMathBot.View.Commands.GraphicCommand
         public (ICommand NextCommand, IMessage Response) GetResponse(string message)
         {
             return (
-                new GraphicFormats(imageFormats), 
+                new GraphicFormats(graphicSolver, funcParser, imageFormats), 
                 new TextMessage(GetText()));
         }
     }

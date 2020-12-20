@@ -22,6 +22,9 @@ using TelegramMathBot.View.Commands.ReferenceCommandF;
 using TelegramMathBot.View.Commands.ExpressionCommand;
 using TelegramMathBot.View.Commands.IntegralCommand;
 using TelegramMathBot.View.ImageFormats;
+using Domain.MathModule;
+using Domain.MathModule.Graphic;
+using Domain.AdditionalMath;
 
 namespace TelegramMathBot
 {
@@ -59,13 +62,13 @@ namespace TelegramMathBot
         static StandardKernel ConfigureContainer()
         {
             var container = new StandardKernel();
-            container.Bind<IImageFormat>().To(typeof(PNGImageFormat));
-            container.Bind<IImageFormat>().To(typeof(ASCIIImageFormat));
+            BindImageFormats(container);
             container.Bind<HttpClient>().ToConstant(new HttpClient());
             container.Bind<string>().ToConstant(token);
             container.Bind<ClientManager>().ToSelf().InSingletonScope();
             container.Bind<TelegramBotClient>().ToSelf().InSingletonScope();
             container.Bind<TelegramBot>().ToSelf().InSingletonScope();
+            BindSolversAndParsers(container);
             BindCommands(container);
             container.Bind<MathBot>().ToSelf().InSingletonScope();
             container.Bind<BotSender>().ToSelf().InSingletonScope();
@@ -76,19 +79,59 @@ namespace TelegramMathBot
 
         static void BindCommands(StandardKernel container)
         {
-            container.Bind<ICommand>().To(typeof(GraphicHelp));
-            container.Bind<ICommand>().To(typeof(RefHelp));
-            container.Bind<ICommand>().To(typeof(IntegralHelp));
-            container.Bind<ICommand>().To(typeof(ExpressionHelp));
+            container.Bind<ICommand>().To<GraphicHelp>();
+            container.Bind<ICommand>().To<RefHelp>();
+            container.Bind<ICommand>().To<IntegralHelp>();
+            container.Bind<ICommand>().To<ExpressionHelp>();
             container
                 .Bind<ICommand>()
-                .To(typeof(StartCommand))
+                .To<StartCommand>()
                 .WhenInjectedInto<MathBot>();
 
             container
                 .Bind<ICommand>()
-                .To(typeof(HelpCommand))
-                .WhenInjectedInto(typeof(MathBot));
+                .To<HelpCommand>()
+                .WhenInjectedInto<MathBot>();
+        }
+
+        static void BindSolversAndParsers(StandardKernel container)
+        {
+            container
+                .Bind<ISolver<string, decimal>>()
+                .To<ExpressionSolver>()
+                .WhenInjectedInto<ExpressionHelp>();
+            container
+                .Bind<IParser<string, string>>()
+                .To<ExpressionParser>()
+                .WhenInjectedInto<ExpressionHelp>();
+
+            container
+                .Bind<ISolver<GraphicConfig, SFML.Graphics.Image>>()
+                .To<GraphicSolver>()
+                .WhenInjectedInto<GraphicHelp>();
+            container
+                .Bind<IParser<string, Func<double, double>>>()
+                .To<FunctionParser>()
+                .WhenInjectedInto<GraphicHelp>();
+
+            container
+                .Bind<ISolver<DefiniteIntegral, double>>()
+                .To<IntegralSolver>()
+                .WhenInjectedInto<IntegralHelp>();
+            container
+                .Bind<IParser<string, Func<double, double>>>()
+                .To<FunctionParser>()
+                .WhenInjectedInto<IntegralHelp>();
+            container
+               .Bind<IParser<string, (double LowerBound, double UpperBound)>>()
+               .To<BoundsParser>()
+               .WhenInjectedInto<IntegralHelp>();
+        }
+
+        static void BindImageFormats(StandardKernel container)
+        {
+            container.Bind<IImageFormat>().To<PNGImageFormat>();
+            container.Bind<IImageFormat>().To<ASCIIImageFormat>();
         }
     }
 }
