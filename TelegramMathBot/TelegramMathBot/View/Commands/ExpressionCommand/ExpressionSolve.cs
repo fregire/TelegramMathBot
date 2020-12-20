@@ -14,18 +14,19 @@ namespace TelegramMathBot.View.Commands.ExpressionCommand
 
         public string Command => throw new NotImplementedException();
 
-        //Явно зависит от ExpressionParser => зависимость
-        private readonly ISolver<string, decimal> expressionSolver;
-        public ExpressionSolve(ISolver<string, decimal> solver)
+        private readonly ExpressionSolver solver;
+        private readonly ExpressionParser parser;
+        public ExpressionSolve(ExpressionSolver solver, ExpressionParser parser)
         {
-            this.expressionSolver = solver;
+            this.solver = solver;
+            this.parser = parser;
         }
         public (ICommand NextCommand, IMessage Response) GetResponse(string message)
         {
             try
             {
-                var data = ExpressionParser.Parse(message);
-                var result = expressionSolver.Solve(data).ToString();
+                var data = parser.Parse(message);
+                var result = solver.Solve(data).ToString();
                 return (this, new TextMessage(result));
             }
             catch

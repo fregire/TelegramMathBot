@@ -15,26 +15,31 @@ namespace TelegramMathBot.View.Commands.IntegralCommand
 
         public string Command => throw new NotImplementedException();
         private readonly DefiniteIntegral definiteIntegral;
-        private readonly ISolver<DefiniteIntegral, double> solver;
+        private readonly IntegralSolver solver;
+        private readonly BoundsParser parser;
         public IntegralBounds(
-            ISolver<DefiniteIntegral, double> solver, 
+            IntegralSolver solver, 
+            BoundsParser parser,
             DefiniteIntegral definiteIntegral)
         {
             this.definiteIntegral = definiteIntegral;
             this.solver = solver;
+            this.parser = parser;
         }
 
         public (ICommand NextCommand, IMessage Response) GetResponse(string message)
         {
             try
             {
-                var bounds = BoundsParser.Parse(message);
+                var bounds = parser.Parse(message);
                 definiteIntegral.LowerBound = bounds.LowerBound;
                 definiteIntegral.UpperBound = bounds.UpperBound;
 
                 var result = solver.Solve(definiteIntegral);
 
-                return (new IntegralFunction(), new TextMessage(result.ToString()));
+                return (
+                    new IntegralFunction(new FunctionParser()), 
+                    new TextMessage(result.ToString()));
             }
             catch
             {

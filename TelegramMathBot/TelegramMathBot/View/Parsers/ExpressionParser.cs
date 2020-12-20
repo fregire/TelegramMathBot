@@ -6,10 +6,10 @@ using Domain.MathModule;
 
 namespace TelegramMathBot.View.Parsers
 {
-    public class ExpressionParser
+    public class ExpressionParser: IParser<string, string>
     {
         // Зависимость от FactrorialSolver => зависимость в конструкторе
-        public static string Parse(string input)
+        public string Parse(string input)
         {
             var factorials = new Regex("[0-9]+!");
             var matches = factorials.Matches(input);

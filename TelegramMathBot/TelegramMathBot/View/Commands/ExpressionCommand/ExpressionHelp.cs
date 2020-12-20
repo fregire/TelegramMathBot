@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using TelegramMathBot.View.Messages;
+using TelegramMathBot.View.Parsers;
 
 namespace TelegramMathBot.View.Commands.ExpressionCommand
 {
@@ -16,7 +17,7 @@ namespace TelegramMathBot.View.Commands.ExpressionCommand
         public (ICommand NextCommand, IMessage Response) GetResponse(string message)
         {
             return (
-                new ExpressionSolve(new ExpressionSolver()), 
+                new ExpressionSolve(new ExpressionSolver(), new ExpressionParser()), 
                 new TextMessage("Введите численное выражение"));
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TelegramMathBot.View.Messages;
+using TelegramMathBot.View.Parsers;
 
 namespace TelegramMathBot.View.Commands.IntegralCommand
 {
@@ -13,7 +14,9 @@ namespace TelegramMathBot.View.Commands.IntegralCommand
 
         public (ICommand NextCommand, IMessage Response) GetResponse(string message)
         {
-            return (new IntegralFunction(), new TextMessage("Введите функцию по переменной x"));
+            return (
+                new IntegralFunction(new FunctionParser()), 
+                new TextMessage("Введите функцию по переменной x"));
         }
     }
 }

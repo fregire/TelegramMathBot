@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace TelegramMathBot.View.Parsers
 {
-    public class PolynomParser
+    public class PolynomParser: IParser<string, List<double>>
     {
         private static List<(double Deg, double Coeff)> GetOrderedCoeffAndDegree(MatchCollection matches)
         {
@@ -44,7 +44,7 @@ namespace TelegramMathBot.View.Parsers
                 .ToList();
         }
 
-        public static List<double> Parse(string input)
+        public List<double> Parse(string input)
         {
             input = input.Replace(" ", string.Empty);
             var regex = new Regex(@"([-]*)([0-9]*)[x0-9][\^]*([0-9]*)");

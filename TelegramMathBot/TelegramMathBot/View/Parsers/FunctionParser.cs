@@ -6,9 +6,9 @@ using Flee.PublicTypes;
 
 namespace TelegramMathBot.View.Parsers
 {
-    public class FunctionParser
+    public class FunctionParser: IParser<string, Func<double, double>>
     {
-        public static Func<double, double> Parse(string input)
+        public Func<double, double> Parse(string input)
         {
             ExpressionContext context = new ExpressionContext();
             // Define some variables
