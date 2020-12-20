@@ -3,9 +3,9 @@ using System.Data;
 
 namespace Domain.MathModule
 {
-    public class ExpressionSolver
+    public class ExpressionSolver: ISolver<string, decimal>
     {
-        public static decimal Solve(string input)
+        public decimal Solve(string input)
         {
             var result = new DataTable().Compute(input, "");
 

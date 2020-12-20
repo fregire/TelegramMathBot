@@ -1,9 +1,9 @@
-using Domain.Math;
+using Domain.AdditionalMath;
 using System;
 
 namespace Domain.MathModule
 {
-    public class IntegralSolver
+    public class IntegralSolver: ISolver<DefiniteIntegral, double>
     {
         /// <summary>
         /// Returns definite integral value of current function
@@ -12,7 +12,7 @@ namespace Domain.MathModule
         /// <param name="upperBound">greater segment of curvilinear trapezoid</param>
         /// <param name="lowerBound">lower segment of curvilinear trapezoid</param>
         /// <returns>Integral value</returns>
-        public static double Solve(DefiniteIntegral integral)
+        public double Solve(DefiniteIntegral integral)
         {
             var result = 0d;
             var resSign = 1;

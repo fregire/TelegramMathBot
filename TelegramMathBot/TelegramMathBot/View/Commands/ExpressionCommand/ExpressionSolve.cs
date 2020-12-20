@@ -7,7 +7,7 @@ using TelegramMathBot.View.Parsers;
 
 namespace TelegramMathBot.View.Commands.ExpressionCommand
 {
-    public class ExpresssionSolve : ICommand
+    public class ExpressionSolve : ICommand
     {
         public string FullDescription => throw new NotImplementedException();
         public string Description => throw new NotImplementedException();
@@ -15,12 +15,17 @@ namespace TelegramMathBot.View.Commands.ExpressionCommand
         public string Command => throw new NotImplementedException();
 
         //Явно зависит от ExpressionParser => зависимость
+        private readonly ISolver<string, decimal> expressionSolver;
+        public ExpressionSolve(ISolver<string, decimal> solver)
+        {
+            this.expressionSolver = solver;
+        }
         public (ICommand NextCommand, IMessage Response) GetResponse(string message)
         {
             try
             {
                 var data = ExpressionParser.Parse(message);
-                var result = ExpressionSolver.Solve(data).ToString();
+                var result = expressionSolver.Solve(data).ToString();
                 return (this, new TextMessage(result));
             }
             catch

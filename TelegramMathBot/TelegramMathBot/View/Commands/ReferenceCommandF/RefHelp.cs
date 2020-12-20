@@ -22,6 +22,7 @@ namespace TelegramMathBot.View.Commands.ReferenceCommandF
 
         private List<RefCategory> GetCategories()
         {
+            // вынести в di
             var result = new List<RefCategory>();
             result.Add(
                 new RefCategory(

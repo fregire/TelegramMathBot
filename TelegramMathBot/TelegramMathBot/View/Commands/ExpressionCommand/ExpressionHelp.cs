@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.MathModule;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using TelegramMathBot.View.Messages;
@@ -14,7 +15,9 @@ namespace TelegramMathBot.View.Commands.ExpressionCommand
 
         public (ICommand NextCommand, IMessage Response) GetResponse(string message)
         {
-            return (new ExpresssionSolve(), new TextMessage("Введите численное выражение"));
+            return (
+                new ExpressionSolve(new ExpressionSolver()), 
+                new TextMessage("Введите численное выражение"));
         }
     }
 }

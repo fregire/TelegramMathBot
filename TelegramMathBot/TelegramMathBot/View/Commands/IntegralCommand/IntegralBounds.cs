@@ -1,4 +1,5 @@
-﻿using Domain.MathModule;
+﻿using Domain.AdditionalMath;
+using Domain.MathModule;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,9 +15,13 @@ namespace TelegramMathBot.View.Commands.IntegralCommand
 
         public string Command => throw new NotImplementedException();
         private readonly DefiniteIntegral definiteIntegral;
-        public IntegralBounds(DefiniteIntegral definiteIntegral)
+        private readonly ISolver<DefiniteIntegral, double> solver;
+        public IntegralBounds(
+            ISolver<DefiniteIntegral, double> solver, 
+            DefiniteIntegral definiteIntegral)
         {
             this.definiteIntegral = definiteIntegral;
+            this.solver = solver;
         }
 
         public (ICommand NextCommand, IMessage Response) GetResponse(string message)
@@ -27,7 +32,7 @@ namespace TelegramMathBot.View.Commands.IntegralCommand
                 definiteIntegral.LowerBound = bounds.LowerBound;
                 definiteIntegral.UpperBound = bounds.UpperBound;
 
-                var result = IntegralSolver.Solve(definiteIntegral);
+                var result = solver.Solve(definiteIntegral);
 
                 return (new IntegralFunction(), new TextMessage(result.ToString()));
             }

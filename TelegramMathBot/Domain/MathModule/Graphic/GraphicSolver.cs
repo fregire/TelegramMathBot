@@ -1,11 +1,11 @@
 using System;
 using Domain.GraphicModule;
-using Domain.Math;
+using Domain.AdditionalMath;
 using SFML.Graphics;
 
-namespace Domain.MathModule
+namespace Domain.MathModule.Graphic
 {
-    public static class GraphicSolver
+    public class GraphicSolver: ISolver<GraphicConfig, Image>
     {
         /// <summary>
         /// Generates given function graphic and saves in into "filename".png
@@ -16,12 +16,18 @@ namespace Domain.MathModule
         /// <param name="xInterval">Horizontal segment describing visible part of oX axis</param>
         /// <param name="yInterval">Vertical segment describing visible part of oY axis</param>
         /// <param name="rawFunction">Function, which will be drawn</param>
-        public static Image Solve(int screenWidth, int screenHeight, Tuple<double, double> xInterval, Tuple<double, double> yInterval, Func<double, double> rawFunction)
+        public Image Solve(GraphicConfig config)
         {
-            var imgProcessor = new ImageProcessor((uint)screenWidth, (uint)screenHeight, xInterval, yInterval);
+            var imgProcessor = new ImageProcessor(
+                (uint)config.Size.Width, 
+                (uint)config.Size.Height, 
+                config.XInterval, 
+                config.YInterval);
             imgProcessor.DrawAxes();
-            var processedFunction = new RealArgumentFunction(rawFunction);
-            processedFunction.CalculatePointsInInterval(xInterval, yInterval);
+            var processedFunction = new RealArgumentFunction(config.Func);
+            processedFunction.CalculatePointsInInterval(
+                config.XInterval,
+                config.YInterval);
             imgProcessor.DrawGraphic(processedFunction.GraphPoints, SFML.Graphics.Color.Green);
             
             return imgProcessor.GraphImage;

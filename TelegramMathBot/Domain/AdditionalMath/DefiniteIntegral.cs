@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Domain.Math
+namespace Domain.AdditionalMath
 {
     public class DefiniteIntegral
     {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.MathModule.Graphic;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using TelegramMathBot.View.ImageFormats;
@@ -29,7 +30,7 @@ namespace TelegramMathBot.View.Commands.GraphicCommand
                 var index = num - 1;
 
                 if (IsValidIndex(index))
-                    return (new GraphicSolve(imageFormats[index]), new TextMessage("Введите функцию по переменной x"));
+                    return (new GraphicSolve(new GraphicSolver(), imageFormats[index]), new TextMessage("Введите функцию по переменной x"));
 
                 return (this, new TextMessage("Введите номер из предложенного списка"));
             }
