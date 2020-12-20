@@ -15,7 +15,8 @@ namespace Tests
         [TestCase("1+2+10-8", "1+2+10-8")]
         public void ExpressionParserTest(string expectedRes, string expression)
         {
-            Assert.AreEqual(expectedRes, ExpressionParser.Parse(expression));
+            var parser = new ExpressionParser();
+            Assert.AreEqual(expectedRes, parser.Parse(expression));
         }
 
         [TestCase(14, "2+2+10")]
@@ -25,8 +26,10 @@ namespace Tests
         [TestCase(72, "3!*10+12")]
         public void ExpressionSolverTest(decimal expectedRes, string expression)
         {
-            var parsedData = ExpressionParser.Parse(expression);
-            Assert.AreEqual(expectedRes, ExpressionSolver.Solve(parsedData));
+            var parser = new ExpressionParser();
+            var solver = new ExpressionSolver();
+            var parsedData = parser.Parse(expression);
+            Assert.AreEqual(expectedRes, solver.Solve(parsedData));
         }
     }
 }

@@ -18,7 +18,8 @@ namespace Tests
         public void OneRootTest()
         {
             var expectedRoot = 1;
-            var roots = PolynomialSolver.Solve(new List<double> { 1, -1 });
+            var solver = new PolynomialSolver();
+            var roots = solver.Solve(new List<double> { 1, -1 });
 
             Assert.AreEqual(roots.Count, 1);
             Assert.AreEqual(roots.First(), expectedRoot);
@@ -28,7 +29,8 @@ namespace Tests
         public void SquareEquationTest()
         {
             var expectedRoots = new List<double> { 2, 6 };
-            var roots = PolynomialSolver.Solve(new List<double> { 1, -8, 12 });
+            var solver = new PolynomialSolver();
+            var roots = solver.Solve(new List<double> { 1, -8, 12 });
 
             CollectionAssert.AreEquivalent(roots, expectedRoots);
         }
@@ -37,7 +39,8 @@ namespace Tests
         public void WithoutOneCoeffTest()
         {
             var expectedRoots = new List<double> { 2, -2 };
-            var roots = PolynomialSolver.Solve(new List<double> { 1, 0, -4});
+            var solver = new PolynomialSolver();
+            var roots = solver.Solve(new List<double> { 1, 0, -4});
 
             CollectionAssert.AreEquivalent(roots, expectedRoots);
         }
@@ -45,7 +48,8 @@ namespace Tests
         [Test]
         public void WithoutRootsTest()
         {
-            var roots = PolynomialSolver.Solve(new List<double> { 1, 0, 4 });
+            var solver = new PolynomialSolver();
+            var roots = solver.Solve(new List<double> { 1, 0, 4 });
 
             CollectionAssert.IsEmpty(roots);
         }
