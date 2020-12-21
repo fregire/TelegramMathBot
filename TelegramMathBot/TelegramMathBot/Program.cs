@@ -44,6 +44,8 @@ namespace TelegramMathBot
 
         static void Start()
         {
+            Console.WriteLine(System.IO.File.Exists("View/MathBot.cs"));
+
             var container = ConfigureContainer();
             var bot = container.Get<TelegramBot>();
             var mathBot = container.Get<MathBot>();

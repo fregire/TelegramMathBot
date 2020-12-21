@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Text;
+using TelegramMathBot.Properties;
 using TelegramMathBot.View.Messages;
 
 namespace TelegramMathBot.View.Commands.ReferenceCommandF
@@ -23,15 +24,15 @@ namespace TelegramMathBot.View.Commands.ReferenceCommandF
         private List<RefCategory> GetCategories()
         {
             var result = new List<RefCategory>();
+            
             result.Add(
                 new RefCategory(
                     "Производная",
-                    new PhotoMessage(new Image("Images/derivative.png"), ImageFormat.Png)));
-
+                    new PhotoMessage(Properties.Resources.derivative, ImageFormat.Png)));
             result.Add(
                 new RefCategory(
                     "Интегралы",
-                    new PhotoMessage(new Image("Images/integral.png"), ImageFormat.Png)));
+                    new PhotoMessage(Properties.Resources.integral, ImageFormat.Png)));
 
             return result;
         }
