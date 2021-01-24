@@ -18,6 +18,7 @@ namespace Domain.MathModule.Graphic
         /// <param name="rawFunction">Function, which will be drawn</param>
         public Image Solve(GraphicConfig config)
         {
+            // Вовзращать набор точек
             var imgProcessor = new ImageProcessor(
                 (uint)config.Size.Width, 
                 (uint)config.Size.Height, 

@@ -35,7 +35,8 @@ namespace TelegramMathBot
         // Код должен работаь сразу при клонировании
         //Config file и добавитьь в .gitignore
         //431331940 
-        static string token = "1495097120:AAHpmNmtzpgF6-_BZe0yXyGdfQYrUdhMokQ";
+        // Убрать в файл!
+        // Задеплоить на другую машину
         static void Main(string[] args)
         {
             Start();
@@ -44,8 +45,6 @@ namespace TelegramMathBot
 
         static void Start()
         {
-            Console.WriteLine(System.IO.File.Exists("View/MathBot.cs"));
-
             var container = ConfigureContainer();
             var bot = container.Get<TelegramBot>();
             var mathBot = container.Get<MathBot>();
@@ -55,6 +54,7 @@ namespace TelegramMathBot
             bot.OnMessageTextReceived += (MessageTextEventArgs args) =>
                 mathBot.ProcessMessage(args.Message);
 
+            //TelegramBot за BotSender
             mathBot.OnReply += (ReplyEventArgs args) =>
                 botSender.SendMessage(args.Response, args.ClientChat);
 
@@ -66,7 +66,7 @@ namespace TelegramMathBot
             var container = new StandardKernel();
             BindImageFormats(container);
             container.Bind<HttpClient>().ToConstant(new HttpClient());
-            container.Bind<string>().ToConstant(token);
+            container.Bind<string>().ToConstant(Properties.Resources.Config);
             container.Bind<ClientManager>().ToSelf().InSingletonScope();
             container.Bind<TelegramBotClient>().ToSelf().InSingletonScope();
             container.Bind<TelegramBot>().ToSelf().InSingletonScope();

@@ -61,6 +61,15 @@ namespace TelegramMathBot.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 1495097120:AAHpmNmtzpgF6-_BZe0yXyGdfQYrUdhMokQ.
+        /// </summary>
+        public static string Config {
+            get {
+                return ResourceManager.GetString("Config", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap derivative {
