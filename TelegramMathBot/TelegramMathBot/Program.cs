@@ -30,17 +30,9 @@ namespace TelegramMathBot
 {
     class Program
     {
-        // Интерфейс для генерации картинок
-        // Интерфейс для солверов
-        // Код должен работаь сразу при клонировании
-        //Config file и добавитьь в .gitignore
-        //431331940 
-        // Убрать в файл!
-        // Задеплоить на другую машину
         static void Main(string[] args)
         {
             Start();
-            Console.ReadLine();
         }
 
         static void Start()
@@ -54,7 +46,6 @@ namespace TelegramMathBot
             bot.OnMessageTextReceived += (MessageTextEventArgs args) =>
                 mathBot.ProcessMessage(args.Message);
 
-            //TelegramBot за BotSender
             mathBot.OnReply += (ReplyEventArgs args) =>
                 botSender.SendMessage(args.Response, args.ClientChat);
 
@@ -65,13 +56,19 @@ namespace TelegramMathBot
         {
             var container = new StandardKernel();
             BindImageFormats(container);
-            container.Bind<HttpClient>().ToConstant(new HttpClient());
-            container.Bind<string>().ToConstant(Properties.Resources.Config);
+            BindSolversAndParsers(container);
+            BindCommands(container);
+            container
+                .Bind<HttpClient>()
+                .ToConstant(new HttpClient())
+                .WhenInjectedInto<TelegramBotClient>();
+            container
+                .Bind<string>()
+                .ToConstant(Properties.Resources.Config)
+                .WhenInjectedInto<TelegramBotClient>();
             container.Bind<ClientManager>().ToSelf().InSingletonScope();
             container.Bind<TelegramBotClient>().ToSelf().InSingletonScope();
             container.Bind<TelegramBot>().ToSelf().InSingletonScope();
-            BindSolversAndParsers(container);
-            BindCommands(container);
             container.Bind<MathBot>().ToSelf().InSingletonScope();
             container.Bind<BotSender>().ToSelf().InSingletonScope();
 

@@ -30,6 +30,7 @@ namespace TelegramMathBot.View
     public class TelegramBot
     {
         private readonly TelegramBotClient bot;
+        public readonly Lazy<BotSender> Sender;
         public event MessageTextReceivedHandler OnMessageTextReceived;
 
         public TelegramBot(TelegramBotClient bot)
@@ -41,6 +42,7 @@ namespace TelegramMathBot.View
         {
             bot.OnMessage += OnMessageReceived;
             bot.StartReceiving();
+            while (true) ;
         }
 
         private void OnMessageReceived(object sender, MessageEventArgs messageEvents)
