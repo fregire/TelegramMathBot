@@ -6,6 +6,6 @@ namespace TelegramMathBot.View.Messages
 {
     public interface IMessage
     {
-        public MessageType MessageType { get; }
+        public MsgType MsgType { get; }
     }
 }

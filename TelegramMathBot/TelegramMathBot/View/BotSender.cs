@@ -4,6 +4,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
 using System.Threading;
+using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.InputFiles;
 using TelegramMathBot.View.Messages;
@@ -13,9 +14,9 @@ namespace TelegramMathBot.View
 {
     public class BotSender
     {
-        private readonly TelegramBot bot;
+        private readonly TelegramBotClient bot;
 
-        public BotSender(TelegramBot bot)
+        public BotSender(TelegramBotClient bot)
         {
             this.bot = bot;
         }
@@ -23,10 +24,7 @@ namespace TelegramMathBot.View
         public async void SendMessage(IMessage message, Chat chat)
         {
             if (message is TextMessage textMessage)
-            {
-                var content = new Message { Chat = chat, Text = textMessage.Text };
-                bot.SendTextMessage(content);
-            }
+                await bot.SendTextMessageAsync(chat, textMessage.Text);
 
             if (message is PhotoMessage photoMessage)
             {
@@ -35,8 +33,8 @@ namespace TelegramMathBot.View
 
                 using (var stream = System.IO.File.Open(tmpName, FileMode.Open))
                 {
-                    var fileToSend = new InputOnlineFile(stream, "Test"); 
-                    await bot.SendPhotoMessage(chat, fileToSend);
+                    var fileToSend = new InputOnlineFile(stream, "Test");
+                    await bot.SendPhotoAsync(chat, fileToSend);
                 }
 
                 System.IO.File.Delete(tmpName);

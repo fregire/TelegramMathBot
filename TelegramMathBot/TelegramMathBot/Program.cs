@@ -38,18 +38,9 @@ namespace TelegramMathBot
         static void Start()
         {
             var container = ConfigureContainer();
-            var bot = container.Get<TelegramBot>();
             var mathBot = container.Get<MathBot>();
-            var botSender = container.Get<BotSender>();
-
-            bot.SetCommands(mathBot.Commands);
-            bot.OnMessageTextReceived += (MessageTextEventArgs args) =>
-                mathBot.ProcessMessage(args.Message);
-
-            mathBot.OnReply += (ReplyEventArgs args) =>
-                botSender.SendMessage(args.Response, args.ClientChat);
-
-            bot.StartReceiving();
+            
+            mathBot.StartReceiving();
         }
 
         static StandardKernel ConfigureContainer()
@@ -68,9 +59,8 @@ namespace TelegramMathBot
                 .WhenInjectedInto<TelegramBotClient>();
             container.Bind<ClientManager>().ToSelf().InSingletonScope();
             container.Bind<TelegramBotClient>().ToSelf().InSingletonScope();
-            container.Bind<TelegramBot>().ToSelf().InSingletonScope();
-            container.Bind<MathBot>().ToSelf().InSingletonScope();
             container.Bind<BotSender>().ToSelf().InSingletonScope();
+            container.Bind<MathBot>().ToSelf().InSingletonScope();
 
             return container;
         }

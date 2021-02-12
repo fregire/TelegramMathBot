@@ -7,7 +7,7 @@ namespace TelegramMathBot.View.Messages
     public class TextMessage : IMessage
     {
         public string Text { get; }
-        public MessageType MessageType => MessageType.Text;
+        public MsgType MsgType => MsgType.Text;
         public TextMessage(string text)
         {
             Text = text;
